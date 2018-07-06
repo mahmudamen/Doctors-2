@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html lang="ar-EG">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="~/Assets/favicon.ico">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/Assets")
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/Doctors/Admin/Index">الرئيسية</a></li>
+                    <li class="active"><a href="/Doctors/Rec/RecAdmin">مدير النظام</a></li>
+                    <li class="active"><a href="/Doctors/Finance/Finance">الحسابات</a></li>
+                    <li class="active"><a href="/Doctors/HR/Index">شئون العاملين</a></li>
+                    <li class="active"><a href="/Doctors/InvMan/Index">المخازن</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right flip">
+                    <li>
+                        <a class="label-danger" href="/Doctors/Home/LogOut">
+                            <i class="glyphicon glyphicon-log-out"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content">
+        <nav>
+            <ul class="nav nav-justified nav-fixed-top">
+                <li class="dropdown">
+                    <a herf="#" class="dropdown-toggle" role="button" data-toggle="dropdown">الأصناف <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href='@Url.Action("Additem", "InvMan")'>إضافة صنف</a></li>
+                        <li class="divider"></li>
+                        <li><a href='@Url.Action("ItmCrd", "InvMan")'>كارت صنف</a></li>
+                        <li class="divider"></li>
+                        <li><a href='@Url.Action("GetItems", "InvMan")'>قائمة الأصناف</a></li>
+                        <li class="divider"></li>
+                        <li><a id="itmb">أرصدة الأصناف</a></li>
+                        <li><a href='@Url.Action("oAddbill", "InvMan")'>رصيد أول المدة</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a herf="#" class="dropdown-toggle" role="button" data-toggle="dropdown">المشتريات <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href='@Url.Action("Addbill", "InvMan")'>فاتورة شراء</a></li>
+                        <li class="divider"></li>
+                        <li><a id="bili">مراجعة الفواتير</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a herf="#" class="dropdown-toggle" role="button" data-toggle="dropdown">الموردين <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a id="advn">اضافة مورد</a></li>
+                        <li><a href='@Url.Action("GetAccSh", "Shar")'>قائمة الموردين</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a herf="#" class="dropdown-toggle" role="button" data-toggle="dropdown">الصرف <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href='@Url.Action("Itemtrans", "InvMan")'>صرف للمخازن الفرعية</a></li>
+                        <li><a href='@Url.Action("patdrw", "InvMan")'>صرف للمرضي</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <br />
+        @RenderBody()
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/wAssets")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="aa76c1226a4a4b4386f9a39d3fd40978" Name="Diagram1" ZoomLevel="88">
+        <EntityTypeShape EntityType="SyrnModel.Depts" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="SyrnModel.EmpHis" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="SyrnModel.EmpInfo" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="SyrnModel.EmpShft" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="SyrnModel.Jop" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="SyrnModel.Loan" Width="1.5" PointX="6.75" PointY="4.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="SyrnModel.Mors" Width="1.5" PointX="2.75" PointY="7.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="SyrnModel.Punsh" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="SyrnModel.Sal" Width="1.5" PointX="8.75" PointY="4.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="SyrnModel.Vac" Width="1.5" PointX="4.75" PointY="9.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="SyrnModel.Role" Width="1.5" PointX="6.75" PointY="9.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="SyrnModel.UserRole" Width="1.5" PointX="8.75" PointY="9.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="SyrnModel.Usr" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="SyrnModel.vDepts" Width="1.5" PointX="10.75" PointY="5.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="SyrnModel.vEDJ" Width="1.5" PointX="6" PointY="7.625" IsExpanded="false" />
+        <EntityTypeShape EntityType="SyrnModel.vEmpHis" Width="1.5" PointX="0.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SyrnModel.vEmpl" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="SyrnModel.vEmplon" Width="1.5" PointX="12.75" PointY="4.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="SyrnModel.vJops" Width="1.5" PointX="12.75" PointY="8.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="SyrnModel.vLoanE" Width="1.5" PointX="10.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SyrnModel.vMorsE" Width="1.5" PointX="12.75" PointY="11.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="SyrnModel.vPunE" Width="1.5" PointX="6.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SyrnModel.vSalary" Width="1.5" PointX="14.75" PointY="0.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="SyrnModel.vSalEntry" Width="1.5" PointX="2.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SyrnModel.vTSal" Width="1.5" PointX="14.75" PointY="6.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="SyrnModel.vUsrEmp" Width="1.5" PointX="14.75" PointY="10.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="SyrnModel.vVacE" Width="1.5" PointX="14.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SyrnModel.vURoles" Width="1.5" PointX="12.375" PointY="1.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="SyrnModel.ItmList" Width="1.5" PointX="20.625" PointY="5" />
+        <EntityTypeShape EntityType="SyrnModel.OrdList" Width="1.5" PointX="18.75" PointY="0.5" />
+        <EntityTypeShape EntityType="SyrnModel.Shft" Width="1.5" PointX="16.5" PointY="0.875" />
+        <EntityTypeShape EntityType="SyrnModel.TypeList" Width="1.5" PointX="18.375" PointY="4.5" />
+        <AssociationConnector Association="SyrnModel.FK_ItmList_TypeList" />
+        <AssociationConnector Association="SyrnModel.FK_OrdList_Shft" />
+        <EntityTypeShape EntityType="SyrnModel.orditm" Width="1.5" PointX="22.875" PointY="2.375" />
+        <AssociationConnector Association="SyrnModel.FK_orditm_ItmList" />
+        <AssociationConnector Association="SyrnModel.FK_orditm_OrdList" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

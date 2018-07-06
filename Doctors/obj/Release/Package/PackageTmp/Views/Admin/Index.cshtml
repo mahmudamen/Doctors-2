@@ -1,0 +1,587 @@
+﻿@{ViewBag.Title = "باب      الحارة";}
+<script language="javascript" type="text/javascript">
+
+    function Gent() {
+        $.ajax({
+            url: '/Syrian/Admin/lastshift', cache: false, type: "POST", success: function (data) {
+                $('#last').text(parseFloat(data).toFixed(0))
+            }
+        });
+    }
+    function ORDlst() {
+        $.ajax({
+            url: '/Syrian/Admin/ORDlst', cache: false, type: "POST", success: function (data) {
+                $('#lastname').val(data)
+            }
+        });
+    } 
+    function ORDlstnum() {
+        $.ajax({
+            url: '/Syrian/Admin/ORDlstnum', cache: false, type: "POST", success: function (data) {
+                $('#orderfk').val(data)
+            }
+        });
+    }
+    function Ordpk() {
+        $.ajax({
+            url: '/Syrian/Admin/Ordpk', cache: false, type: "POST", success: function (data) {
+                $('#orderpk').val(data)
+            }
+        });
+    } 
+    function Totfuc() {
+        $.ajax({      
+            url: '/Syrian/Admin/Totfuc?id=' + parseInt($('#last').text()), cache: false, type: "POST", success: function (data) {
+                $('#Totfuc').text(parseFloat(data).toFixed(0))
+            }
+        });
+    }
+</script>
+
+<input type="hidden" id="prd" value=@ViewBag.prd /><input type="hidden" id="cby" value=@HttpContext.Current.User.Identity.Name.Split('|')[1] />
+<div class="modal fade" id="print">
+    <div class="modal-prn">
+        <div class="modal-contentp">
+            <div class="modal-header text-center" style="background-color:#fff">
+                <label class="modal-title">باب الحارة</label>
+            </div>
+            <div class="form-group" style="margin:5px 10px">
+                <label>رقم:</label>
+                <label id="ordersid" style="margin-left:10px"></label>
+            </div>
+            <div class="form-group" style="margin:5px 10px">
+                <label>الضيف:</label>
+                <label id="ordersname" style="margin-left:10px"></label>
+            </div>
+            <div class="panel-body" style="max-height:400px; min-height:400px; padding:10px">
+          <table id="ordersforprint" class="table table-striped table-bordered dt-responsive " style="margin-bottom:0px" cellspacing="0" width="auto">
+        <thead>
+            <tr>
+                <th></th>
+                <th class="text-center">الصنف</th>
+                <th class="text-center">السعر</th>
+                <th class="text-center">الكمية</th>
+                <th class="text-center">اجمالي</th>
+                
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th class="text-center">الإجمالي:</th>
+                <th></th>
+                <th></th>
+                <th></th>
+               
+            </tr>
+        </tfoot>
+        <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td class="text-center"></td>
+                <td class="text-center"></td>
+                <td class="text-center"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+            <div class="form-group">
+                <label>تاريخ:</label>
+                <label id="ZDPRNT" style="margin-left:5px">@DateTime.Today.ToString("yyyy-MMM-dd")</label>
+                <label style="margin:0px 2px">الوقت:</label>
+                <label id="ZTPRNT">@DateTime.Now.ToString("hh:mm tt")</label>
+                <label>أصـل</label>
+            </div>
+            <div class="modal-footer no-print">
+                <a href="javascript:;" id="prncli" type="button" class="btn btn-sm btn-success no-print">طباعة</a>
+                <a type="button" href="javascript:;" id="prn" class="btn btn-sm btn-danger no-print" data-dismiss="modal">إغلاق</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="Addguest">
+    <div class="modal-med">
+        <div class="modal-content">
+            <div class="modal-header">
+                <label class="modal-title">اضافة شفت جديد</label>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-inline ls_form">
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>رقم الشفت</label>
+                            <input type="text" id="cwdoc" class="form-control text-center" style="max-width:150px" readonly="readonly" />
+                            <input type="hidden" id="cwdoci" />
+                        </div>
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>التاريخ</label>
+                            <input type="date" id="cwdat" class="form-control text-center" style="max-width:150px" value=@DateTime.Today.ToString("yyyy-MM-dd") autofocus="autofocus" />
+                        </div>
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>الفترة</label>
+                            <select id="whshft" class="form-control" name="cwshft" style="max-width:100px">
+                                <option value=true>صباحا</option>
+                                <option value=false>مساءا</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:;" id="adshft" type="button" class="btn btn-sm btn-success">اضافة</a>
+                <a type="button" href="javascript:;" class="btn btn-sm btn-danger" data-dismiss="modal">إغلاق</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="nguest">
+    <div class="modal-med">
+        <div class="modal-content">
+            <div class="modal-header">
+                <label class="modal-title">ضيف جديد</label>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-inline ls_form">
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>اسم الضيف </label>
+                            <input type="text" id="gname" class="form-control text-center" autofocus="autofocus" style="max-width:300px"  />
+                            <input type="hidden" id="asdf" />
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:;" id="adgst" type="button" class="btn btn-sm btn-success">اضافة</a>
+                <a type="button" href="javascript:;" class="btn btn-sm btn-danger" data-dismiss="modal">إغلاق</a>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="row">
+        <div class="col-md-3 col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content text-center">
+                        <div class="user-image">
+                            <img src="~/Assets/bg.jpg" class="img-thumbnail" height="50%" style="border:none ; background-color:none">
+                        </div>
+                    </div>
+                    <div class="ibox-title bg-blue-darker">
+                        <a href="javascript:void(0);" class="panel-reload" style="color:#fff" onclick="ORDlst(); ORDlstnum();Gent()"><i class="glyphicon glyphicon-refresh"></i></a>
+                        <a href="javascript:void(0);" onclick="Gent(); ORDlst(); ORDlstnum();" id="adsh" style="color:white ; font-size:18px ; font-style:unset"><span> رقم الشفت</span></a>
+                    </div>
+                    <div class="ibox-content">
+                        <h3 class="no-margins text-center" id="last"></h3>
+                    </div>
+                    <div class="ibox-content">
+                        <h3 class="no-margins text-center" id="Totfuc"></h3>
+                    </div>
+                    <div class="ibox-content text-center">
+                        @DateTime.Today.ToString("yyyy-MM-dd")
+                        <div class="user-image">
+                        </div>
+                    </div>
+                </div>
+                
+            <div class="widget widget-stats bg-blue">
+                <div class="stats-icon"><i class="glyphicon glyphicon-list"></i></div>
+                @*<div class="stats-info">
+                    <h6>باب الحارة</h6>
+                    <p>للوجبات السريعة</p>
+                </div>*@
+                <div class="stats-link">
+                    <a class="theme-collapse-btn" id="Bkonafa">قائمة الكنافة <i class="glyphicon glyphicon-­list"></i></a>
+                </div>
+                <div class="stats-link">
+                    <a class="theme-collapse-btn" id="cref">قائمة الشاورمة <i class="glyphicon glyphicon­-list"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4" style="padding: 5px;">
+            <div class="panel panel-primary" style="margin-bottom:5px">
+                <div class="panel-heading" style="padding: 10px 10px;">
+                    <label class="panel-title">انواع الوجبات السريعة</label>
+                    <button class="btn btn-xs btn-success pull-left" id="neworder"><i class="glyphicon glyphicon-plus-sign"></i></button>
+                </div>
+                <br />
+                <div class="panel-body" style="max-height:200px; min-height:325px; padding:10px">
+                    <table id="shawrma" class="table table-striped table-bordered dt-responsive" style="margin-bottom:0px" cellspacing="0" width="100%">
+                        <thead>
+                            <tr style="background-color:slateblue !important ; color:white">
+                                <th></th>
+                                <th class="text-center">الصنف</th>
+                                <th class="text-center">السعر</th>
+                                <th class="text-center">طلب</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                                <td></td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-5" style="padding: 5px;">
+            <div class="panel panel-primary" style="margin-bottom:5px">
+                <div class="panel-heading" style="padding: 10px 10px;">
+                    <label class="panel-title">الطلبات</label>
+                    <button class="btn btn-xs btn-primary  pull-left" id="pp">طباعة  <i class="glyphicon glyphicon-print"></i></button>
+                </div>
+                    <div class="row">
+                       
+                        <div class="form-inline ls_form">
+                            <div class="form-group" style="margin:0px 30px 0px 0px">
+                                
+                                <input type="hidden" id="orderpk" class="form-control text-center" style="max-width:50px" readonly="readonly" />
+                                
+                                <input type="hidden" id="iditem" class="form-control text-center" style="max-width:50px" readonly="readonly" />
+                                
+                                <input type="hidden" id="iditempr" class="form-control text-center" style="max-width:50px" readonly="readonly" />
+                            </div>
+                            <div class="form-group" style="margin:0px 0px 0px 0px">
+                                
+                                <label style="font-size:15px">رقم الطلب</label>
+                                <input type="text" id="orderfk" class="form-control text-center" style="max-width:50px ; border:hidden ; font-size:20px"  />
+                            </div>
+                            <div class="form-group" style="margin:0px 0px 0px 0px">
+                                <label style="font-size:15px">اسم الضيف</label>
+                                <input type="text" id="lastname"  class="form-control text-center" style="max-width:200px ; border:hidden ; font-size:20px"  />
+                            </div>
+                        </div>
+                    </div>
+                
+                <div class="panel-body" style="max-height:200px; min-height:355px; padding:10px">
+                    <table id="orders" class="table table-striped table-bordered dt-responsive " style="margin-bottom:0px" cellspacing="0" width="100%">
+                        <thead>
+                            <tr style="background-color:slateblue !important ; color:white">
+                                <th></th>
+                                <th class="text-center">الصنف</th>
+                                <th class="text-center">السعر</th>
+                                <th class="text-center">الكمية</th>
+                                <th class="text-center">اجمالي</th>
+                                <th class="text-center">حذف</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th class="text-center">الإجمالي:</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section scripts{
+        <script src="~/Scripts/dts.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                Gent()
+                ORDlst()
+                ORDlstnum()
+                Ordpk()
+                Totfuc()
+            });
+            $(document).ready(function () {
+                $(window).keydown(function (e) {
+                    
+                    if (event.which === 107) {
+                        $('#neworder').click();
+                    }
+                    if (event.which === 40) {
+                        $('#adgst').click();
+                    }
+                    if (event.which === 35) {
+                        $('#pp').click();
+                    }
+                    var ordtable = $("#orders").DataTable();
+                    ordtable.$('tr.selected').removeClass('selected');
+                    ordtable.clear();
+                    ordtable.draw();
+                    ordtable.ajax.url('ordprint?id=' + $('#orderpk').val()).load();
+                });
+                Gent()
+                var table = $('#shawrma').DataTable({
+                    fixedHeader: true, bPaginate: false, bLengthChange: false, bInfo: false,bSearchable:false, "oLanguage": { "sSearch": "" },
+                    "pageLength": 5, "order": [[1, "desc"]], scrollY: '120px', scrollCollapse: true, sAjaxSource: '/Syrian/Admin/Tlist',
+                    columns: [
+
+                { "data": "ItemID", "visible": false, "bSearchable": false },
+                { "data": "ItmName", "orderable": false },
+                { "data": "ItmPrice", "orderable": false },
+                {
+                    "data": null, "sClass": "dt-center", "width": "10%", "orderable": false,
+                    "defaultContent": "<button  class='bbutton small btn-info'id='adp'><i class='glyphicon glyphicon-plus'></button>"
+                }
+                    ]
+                });
+                var kotable = $('#ko').DataTable({
+                    fixedHeader: true, bPaginate: false,bFilter:false, bLengthChange: false, bInfo: false, "oLanguage": { "sSearch": "" },
+                    "pageLength": 5, "order": [[1, "desc"]], scrollY: '120px', scrollCollapse: true, sAjaxSource: '/Syrian/Admin/Konafa',
+                    columns: [                       
+                { "data": "ItemID", "visible": false, "bSearchable": false },
+                { "data": "ItmName", "orderable": false },
+                { "data": "ItmPrice", "orderable": false }
+                    ]
+                });
+                
+                var ordersforprint = $('#ordersforprint').DataTable({
+                    fixedHeader: true, bPaginate: false, bLengthChange: false,bFilter:false, bInfo: false, "oLanguage": { "sSearch": "" },
+                    //"pageLength": 5, "order": [[1, "desc"]], scrollY: '200px', scrollCollapse: true, sAjaxSource: '/Syrian/Admin/ordprint',
+                    "pageLength": 5, "order": [[1, "desc"]], scrollY: '200px', scrollCollapse: true, sAjaxSource: '/Syrian/Admin/ordprint?id=' + $('#orderpk').val(),
+                    footerCallback: function (row, data, start, end, display) {
+                        var api = this.api(), data;
+                        var intVal = function (i) {
+                            return typeof i === 'string' ?
+                                i.replace(/[\$,]/g, '') * 1 :
+                                typeof i === 'number' ?
+                                i : 0;
+                        };
+                        caca= api
+                            .column(4, { page: 'current' })
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                    
+                        totapo = api
+                          .column(2, { page: 'current' })
+                          .data()
+                          .reduce(function (a, b) {
+                              return intVal(a) + intVal(b);
+                          }, 0);
+                        $(api.column(4).footer()).html(
+                             caca
+                        );
+                    },
+                    columns: [
+                { "data": "ser", "visible": false, "bSearchable": false },
+                { "data": "ItmName", "orderable": false },
+                { "data": "price", "orderable": false },
+                { "data": "qty", "orderable": false },
+                { "data": "totval", "orderable": false }
+                    ]
+                });
+
+                var ordtableprint = $('#orders').DataTable({
+                    
+                    fixedHeader: true, bPaginate: false, bLengthChange: false, bFilter: false, bInfo: false, "oLanguage": { "sSearch": "" },
+                    //"pageLength": 5, "order": [[1, "desc"]], scrollY: '200px', scrollCollapse: true, sAjaxSource: '/Syrian/Admin/ordprint',
+                    "pageLength": 5, "order": [[1, "desc"]], scrollY: '200px', scrollCollapse: true, sAjaxSource: '/Syrian/Admin/ordprint?id=' + $('#orderpk').val(),
+                    footerCallback: function (row, data, start, end, display) {
+                        var api = this.api(), data;
+                        var intVal = function (i) {
+                            return typeof i === 'string' ?
+                                i.replace(/[\$,]/g, '') * 1 :
+                                typeof i === 'number' ?
+                                i : 0;
+                        };
+                        caca = api
+                            .column(4, { page: 'current' })
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                        totapo = api
+                          .column(2, { page: 'current' })
+                          .data()
+                          .reduce(function (a, b) {
+                              return intVal(a) + intVal(b);
+                          }, 0);
+                        $(api.column(4).footer()).html(
+                             caca
+                        );
+                    },
+                    columns: [
+                { "data": "ser", "visible": false, "bSearchable": false },
+                { "data": "ItmName", "orderable": false },
+                { "data": "price", "orderable": false },
+                { "data": "qty", "orderable": false },
+                {"data": "totval","orderable":false},
+                {
+                    "data": null, "sClass": "dt-center", "width": "10%", "orderable": false,
+                    "defaultContent": "<button  class='bbutton small btn-info'id='adpremove'><i class='glyphicon glyphicon-remove'></button>"
+                }
+                    ]
+                });
+
+                $('#cref').click(function () {
+                    var table = $("#shawrma").DataTable();
+                    table.$('tr.selected').removeClass('selected');
+                    table.clear();
+                    table.draw();
+                    table.ajax.url('/Syrian/Admin/Tlist').load()
+                });
+                $('#prncli').click(function () {
+                   // printdiv('print')
+                    $('#foo').prepend('#print');
+                    $('#print').printPreview(); 
+                    $('#print').modal('hide')
+                    location.href = '/Syrian/Admin/Index';
+                    
+                });
+                $('#prn').click(function () {
+                    $('#print').modal('hide')
+                    
+
+                });
+                $('#Bkonafa').click(function () {
+                    var kotable = $("#shawrma").DataTable();
+                    kotable.$('tr.selected').removeClass('selected');
+                    kotable.clear();
+                    kotable.draw();
+                    kotable.ajax.url('/Syrian/Admin/Konafa').load()
+                });
+
+                $('#adsh').click(function () {
+                    $('#cwdoc').val(parseInt($('#last').text()) + 1);
+                    $('#Addguest').modal({ backdrop: false });
+                });
+
+                $('#pp').click(function () {
+                    $('#ordersid').text($('#orderfk').val())
+                    $('#ordersname').text($('#lastname').val())
+                    var ordersforprint = $("#ordersforprint").DataTable();
+                    ordersforprint.$('tr.selected').removeClass('selected');
+                    ordersforprint.clear();
+                    ordersforprint.draw();
+                    ordersforprint.ajax.url('ordprint?id=' + $('#orderpk').val()).load();
+                    $('#print').modal({ backdrop: false });
+                    
+                });
+                $('#neworder').click(function () {  
+                    $('#asdf').val(parseInt($('#last').text()));
+                    Gent();
+                    ORDlst();
+                    Ordpk();
+                    ORDlstnum();
+                    Totfuc();
+                    $('#nguest').modal({ backdrop: false });
+                    $("#gname").focus();
+                    $("#gname").val(' ')
+                    $('#gname').empty();
+                    
+                });
+                $('#adshft').click(function () {
+                    $.ajax({
+                        url: "@(Url.Action("adshf", "Admin"))",
+                        type: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    data: { a: $('#whshft').val() },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.Success) {
+                            $('#Addguest').modal("hide");
+                            Gent();
+                            ORDlst();
+                            Ordpk();
+                            ORDlstnum();
+                            Totfuc();
+
+
+                        }
+                        else {
+                            alert(data.Message)
+                        }
+                    }
+                });
+                });
+
+                $('#adgst').click(function () {
+                    $.ajax({
+                        url: "@(Url.Action("adORD", "Admin"))",
+                        type: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    data: { gsname: $('#gname').val(), shvt: $('#asdf').val() },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.Success) {
+                           // $('#lastname').val($('#gname').val());
+                            $('#nguest').modal("hide");
+                            //$('#lastname').val($('#gname').val());
+                            $('#orderpk').val(Ordpk());
+                            Gent();                             
+                            ORDlst();
+                            ORDlstnum();
+                            Ordpk();
+                            Totfuc();
+                            var ordtable = $("#orders").DataTable();
+                            ordtable.$('tr.selected').removeClass('selected');
+                            ordtable.clear();
+                            ordtable.draw();
+                            ordtable.ajax.url('ordprint?id=' + $('#orderpk').val()).load();
+                            
+                        }
+                        else {
+                            alert(data.Message)
+                        }
+                    }
+                });
+            });
+
+
+            });
+      
+            $('#shawrma tbody').on('click', '.bbutton', function () {
+                var table = $("#shawrma").DataTable();
+                table.$('tr.selected').removeClass('selected');
+                $(this).closest('tr').addClass('selected');
+               
+                var asd = table.cell('.selected', 0).data();
+                var p =   table.cell('.selected', 2).data();
+                $('#iditempr').val(p);
+                $('#iditem').val(asd)
+                
+
+                $.ajax({
+                    url: "@(Url.Action("aditm", "Admin"))",
+                    type: "GET",
+                contentType: "application/json; charset=utf-8",
+                data: { itmfk: $('#iditem').val(), ordfk: $('#orderpk').val(), pr: $('#iditempr').val() ,shi:parseInt($('#last').text()), cby:$('#cby').val() },
+                dataType: "json",
+                success: function (data) {
+                    if (data.Success) {
+                        var ordtable = $("#orders").DataTable();
+                        ordtable.$('tr.selected').removeClass('selected');
+                        ordtable.clear();
+                        ordtable.draw();
+                        ordtable.ajax.url('ordprint?id=' + $('#orderpk').val()).load();
+                        Totfuc();
+                    }
+                                        
+                },
+                error: function (response) {
+                    alert("error : " + response);
+                }
+            });
+            });
+
+        </script>
+    }

@@ -1,0 +1,1089 @@
+﻿@{ViewBag.Title = " الاستقبال";}
+<script language="javascript" type="text/javascript">
+    function Pcount() {
+        $.ajax({
+            url: '/Erp/Pro/Pcount', cache: false, type: "POST", success: function (data) {
+                $('#zpcount').text(parseFloat(data).toFixed(0))
+            }
+        }).then(function () {
+            setTimeout(Pcount, 900000);
+        });;
+    }
+    function Gent() {
+        $.ajax({
+            url: '/Erp/Pro/Tcount', cache: false, type: "POST", success: function (data) {
+                $('#tcount').text(parseFloat(data).toFixed(0))
+            }
+        });
+    }
+    function fcount() {
+        $.ajax({
+            url: '/Erp/Pro/fcount', cache: false, type: "POST", success: function (data) {
+                $('#fcount').text(parseFloat(data).toFixed(0))
+            }
+        });
+    }
+    function fixcount() {
+        $.ajax({
+            url: '/Erp/Pro/fixcount', cache: false, type: "POST", success: function (data) {
+                $('#fxcount').text(parseFloat(data).toFixed(0))
+            }
+        });
+    }
+    function savcount() {
+        $.ajax({
+            url: '/Erp/Pro/savcount', cache: false, type: "POST", success: function (data) {
+                $('#savcount').text(parseFloat(data).toFixed(0))
+            }
+        });
+    }
+</script>
+<link href="~/Content/bootstrap-rtl.min.css" rel="stylesheet" />
+<link href="~/Content/style.min.css" rel="stylesheet" />
+<link href="~/Content/style-responsive.min.css" rel="stylesheet" />
+<link href="~/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+<link href="~/Content/animate.css" rel="stylesheet" media="screen">
+<input type="hidden" id="cby" value=@HttpContext.Current.User.Identity.Name.Split('|')[1] />
+<input type="hidden" id="cbyn" value=@HttpContext.Current.User.Identity.Name.Split('|')[0] />
+<div class="modal fade" id="mdcashrp">
+    <div class="modal-prn">
+        <div class="modal-contentp">
+            <div class="modal-header text-center" style="background-color:#fff">
+                <a href="javascript:;" id="bbcashrp" type="button" class="btn btn-sm btn-success no-print">طباعة</a>
+                <a type="button" href="javascript:;" id="prn" class="btn btn-sm btn-danger no-print" data-dismiss="modal">إغلاق</a>
+                <div class="form-group" style="margin:0px 5px 0px 5px">
+                    <label>مستشفي حفصه العوضي التخصصي</label>
+                    <br />
+                    <label>الاستقبال</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-inline ls_form">
+                    <div class="form-group" style="margin:0px 25px 0px 5px">
+                        <label>اسم المريض</label>
+                        <label id="patientname"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-inline ls_form">
+                    <div class="form-group" style="margin:0px 25px 0px 5px">
+                        <label>الخدمة</label>
+                        <label id="vserv"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-inline ls_form">
+                    <div class="form-group" style="margin:0px 25px 0px 5px">
+                        <label>الطبيب</label>
+                        <label id="vdoc"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-inline ls_form">
+                    <div class="form-group" style="margin:0px 25px 0px 5px">
+                        <label>المبلغ</label>
+                        <label id="xval"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" style="margin:0px 25px 0px 5px">
+                <label>تاريخ:</label>
+                <label id="ZDPRNT" style="margin-left:5px">@DateTime.Today.ToString("yyyy-MMM-dd")</label>
+                <label style="margin:0px 2px">الوقت:</label>
+                <label id="ZTPRNT">@DateTime.Now.ToString("hh:mm tt")</label>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="MdAdPat">
+    <div class="modal-med">
+        <div class="modal-content">
+            <div class="modal-header">
+                <label class="modal-title">تسجيل مريض جديد</label>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-inline ls_form">
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>اسم المريض</label>
+                            <input type="text" id="spatientname" class="form-control text-center" style="width:250px" autofocus="autofocus" />
+                        </div>
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>نوع الزيارة</label>
+                            <input type="text" id="serv" class="form-control text-center" style="width:150px" />
+                            <input type="hidden" id="servID"  />
+                        </div>
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>تكلفة</label>
+                            <input type="text" id="PaidAmount" class="form-control text-center" style="width:70px" disabled />
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="form-inline ls_form">
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>تاريخ الزيارة</label>
+                            <input type="date" id="birthdate" class="form-control text-center" style="width:160px" />
+                        </div>
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>النوع</label>
+                            <select id="gender" class="form-control" style="max-width:100px">
+                                <option value=true>ذكر</option>
+                                <option value=false>انثى</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="form-inline ls_form">
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>موبايل</label>
+                            <input type="text" id="Nationalid" class="form-control text-center" style="width:200px" />
+                        </div>
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>تليفون</label>
+                            <input type="text" id="mob" class="form-control text-center" style="width:200px" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:;" id="adnpat" type="button" class="btn btn-sm btn-success">اضافة</a>
+                <a type="button" href="javascript:;" class="btn btn-sm btn-danger" data-dismiss="modal">إغلاق</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="MdAdPatClinic">
+    <div class="modal-med">
+        <div class="modal-content">
+            <div class="modal-header">
+                <label class="modal-title">عيادة </label>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-inline ls_form">
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>اسم المريض</label>
+                            <input type="text" id="vpatientname" class="form-control text-center" style="width:250px" readonly="readonly" />
+                            <input type="hidden" id="patid" />
+                        </div>
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>الخدمة</label>
+                            <input type="text" id="serv" class="form-control text-center" style="width:250px" />
+                            <input type="hidden" id="iserv" class="form-control text-center" style="width:250px" />
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="form-inline ls_form">
+                        <div class="form-group" style="margin:0px 35px 0px 5px">
+                            <label>الطبيب</label>
+                            <input type="text" id="Doct" class="form-control text-center" style="width:260px" />
+                            <input type="hidden" id="iDoct" />
+                            <input type="hidden" id="ival" />
+                            <input type="hidden" id="iallvall" />
+                            <input type="hidden" id="iaddval" />
+                        </div>
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>الدفع</label>
+                            <select id="paytype" class="form-control" style="max-width:100px">
+                                <option value=true>كاش</option>
+                                <option value=true>تعاقد</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>المبلغ</label>
+                            <input type="text" id="totval" class="form-control text-center" style="width:80px" readonly />
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row" id="cstr" style="display:none">
+                    <div class="form-inline ls_form">
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>اسم الجهة</label>
+                            <input type="text" id="vendorid" class="form-control text-center" style="width:200px" />
+                            <input type="hidden" id="ivendorid" class="form-control text-center" style="width:200px" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:;" id="adserv" type="button" class="btn btn-sm btn-success">اضافة</a>
+                <a type="button" href="javascript:;" class="btn btn-sm btn-danger" data-dismiss="modal">إغلاق</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="MdAdPatAnz">
+    <div class="modal-med">
+        <div class="modal-content">
+            <div class="modal-header">
+                <label class="modal-title">تحاليل </label>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-inline ls_form">
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>اسم المريض</label>
+                            <input type="text" id="azpatientname" class="form-control text-center" style="width:250px" readonly="readonly" />
+                            <input type="hidden" id="azpatid" />
+                        </div>
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>التحليل</label>
+                            <input type="text" id="anz" class="form-control text-center" style="width:250px" />
+                            <input type="hidden" id="anzz" class="form-control text-center" style="width:250px" />
+                            <input type="hidden" id="acc" />
+                            <input type="hidden" id="code" />
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="form-inline ls_form">
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>الدفع</label>
+                            <select id="paytype" class="form-control" style="max-width:100px">
+                                <option value=true>كاش</option>
+                                <option value=true>تعاقد</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>المبلغ</label>
+                            <input type="text" id="aztotval" class="form-control text-center" style="width:80px" readonly />
+                            <input type="hidden" id="adval" />
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row" id="cstr" style="display:none">
+                    <div class="form-inline ls_form">
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>اسم الجهة</label>
+                            <input type="text" id="vendorid" class="form-control text-center" style="width:200px" />
+                            <input type="hidden" id="ivendorid" class="form-control text-center" style="width:200px" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:;" id="adanz" type="button" class="btn btn-sm btn-success">اضافة</a>
+                <a type="button" href="javascript:;" class="btn btn-sm btn-danger" data-dismiss="modal">إغلاق</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="MdAdPatEr">
+    <div class="modal-med">
+        <div class="modal-content">
+            <div class="modal-header">
+                <label class="modal-title">الطوارئ </label>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-inline ls_form">
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>اسم المريض</label>
+                            <input type="text" id="erpatientname" class="form-control text-center" style="width:200px" readonly="readonly" />
+                            <input type="hidden" id="erpatid" />
+                        </div>
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>الخدمة</label>
+                            <input type="text" id="ername" class="form-control text-center" style="width:250px" />
+                            <input type="hidden" id="erid" class="form-control text-center" style="width:250px" />
+                            <input type="hidden" id="eracc" />
+                            <input type="hidden" id="ernacc" />
+                            <input type="hidden" id="ersect" />
+                            <input type="hidden" id="ernsect" />
+                        </div>
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>المبلغ</label>
+                            <input type="number" id="erval" class="form-control text-center" style="width:70px" />
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="form-inline ls_form">
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>كشف دخول</label>
+                            <input type="number" value=50 id="diagnos" class="form-control text-center" style="width:70px" readonly="readonly" />
+                        </div>
+
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>تاريخ الدخول</label>
+                            <input type="date" value=@DateTime.Today.ToString("yyyy-MM-dd") id="startdate" class="form-control text-center" style="width:200px" />
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="form-inline ls_form">
+                        <label>الطبيب</label>
+                        @*@Html.DropDownList("doctray", (SelectList)ViewBag.doctray, "  -----اختر من القائمة-----  ", new { @class = "js-example-basic-single form-control", @style = "width:100%", id = "erdoc" })*@
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="form-inline ls_form">
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>الدفع</label>
+                            <select id="paytype" class="form-control" style="max-width:100px">
+                                <option value=true>كاش</option>
+                                <option value=true>تعاقد</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>اشراف طبي</label>
+                            <input type="number" id="mstotval" class="form-control text-center" style="width:80px" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:;" id="ader" type="button" class="btn btn-sm btn-success">اضافة</a>
+                <a type="button" href="javascript:;" class="btn btn-sm btn-danger" data-dismiss="modal">إغلاق</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="MdAdPatRay">
+    <div class="modal-med">
+        <div class="modal-content">
+            <div class="modal-header">
+                <label class="modal-title">الاشعة </label>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-inline ls_form">
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>اسم المريض</label>
+                            <input type="text" id="raypatname" class="form-control text-center" style="width:250px" readonly="readonly" />
+                            <input type="hidden" id="raypatid" />
+                        </div>
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>الاشعة</label>
+                            <input type="text" id="rayname" class="form-control text-center" style="width:250px" />
+                            <input type="hidden" id="rayid" class="form-control text-center" style="width:250px" />
+                            <input type="hidden" id="rayacc" />
+                            <input type="hidden" id="raycode" />
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="form-inline ls_form">
+                        <div class="form-inline" style="margin:0px 5px 0px 5px">
+                            <label>الطبيب</label>
+                         @*   @Html.DropDownList("doctray", (SelectList)ViewBag.doctray, "  -----اختر من القائمة-----  ", new { @class = "js-example-basic-single form-control", @style = "width:100px", id = "doctray" })*@
+                            <label style="margin:0px 5px 0px 5px">مبلغ</label>
+                            <input type="number" id="DoctRayVal" class="form-control text-center" style="width:100px" />
+                        </div>
+                        <br />
+                        <div class="form-inline" style="margin:0px 5px 0px 5px">
+                            <label>الفنى</label>
+                       @*     @Html.DropDownList("tech", (SelectList)ViewBag.tech, "  -----اختر من القائمة-----  ", new { @class = "js-example-basic-single form-control", @style = "width:100px", id = "tech" })*@
+
+                            <label style="margin:0px 5px 0px 5px">مبلغ</label>
+                            <input type="number" id="TechRayVal" class="form-control text-center" style="width:100px" />
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="form-inline ls_form">
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>الدفع</label>
+                            <select id="paytype" class="form-control" style="max-width:100px">
+                                <option value=true>كاش</option>
+                                <option value=true>تعاقد</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>المبلغ</label>
+                            <input type="text" id="raytotval" class="form-control text-center" style="width:80px" readonly />
+                            <input type="hidden" id="adval" />
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row" id="cstr" style="display:none">
+                    <div class="form-inline ls_form">
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>اسم الجهة</label>
+                            <input type="text" id="vendorid" class="form-control text-center" style="width:200px" />
+                            <input type="hidden" id="ivendorid" class="form-control text-center" style="width:200px" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:;" id="adActRay" type="button" class="btn btn-sm btn-success">اضافة</a>
+                <a type="button" href="javascript:;" class="btn btn-sm btn-danger" data-dismiss="modal">إغلاق</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="MdAdPatin">
+    <div class="modal-med">
+        <div class="modal-content">
+            <div class="modal-header">
+                <label class="modal-title">داخلي</label>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-inline ls_form">
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>اسم المريض</label>
+                            <input type="text" id="inpatientname" class="form-control text-center" style="width:200px" readonly="readonly" />
+                            <input type="hidden" id="inpatid" />
+                        </div>
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>الخدمة</label>
+                            <input type="text" id="servin" class="form-control text-center" style="width:200px" />
+                            <input type="hidden" id="iservin" class="form-control text-center" style="width:250px" />
+                        </div>
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>الغرفة</label>
+                            <input type="text" id="rom" class="form-control text-center" style="width:100px" />
+                            <input type="hidden" id="irom" class="form-control text-center" style="width:50px" />
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="form-inline ls_form">
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>العملية</label>
+                            <input type="text" id="operdesc" class="form-control text-center" style="width:400px" />
+                            <input type="hidden" id="ioperdesc" />
+                        </div>
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>تكلفة العملية</label>
+                            <input type="text" id="iserval" class="form-control text-center" readonly="readonly" style="width:60px" />
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="form-inline ls_form">
+                        <div class="form-group" style="margin:0px 35px 0px 5px">
+                            <label>الطبيب</label>
+                            <input type="text" id="Doctin" class="form-control text-center" style="width:260px" />
+                            <input type="hidden" id="iDoctin" />
+                            <input type="hidden" id="ivalin" />
+                            <input type="hidden" id="iallvallin" />
+                            <input type="hidden" id="iaddvalin" />
+                        </div>
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>الدفع</label>
+                            <select id="paytype" class="form-control" style="max-width:100px">
+                                <option value=true>كاش</option>
+                                <option value=true>تعاقد</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>المبلغ</label>
+                            <input type="text" id="totvalin" class="form-control text-center" style="width:80px" readonly />
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row" id="cstr" style="display:none">
+                    <div class="form-inline ls_form">
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>اسم الجهة</label>
+                            <input type="text" id="vendorid" class="form-control text-center" style="width:200px" />
+                            <input type="hidden" id="ivendorid" class="form-control text-center" style="width:200px" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:;" id="adservin" type="button" class="btn btn-sm btn-success">اضافة</a>
+                <a type="button" href="javascript:;" class="btn btn-sm btn-danger" data-dismiss="modal">إغلاق</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="MdAdPatCare">
+    <div class="modal-med">
+        <div class="modal-content">
+            <div class="modal-header">
+                <label class="modal-title">العناية المركزة</label>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-inline ls_form">
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>اسم المريض</label>
+                            <input type="text" id="carepatientname" class="form-control text-center" style="width:200px" readonly="readonly" />
+                            <input type="hidden" id="carepatid" />
+                        </div>
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>الخدمة</label>
+                            <input type="text" id="carename" class="form-control text-center" style="width:250px" />
+                            <input type="hidden" id="careid" class="form-control text-center" style="width:250px" />
+                            <input type="hidden" id="careacc" />
+                            <input type="hidden" id="carenacc" />
+                            <input type="hidden" id="caresect" />
+                            <input type="hidden" id="carensect" />
+                        </div>
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>المبلغ</label>
+                            <input type="number" id="careval" class="form-control text-center" style="width:70px" />
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="form-inline ls_form">
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>كشف دخول</label>
+                            <input type="number" value=50 id="diagnos" class="form-control text-center" style="width:70px" readonly="readonly" />
+                        </div>
+
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>تاريخ الدخول</label>
+                            <input type="date" value=@DateTime.Today.ToString("yyyy-MM-dd") id="startdate" class="form-control text-center" style="width:200px" />
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="form-inline ls_form">
+                        <label>الطبيب</label>
+                        @*@Html.DropDownList("doctray", (SelectList)ViewBag.doctray, "  -----اختر من القائمة-----  ", new { @class = "js-example-basic-single form-control", @style = "width:100%", id = "erdoc" })*@
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="form-inline ls_form">
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>الدفع</label>
+                            <select id="paytype" class="form-control" style="max-width:100px">
+                                <option value=true>كاش</option>
+                                <option value=true>تعاقد</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>اشراف طبي</label>
+                            <input type="number" id="caretotval" class="form-control text-center" style="width:80px" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:;" id="adcare" type="button" class="btn btn-sm btn-success">اضافة</a>
+                <a type="button" href="javascript:;" class="btn btn-sm btn-danger" data-dismiss="modal">إغلاق</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- begin col-4 -->
+<br />
+<div id="content" class="content">
+    <div class="row">
+        <div class="col-md-6">
+            <div id="a-panal" class="panel panel-primary" style="margin-bottom:5px" data-sortable-id="index-1">
+                <div class="panel-heading" style="height: 50px;">
+                    <label class="panel-title" style="font-size:13px;"> تسجيل مريض </label>
+                    <div class="btn-group m-r-5 pull-left">
+                        <button class="btn-group-sm btn-icon btn-square btn-info pull-left" title="تبديل " id="patogele"><i class="fa fa-expand"></i></button>
+                        <button class="btn-group-sm btn-icon btn-square btn-success pull-left" title="تحديث " id="refreshz"><i class="fa fa-repeat"></i></button>
+                        <button class="btn-group-sm btn-icon btn-square btn-warning pull-left" title="تسجيل بيانات مريض " id="btnewpat"><i class="fa fa-plus"></i></button>
+                    </div>
+                    <div class="btn-group m-r-5 pull-left">
+                        <button class="btn-group-sm btn-icon btn-square btn-info pull-left" title="قسم العيادات الخارجية " id="btnServ"><i class="fa fa-fire"></i></button>
+                        <button class="btn-group-sm btn-icon btn-square btn-success pull-left" title="قسم الداخلي " id="btnPatIn"><i class="fa fa-flash"></i></button>
+                        <button class="btn-group-sm btn-icon btn-square btn-warning pull-left" title="قسم عناية مركزة  " id="btncare"><i class="fa fa-anchor"></i></button>
+                    </div>
+                    <div class="btn-group m-r-5 pull-left">
+                        <button class="btn-group-sm btn-icon btn-square btn-info pull-left" title="قسم التحليل  " id="btnAnaly"><i class="fa fa-glass"></i></button>
+                        <button class="btn-group-sm btn-icon btn-square btn-success pull-left" title="قسم الاشعة  " id="btnray"><i class="fa fa-film"></i></button>
+                    </div>
+                    <div class="btn-group m-r-5 pull-left">
+                        <button class="btn-group-sm btn-icon btn-square btn-info pull-left" title="قسم الطوارئ  " id="btner"><i class="fa fa-heart"></i></button>
+                        <button class="btn-group-sm btn-icon btn-square btn-success pull-left" title="قسم الحضانات  " id="btnbaby"><i class="fa fa-child"></i></button>
+                    </div>
+                </div>
+                <div class="panel-body" id="patlistvx" style="max-height:600px; min-height:200px; padding:5px">
+                    <table id="patlist" class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>رقم الملف</th>
+                                <th class="text-center"> المريض</th>
+                                <th>خدمة</th>
+                                <th>مبلغ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div id="b-panal" class="panel panel-warning" style="margin-bottom:5px" data-sortable-id="index-3">
+                <div class="panel-heading">
+                    <label class="panel-title" style="font-size:13px;">  قائمة الانتظار </label>
+                    <div class="btn-group m-r-5 pull-left">
+                        <button class="btn-group-sm btn-icon btn-square btn-info pull-left" title="تبديل " id="btwaitexpand"><i class="fa fa-expand"></i></button>
+                        <button class="btn-group-sm btn-icon btn-square btn-success pull-left" title="تحديث " id="refresh"><i class="fa fa-repeat"></i></button>
+                        <button class="btn-group-sm btn-icon btn-square btn-warning pull-left" title="رد المبلغ للمريض " id="refund"><i class="fa fa-eraser"></i> </button>
+                    </div>
+                </div>
+                <div class="panel-body" id="panelwaitlist" style="max-height:400px;  display:none; min-height:200px; padding:10px">
+                    <table id="tbwait" class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>رقم الملف</th>
+                                <th class="text-center"> المريض</th>
+                                <th>خدمة</th>
+                                <th>ترتيب</th>
+                                <th>باقي</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="c-panal" class="panel panel-danger" style="margin-bottom:5px" data-sortable-id="ui-index-2">
+                <div class="panel-heading">
+
+                    <label class="panel-title" style="font-size:13px;"> سجل الحالات التحاليل </label>
+                    <div class="btn-group m-r-5 pull-left">
+                        <button class="btn-group-sm btn-icon btn-square btn-info pull-left" title="تبديل " id="patogelec"><i class="fa fa-expand"></i></button>
+                        <button class="btn-group-sm btn-icon btn-square btn-success pull-left" title="تحديث البيانات " id="refreshanz"><i class="fa fa-refresh"></i> </button>
+                        <button class="btn-group-sm btn-icon btn-square btn-warning pull-left" title="رد المبلغ للمريض " id="refundanz"><i class="fa fa-eraser"></i> </button>
+                    </div>
+                </div>
+                <div class="panel-body" id="recanz" style="max-height:300px; display:none; min-height:200px; padding:10px">
+                    <table id="recanzz" class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th class="text-center">مريض</th>
+                                <th class="text-center">التحليل</th>
+                                <th class="text-center">مبلغ </th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th class="text-center">الإجمالي</th>
+                                <th></th>
+                                <th class="text-center"></th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="i-panal" class="panel panel-primary" style="margin-bottom:5px" data-sortable-id="index-2">
+                <div class="panel-heading">
+                    <label class="panel-title" style="font-size:13px;"> حالات الاشعة   </label>
+                    <div class="btn-group m-r-5 pull-left">
+                        <button class="btn-group-sm btn-icon btn-square btn-info pull-left" title="تبديل " id="expray"><i class="fa fa-expand"></i></button>
+                        <button class="btn-group-sm btn-icon btn-square btn-success pull-left" title="تحديث البيانات " id="refreshray"><i class="fa fa-repeat"></i></button>
+                        <button class="btn-group-sm btn-icon btn-square btn-warning pull-left" title="رد المبلغ للمريض " id="cnla"><i class="fa fa-eraser"></i></button>
+                    </div>
+                </div>
+                <div class="panel-body" id="pnlray" style="max-height:300px; display:none; min-height:200px; padding:10px">
+                    <table id="tbray" class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th class="text-center">مريض</th>
+                                <th class="text-center">الاشعة</th>
+                                <th class="text-center">مبلغ </th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th class="text-center">الإجمالي</th>
+                                <th></th>
+                                <th class="text-center"></th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="n-panal" class="panel panel-success" style="margin-bottom:5px" data-sortable-id="ui-index-2">
+                <div class="panel-heading">
+                    <label class="panel-title" style="font-size:13px;"> حالات الداخلى </label>
+                    <div class="btn-group m-r-5 pull-left">
+                        <button class="btn-group-sm btn-icon btn-square btn-info pull-left" title="تبديل " id="expin"><i class="fa fa-expand"></i></button>
+                        <button class="btn-group-sm btn-icon btn-square btn-success pull-left" title="تحديث البيانات " id="refreshin"><i class="fa fa-repeat"></i></button>
+
+                    </div>
+                </div>
+                <div class="panel-body" id="pnlin" style="max-height:300px; display:none; min-height:200px; padding:10px">
+                    <table id="tbPatIn" class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th class="text-center">مريض</th>
+                                <th class="text-center">عملية</th>
+                                <th class="text-center">مبلغ </th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th class="text-center">الإجمالي</th>
+                                <th></th>
+                                <th class="text-center"></th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="m-panal" class="panel panel-danger" style="margin-bottom:5px" data-sortable-id="ui-index-2">
+                <div class="panel-heading">
+                    <label class="panel-title" style="font-size:13px;"> سجل العناية المركزة </label>
+                    <div class="btn-group m-r-5 pull-left">
+                        <button class="btn-group-sm btn-icon btn-square btn-info pull-left" title="تبديل " id="expcary"><i class="fa fa-expand"></i></button>
+                        <button class="btn-group-sm btn-icon btn-square btn-success pull-left" title="تحديث البيانات " id="refreshcare"><i class="fa fa-repeat"></i></button>
+
+                    </div>
+                </div>
+                <div class="panel-body" id="pnlcare" style="max-height:300px; display:none; min-height:200px; padding:10px">
+                    <table id="tbPatCare" class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th class="text-center">مريض</th>
+                                <th class="text-center">غرفة</th>
+                                <th class="text-center">مبلغ </th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th class="text-center">الإجمالي</th>
+                                <th></th>
+                                <th class="text-center"></th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- end col-4 -->
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div id="er-panal" class="panel panel-warning" style="margin-bottom:5px" data-sortable-id="ui-index-3">
+                <div class="panel-heading">
+                    <label class="panel-title" style="font-size:13px;"> سجل الطوارئ </label>
+                    <div class="btn-group m-r-5 pull-left">
+                        <button class="btn-group-sm btn-icon btn-square btn-info pull-left" title="تبديل " id="exper"><i class="fa fa-expand"></i></button>
+                        <button class="btn-group-sm btn-icon btn-square btn-success pull-left" title="تحديث البيانات " id="refresher"><i class="fa fa-repeat"></i></button>
+
+                    </div>
+                </div>
+                <div class="panel-body" id="pnler" style="max-height:300px; display:none; min-height:200px; padding:10px">
+                    <table id="tbPatEr" class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th class="text-center">مريض</th>
+                                <th class="text-center">خدمة </th>
+                                <th class="text-center">مبلغ </th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th class="text-center">الإجمالي</th>
+                                <th></th>
+                                <th class="text-center"></th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div id="h-panal" class="panel panel-primary" style="margin-bottom:5px" data-sortable-id="ui-index-3">
+                <div class="panel-heading">
+                    <label class="panel-title" style="font-size:13px;"> سجل الحضانة </label>
+                    <div class="btn-group m-r-5 pull-left">
+                        <button class="btn-group-sm btn-icon btn-square btn-info pull-left" title="تبديل " id="exper"><i class="fa fa-expand"></i></button>
+                        <button class="btn-group-sm btn-icon btn-square btn-success pull-left" title="تحديث البيانات " id="refresher"><i class="fa fa-repeat"></i></button>
+
+                    </div>
+                </div>
+                <div class="panel-body" id="pnler" style="max-height:300px; display:none; min-height:200px; padding:10px">
+                    <table id="tbPatEr" class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th class="text-center">مريض</th>
+                                <th class="text-center">غرفة</th>
+                                <th class="text-center">مبلغ </th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th class="text-center">الإجمالي</th>
+                                <th></th>
+                                <th class="text-center"></th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        <!-- end col-4 -->
+    </div>
+</div>
+<link href="~/Content/select2.css" rel="stylesheet" />
+@section scripts{
+
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <script src="~/Scripts/apps.min.js"></script>
+    <script src="~/Scripts/dts.js"></script>
+    <script src="~/Scripts/select2.full.min.js"></script>
+
+    <script>
+            $(document).ready(function () {
+                App.init();
+            });
+        // select2 function
+            $(".js-example-basic-single").select2({
+                dir: "rtl", language: "ar", selectOnClose: true, width: '30%'
+            });
+            var table = $('#patlist').DataTable({
+                cache: true,
+                bProcessing: false, sAjaxSource: '/Doctors/Admin/PatTbl', "order": [[0, "desc"]], bFilter: true, bInfo: false, lengthChange: false, scrollY: '350px', scrollCollapse: true, bPaginate: true,
+                columns: [
+             { "data": "ID", "visible": false },
+             { "data": "PatientName", "width": "20%" },
+             { "data": "Serv", "width": "1%" },
+             { "data": "PaidAmount" , "width":"1%" }
+                         ]
+            });
+            var table = $('#tbwait').DataTable({
+                cache: true,
+                bProcessing: false, sAjaxSource: '/Doctors/Admin/WaitTbl', "order": [[0, "desc"]], bFilter: true, bInfo: false, lengthChange: false, scrollY: '250px', scrollCollapse: true, bPaginate: true,
+                columns: [
+             { "data": "ID", "visible": false },
+             { "data": "PatientName", "width": "20%" },
+             { "data": "ServName", "width": "1%" },
+             { "data": "CreateDate", "width": "1%" },
+             { "data": "RemainingAmount", "width": "1%" }
+                ]
+            });
+            $('#patogele').click(function () {
+                $('#patlistvx').toggle();
+                var table = $('#patlist').DataTable();
+                table.clear();
+                table.draw();
+                table.ajax.url('/Doctors/Admin/PatTbl').load();
+            });
+            
+            $('#btwaitexpand').click(function () {
+                $('#panelwaitlist').toggle();
+                var table = $('#tbwait').DataTable();
+                table.clear();
+                table.draw();
+                table.ajax.url('/Doctors/Admin/WaitTbl').load();
+            });
+        // refresh table 
+            $('#refreshz').click(function () {
+                var table = $('#patlist').DataTable();
+                table.clear();
+                table.draw();
+                table.ajax.url('/Doctors/Admin/PatTbl').load();
+            });
+            $('#refresh').click(function () {
+                var table = $('#tbwait').DataTable();
+                table.clear();
+                table.draw();
+                table.ajax.url('/Doctors/Admin/WaitTbl').load();
+            });
+        // select table 
+            $('#patlist tbody').on('click', 'tr', function () {
+                var table = $("#patlist").DataTable();
+                table.$('tr.selected').removeClass('selected');
+                $(this).closest('tr').addClass('selected');
+                var m = table.cell('.selected', 0).data();
+                console.log(m);
+               
+            });
+        // auto complete for serv id
+            $('#serv').autocomplete({
+                autoFocus: true,
+                messages: { noResults: '', results: function () { } },
+                appendTo: $('#MdAdPat'),
+                source: function (request, response) {
+                    $.ajax({
+                        url: "@(Url.Action("autoserv", "Admin"))",
+                        type: 'GET',
+                    cache: false,
+                    dataType: 'json',
+                    data: { Prefix: request.term },
+                    success: function (json) {
+                        response($.map(json, function (data, ID, ServName, PaidAmount) {
+                            return {
+                                label: data.ID + " - " + data.ServName,
+                                value: data.ID ,
+                                amount: data.PaidAmount
+                            }; uest
+                        }));
+                    },
+                    });
+            },
+            focus: function (event, ui) {
+                return false;
+            },
+            select: function (event, ui) {
+                $('#ID').val(ui.item.value);
+                $('#serv').val(ui.item.label);
+                $('#PaidAmount').val(ui.item.amount);
+                return false;
+            },
+            change: function (event, ui) {
+                var source = $(this).val();
+                var found = false;
+                $('#serv').filter(function () {
+                    if (ui.item != null) {
+                        found = true;
+                    }
+                    else {
+                        $(this).val('');
+                        $(this).focus();
+                        $('#PaidAmount').val('');
+                    }
+                    if ($(this).val() == null) {
+                        $('#PaidAmount').val('');
+                    }
+                });
+            }
+            });
+        // open add modal
+        $('#btnewpat').click(function () {
+            $('#MdAdPat').modal({ backdrop: false });
+        });
+
+        // button add new patient 
+        $('#adnpat').click(function () {
+            if ($('#spatientname').val() == ' ') {
+                $('#spatientname').focus();
+                $('#spatientname').addClass('input-validation-error');
+                alert('يجب تحديد اسم المريض');
+            }
+            else if ($('#serv').val() == '') {
+                $('#serv').focus();
+                $('#serv').addClass('input-validation-error');
+                alert('يجب تحديد نوع الزيارة');
+            } else {
+                $.ajax({
+                    url: "@(Url.Action("adpat", "Rec"))",
+                    type: "GET",
+                contentType: "application/json; charset=utf-8",
+                data: {
+                    patname: $('#spatientname').val(),
+                    mob: $('#mob').val(),
+                    adress: $('#adress').val(),
+                    cby: $('#cby').val(),
+                    birthdate: $('#birthdate').val(),
+                    gender: $('#gender').val(),
+                    Nationalid: $('#Nationalid').val(),
+                    cbyn: $('#cbyn').val()
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data.Success) {
+                        $("#MdAdPat").modal("hide");
+                        alert(data.Message)
+                        var table = $("#patlist").DataTable();
+                        table.$('tr.selected').removeClass('selected');
+                        table.clear();
+                        table.draw();
+                        table.ajax.url('/Haf/Rec/tbpatdef').load();
+
+                    } else {
+                        alert(data.Message)
+                    }
+                }
+            });
+        }
+        });
+    </script>
+}

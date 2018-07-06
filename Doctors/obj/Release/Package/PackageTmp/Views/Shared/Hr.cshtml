@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html lang="ar-EG">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="~/Assets/favicon.ico">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/Assets")
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/Syrian/Admin/Index">الرئيسية</a></li>
+                    <li class="active"><a href="/Syrian/Rec/RecAdmin"></a>مدير النظام</li>
+                    <li class="active"><a href="/Syrian/Finance/Finance">الحسابات</a></li>
+                    <li class="active"><a href="/Syrian/HR/Index">شئون العاملين</a></li>
+                    <li class="active"><a href="/Syrian/InvMan/Index">المخازن</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right flip">
+                    <li>
+                        <a class="label-danger" href="/Syrian/Home/LogOut">
+                            <i class="glyphicon glyphicon-log-out"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
+    <div class="container body-content">
+        <nav>
+            <ul class="nav nav-justified nav-fixed-top">
+                <li><a href='@Url.Action("Index", "HR")'>شئون العاملين</a></li>
+                <li><a href='@Url.Action("GetDepts", "HR")'>الإدارات</a></li>
+                <li><a href='@Url.Action("GetJobs", "HR")'>الوظائف</a></li>
+                <li><a href='@Url.Action("Emps", "HR")'>العاملين</a></li>
+                <li><a href='@Url.Action("Lon", "HR")'>سلف</a></li>
+                <li><a href='@Url.Action("Mor", "HR")'>حوافز</a></li>
+                <li><a href='@Url.Action("Pun", "HR")'>جزاءات</a></li>
+                <li><a href='@Url.Action("Vac", "HR")'>أجازات</a></li>
+                <li><a href='@Url.Action("Salary", "HR")'>مرتبات</a></li>
+            </ul>
+        </nav>
+        <br />
+        @RenderBody()
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/wAssets")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MenoModelStoreContainer" CdmEntityContainer="HDB">
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="MenoModel.Role">
+        <MappingFragment StoreEntitySet="Role">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="RoleDescription" ColumnName="RoleDescription" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="ValidFrom" ColumnName="ValidFrom" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedTime" ColumnName="CreatedTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserRoles">
+      <EntityTypeMapping TypeName="MenoModel.UserRole">
+        <MappingFragment StoreEntitySet="UserRole">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="ValidFrom" ColumnName="ValidFrom" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedTime" ColumnName="CreatedTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usrs">
+      <EntityTypeMapping TypeName="MenoModel.Usr">
+        <MappingFragment StoreEntitySet="Usr">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+          <ScalarProperty Name="Role" ColumnName="Role" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="UserKey" ColumnName="UserKey" />
+          <ScalarProperty Name="EntryKey" ColumnName="EntryKey" />
+          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="ValidFrom" ColumnName="ValidFrom" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedTime" ColumnName="CreatedTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vURoles">
+      <EntityTypeMapping TypeName="MenoModel.vURole">
+        <MappingFragment StoreEntitySet="vURoles">
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="RoleDescription" ColumnName="RoleDescription" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="UsrRolID" ColumnName="UsrRolID" />
+          <ScalarProperty Name="UsrID" ColumnName="UsrID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="EntryKey" ColumnName="EntryKey" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Depts">
+      <EntityTypeMapping TypeName="MenoModel.Dept">
+        <MappingFragment StoreEntitySet="Depts">
+          <ScalarProperty Name="Users" ColumnName="Users" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="EmpReq" ColumnName="EmpReq" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmpHis">
+      <EntityTypeMapping TypeName="MenoModel.EmpHi">
+        <MappingFragment StoreEntitySet="EmpHis">
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Osal" ColumnName="Osal" />
+          <ScalarProperty Name="Nsal" ColumnName="Nsal" />
+          <ScalarProperty Name="Jopto" ColumnName="Jopto" />
+          <ScalarProperty Name="Jopfrm" ColumnName="Jopfrm" />
+          <ScalarProperty Name="Deptto" ColumnName="Deptto" />
+          <ScalarProperty Name="Deptfrm" ColumnName="Deptfrm" />
+          <ScalarProperty Name="Action" ColumnName="Action" />
+          <ScalarProperty Name="NatId" ColumnName="NatId" />
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmpInfoes">
+      <EntityTypeMapping TypeName="MenoModel.EmpInfo">
+        <MappingFragment StoreEntitySet="EmpInfo">
+          <ScalarProperty Name="Usr" ColumnName="Usr" />
+          <ScalarProperty Name="Shift" ColumnName="Shift" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+          <ScalarProperty Name="MaritalState" ColumnName="MaritalState" />
+          <ScalarProperty Name="MState" ColumnName="MState" />
+          <ScalarProperty Name="Photo" ColumnName="Photo" />
+          <ScalarProperty Name="Degree" ColumnName="Degree" />
+          <ScalarProperty Name="GradeDate" ColumnName="GradeDate" />
+          <ScalarProperty Name="EduGrade" ColumnName="EduGrade" />
+          <ScalarProperty Name="Adress" ColumnName="Adress" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+          <ScalarProperty Name="MonthDays" ColumnName="MonthDays" />
+          <ScalarProperty Name="Salary" ColumnName="Salary" />
+          <ScalarProperty Name="HireDate" ColumnName="HireDate" />
+          <ScalarProperty Name="NatID" ColumnName="NatID" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="CostCenter" ColumnName="CostCenter" />
+          <ScalarProperty Name="JopID" ColumnName="JopID" />
+          <ScalarProperty Name="DeptID" ColumnName="DeptID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmpShfts">
+      <EntityTypeMapping TypeName="MenoModel.EmpShft">
+        <MappingFragment StoreEntitySet="EmpShft">
+          <ScalarProperty Name="Dept" ColumnName="Dept" />
+          <ScalarProperty Name="SDate" ColumnName="SDate" />
+          <ScalarProperty Name="Val" ColumnName="Val" />
+          <ScalarProperty Name="Yer" ColumnName="Yer" />
+          <ScalarProperty Name="Mo" ColumnName="Mo" />
+          <ScalarProperty Name="Dy" ColumnName="Dy" />
+          <ScalarProperty Name="tw" ColumnName="tw" />
+          <ScalarProperty Name="frm" ColumnName="frm" />
+          <ScalarProperty Name="Emp" ColumnName="Emp" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Jops">
+      <EntityTypeMapping TypeName="MenoModel.Jop">
+        <MappingFragment StoreEntitySet="Jop">
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="CreatDate" ColumnName="CreatDate" />
+          <ScalarProperty Name="MaxSal" ColumnName="MaxSal" />
+          <ScalarProperty Name="MinSal" ColumnName="MinSal" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Loans">
+      <EntityTypeMapping TypeName="MenoModel.Loan">
+        <MappingFragment StoreEntitySet="Loan">
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="EntID" ColumnName="EntID" />
+          <ScalarProperty Name="DocID" ColumnName="DocID" />
+          <ScalarProperty Name="DeptID" ColumnName="DeptID" />
+          <ScalarProperty Name="SCutMonths" ColumnName="SCutMonths" />
+          <ScalarProperty Name="CutMonths" ColumnName="CutMonths" />
+          <ScalarProperty Name="Months" ColumnName="Months" />
+          <ScalarProperty Name="MonthPayed" ColumnName="MonthPayed" />
+          <ScalarProperty Name="LoanMount" ColumnName="LoanMount" />
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Mors">
+      <EntityTypeMapping TypeName="MenoModel.Mor">
+        <MappingFragment StoreEntitySet="Mors">
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="OrderBy" ColumnName="OrderBy" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="PayMonth" ColumnName="PayMonth" />
+          <ScalarProperty Name="DonDate" ColumnName="DonDate" />
+          <ScalarProperty Name="MorDay" ColumnName="MorDay" />
+          <ScalarProperty Name="MorMount" ColumnName="MorMount" />
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Punshes">
+      <EntityTypeMapping TypeName="MenoModel.Punsh">
+        <MappingFragment StoreEntitySet="Punsh">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="OrderBy" ColumnName="OrderBy" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="SCutMonths" ColumnName="SCutMonths" />
+          <ScalarProperty Name="CutMonths" ColumnName="CutMonths" />
+          <ScalarProperty Name="PunshDay" ColumnName="PunshDay" />
+          <ScalarProperty Name="PunshMount" ColumnName="PunshMount" />
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sals">
+      <EntityTypeMapping TypeName="MenoModel.Sal">
+        <MappingFragment StoreEntitySet="Sal">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="PdDoc" ColumnName="PdDoc" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="NetSall" ColumnName="NetSall" />
+          <ScalarProperty Name="AdAll" ColumnName="AdAll" />
+          <ScalarProperty Name="Mor" ColumnName="Mor" />
+          <ScalarProperty Name="MainSal" ColumnName="MainSal" />
+          <ScalarProperty Name="CtAll" ColumnName="CtAll" />
+          <ScalarProperty Name="Vac" ColumnName="Vac" />
+          <ScalarProperty Name="Pun" ColumnName="Pun" />
+          <ScalarProperty Name="Lon" ColumnName="Lon" />
+          <ScalarProperty Name="Yer" ColumnName="Yer" />
+          <ScalarProperty Name="Mon" ColumnName="Mon" />
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Vacs">
+      <EntityTypeMapping TypeName="MenoModel.Vac">
+        <MappingFragment StoreEntitySet="Vac">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="OrderBy" ColumnName="OrderBy" />
+          <ScalarProperty Name="Nots" ColumnName="Nots" />
+          <ScalarProperty Name="CutMonth" ColumnName="CutMonth" />
+          <ScalarProperty Name="CreatDate" ColumnName="CreatDate" />
+          <ScalarProperty Name="Cuts" ColumnName="Cuts" />
+          <ScalarProperty Name="Ds" ColumnName="Ds" />
+          <ScalarProperty Name="VMount" ColumnName="VMount" />
+          <ScalarProperty Name="VacEnd" ColumnName="VacEnd" />
+          <ScalarProperty Name="VacStrt" ColumnName="VacStrt" />
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vUsrEmps">
+      <EntityTypeMapping TypeName="MenoModel.vUsrEmp">
+        <MappingFragment StoreEntitySet="vUsrEmp">
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

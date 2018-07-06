@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="quizlist">
+    <Key>
+      <PropertyRef Name="sernum" />
+    </Key>
+    <Property Name="sernum" Type="int" Nullable="false" />
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="quizname" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="createdate" Type="date" Nullable="false" />
+    <Property Name="userid" Type="int" Nullable="false" />
+    <Property Name="remark" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="result">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="sernum" Type="int" Nullable="false" />
+    <Property Name="ex" Type="int" Nullable="false" />
+    <Property Name="vg" Type="int" Nullable="false" />
+    <Property Name="g" Type="int" Nullable="false" />
+    <Property Name="m" Type="int" Nullable="false" />
+    <Property Name="b" Type="int" Nullable="false" />
+    <Property Name="userid" Type="int" Nullable="false" />
+    <Property Name="createdate" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="EmpInfo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DeptID" Type="int" />
+    <Property Name="JopID" Type="int" />
+    <Property Name="CostCenter" Type="int" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="25" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="25" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="NatID" Type="nvarchar" MaxLength="14" Nullable="false" />
+    <Property Name="HireDate" Type="date" Nullable="false" />
+    <Property Name="Salary" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="MonthDays" Type="int" />
+    <Property Name="Telephone" Type="nvarchar" MaxLength="12" />
+    <Property Name="Mobile" Type="nvarchar" MaxLength="12" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="Adress" Type="nvarchar" MaxLength="100" />
+    <Property Name="EduGrade" Type="nvarchar" MaxLength="100" />
+    <Property Name="GradeDate" Type="date" />
+    <Property Name="Degree" Type="nvarchar" MaxLength="20" />
+    <Property Name="Photo" Type="nvarchar" MaxLength="50" />
+    <Property Name="MState" Type="nvarchar" MaxLength="20" />
+    <Property Name="MaritalState" Type="bit" />
+    <Property Name="BirthDate" Type="date" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedDate" Type="date" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" Nullable="false" />
+    <Property Name="Shift" Type="bit" Nullable="false" />
+    <Property Name="Usr" Type="nvarchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleName" Type="nvarchar" MaxLength="25" Nullable="false" />
+    <Property Name="RoleDescription" Type="nvarchar" MaxLength="150" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="ValidFrom" Type="date" Nullable="false" />
+    <Property Name="CreatedDate" Type="date" Nullable="false" />
+    <Property Name="CreatedTime" Type="time" Precision="7" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserRole">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="RoleID" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="ValidFrom" Type="date" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="date" Nullable="false" />
+    <Property Name="CreatedTime" Type="time" Precision="7" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Usr">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="EmpID" Type="int" Nullable="false" />
+    <Property Name="Role" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="UserKey" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="EntryKey" Type="nvarchar" MaxLength="3" Nullable="false" />
+    <Property Name="Telephone" Type="nvarchar" MaxLength="11" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" Nullable="false" />
+    <Property Name="ValidFrom" Type="date" Nullable="false" />
+    <Property Name="CreatedDate" Type="date" Nullable="false" />
+    <Property Name="CreatedTime" Type="time" Precision="6" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DB.Emp.vUsrEmp' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vUsrEmp">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="FullName" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DB.usr.vURoles' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vURoles">
+    <Key>
+      <PropertyRef Name="RoleID" />
+      <PropertyRef Name="RoleName" />
+      <PropertyRef Name="UserName" />
+      <PropertyRef Name="UsrRolID" />
+      <PropertyRef Name="UsrID" />
+      <PropertyRef Name="UserID" />
+      <PropertyRef Name="EntryKey" />
+    </Key>
+    <Property Name="RoleID" Type="int" Nullable="false" />
+    <Property Name="RoleName" Type="nvarchar" MaxLength="25" Nullable="false" />
+    <Property Name="RoleDescription" Type="nvarchar" MaxLength="150" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="UsrRolID" Type="int" Nullable="false" />
+    <Property Name="UsrID" Type="int" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="EntryKey" Type="nvarchar" MaxLength="3" Nullable="false" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_result_quizlist">
+    <End Role="quizlist" Type="Self.quizlist" Multiplicity="1" />
+    <End Role="result" Type="Self.result" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="quizlist">
+        <PropertyRef Name="sernum" />
+      </Principal>
+      <Dependent Role="result">
+        <PropertyRef Name="sernum" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DBModelStoreContainer">
+    <EntitySet Name="quizlist" EntityType="Self.quizlist" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="result" EntityType="Self.result" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EmpInfo" EntityType="Self.EmpInfo" Schema="Emp" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="usr" store:Type="Tables" />
+    <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="usr" store:Type="Tables" />
+    <EntitySet Name="Usr" EntityType="Self.Usr" Schema="usr" store:Type="Tables" />
+    <EntitySet Name="vUsrEmp" EntityType="Self.vUsrEmp" store:Type="Views" store:Schema="Emp">
+      <DefiningQuery>SELECT 
+    [vUsrEmp].[ID] AS [ID], 
+    [vUsrEmp].[FullName] AS [FullName]
+    FROM [Emp].[vUsrEmp] AS [vUsrEmp]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vURoles" EntityType="Self.vURoles" store:Type="Views" store:Schema="usr">
+      <DefiningQuery>SELECT 
+    [vURoles].[RoleID] AS [RoleID], 
+    [vURoles].[RoleName] AS [RoleName], 
+    [vURoles].[RoleDescription] AS [RoleDescription], 
+    [vURoles].[UserName] AS [UserName], 
+    [vURoles].[UsrRolID] AS [UsrRolID], 
+    [vURoles].[UsrID] AS [UsrID], 
+    [vURoles].[UserID] AS [UserID], 
+    [vURoles].[EntryKey] AS [EntryKey], 
+    [vURoles].[FullName] AS [FullName]
+    FROM [usr].[vURoles] AS [vURoles]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_result_quizlist" Association="Self.FK_result_quizlist">
+      <End Role="quizlist" EntitySet="quizlist" />
+      <End Role="result" EntitySet="result" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

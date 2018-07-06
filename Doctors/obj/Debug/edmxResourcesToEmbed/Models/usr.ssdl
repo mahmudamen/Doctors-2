@@ -1,0 +1,288 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MenoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Depts">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="EmpReq" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreateDate" Type="date" Nullable="false" />
+    <Property Name="CreateBy" Type="int" Nullable="false" />
+    <Property Name="Users" Type="bit" />
+  </EntityType>
+  <EntityType Name="EmpHis">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmpID" Type="int" Nullable="false" />
+    <Property Name="NatId" Type="nvarchar" MaxLength="14" />
+    <Property Name="Action" Type="nvarchar" MaxLength="25" Nullable="false" />
+    <Property Name="Deptfrm" Type="int" />
+    <Property Name="Deptto" Type="int" />
+    <Property Name="Jopfrm" Type="int" />
+    <Property Name="Jopto" Type="int" />
+    <Property Name="Nsal" Type="int" />
+    <Property Name="Osal" Type="int" />
+    <Property Name="CreatedDate" Type="date" Nullable="false" />
+    <Property Name="CreateBy" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EmpInfo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DeptID" Type="int" />
+    <Property Name="JopID" Type="int" />
+    <Property Name="CostCenter" Type="int" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="25" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="25" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="NatID" Type="nvarchar" MaxLength="14" Nullable="false" />
+    <Property Name="HireDate" Type="date" Nullable="false" />
+    <Property Name="Salary" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="MonthDays" Type="int" />
+    <Property Name="Telephone" Type="nvarchar" MaxLength="12" />
+    <Property Name="Mobile" Type="nvarchar" MaxLength="12" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="Adress" Type="nvarchar" MaxLength="100" />
+    <Property Name="EduGrade" Type="nvarchar" MaxLength="100" />
+    <Property Name="GradeDate" Type="date" />
+    <Property Name="Degree" Type="nvarchar" MaxLength="20" />
+    <Property Name="Photo" Type="nvarchar" MaxLength="50" />
+    <Property Name="MState" Type="nvarchar" MaxLength="20" />
+    <Property Name="MaritalState" Type="bit" />
+    <Property Name="BirthDate" Type="date" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedDate" Type="date" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" Nullable="false" />
+    <Property Name="Shift" Type="bit" Nullable="false" />
+    <Property Name="Usr" Type="nvarchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="EmpShft">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Emp" Type="int" Nullable="false" />
+    <Property Name="frm" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="tw" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Dy" Type="int" />
+    <Property Name="Mo" Type="int" />
+    <Property Name="Yer" Type="int" />
+    <Property Name="Val" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="SDate" Type="date" Nullable="false" />
+    <Property Name="Dept" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Jop">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="MinSal" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="MaxSal" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CreatDate" Type="date" Nullable="false" />
+    <Property Name="CreateBy" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Loan">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmpID" Type="int" Nullable="false" />
+    <Property Name="LoanMount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="MonthPayed" Type="date" Nullable="false" />
+    <Property Name="Months" Type="int" Nullable="false" />
+    <Property Name="CutMonths" Type="int" Nullable="false" />
+    <Property Name="SCutMonths" Type="date" Nullable="false" />
+    <Property Name="DeptID" Type="int" Nullable="false" />
+    <Property Name="DocID" Type="nvarchar" MaxLength="10" />
+    <Property Name="EntID" Type="int" Nullable="false" />
+    <Property Name="CreateDate" Type="date" Nullable="false" />
+    <Property Name="CreateBy" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Mors">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmpID" Type="int" Nullable="false" />
+    <Property Name="MorMount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="MorDay" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="DonDate" Type="date" Nullable="false" />
+    <Property Name="PayMonth" Type="date" Nullable="false" />
+    <Property Name="Notes" Type="nvarchar" MaxLength="200" />
+    <Property Name="OrderBy" Type="nvarchar" MaxLength="100" />
+    <Property Name="CreateDate" Type="date" Nullable="false" />
+    <Property Name="CreateBy" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Punsh">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmpID" Type="int" Nullable="false" />
+    <Property Name="PunshMount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PunshDay" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CutMonths" Type="int" Nullable="false" />
+    <Property Name="SCutMonths" Type="date" Nullable="false" />
+    <Property Name="Notes" Type="nvarchar" MaxLength="200" />
+    <Property Name="OrderBy" Type="nvarchar" MaxLength="100" />
+    <Property Name="CreateBy" Type="int" Nullable="false" />
+    <Property Name="CreateDate" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Sal">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmpID" Type="int" Nullable="false" />
+    <Property Name="Mon" Type="int" Nullable="false" />
+    <Property Name="Yer" Type="int" Nullable="false" />
+    <Property Name="Lon" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Pun" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Vac" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="CtAll" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="MainSal" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Mor" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="AdAll" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="NetSall" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Status" Type="bit" Nullable="false" />
+    <Property Name="PdDoc" Type="nvarchar" MaxLength="10" />
+    <Property Name="CreateBy" Type="int" Nullable="false" />
+    <Property Name="CreateDate" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Vac">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmpID" Type="int" Nullable="false" />
+    <Property Name="VacStrt" Type="date" Nullable="false" />
+    <Property Name="VacEnd" Type="date" Nullable="false" />
+    <Property Name="VMount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Ds" Type="int" Nullable="false" />
+    <Property Name="Cuts" Type="bit" Nullable="false" />
+    <Property Name="CreatDate" Type="date" Nullable="false" />
+    <Property Name="CutMonth" Type="date" Nullable="false" />
+    <Property Name="Nots" Type="nvarchar" MaxLength="200" />
+    <Property Name="OrderBy" Type="nvarchar" MaxLength="10" />
+    <Property Name="CreateBy" Type="int" Nullable="false" />
+    <Property Name="CreateDate" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleName" Type="nvarchar" MaxLength="25" Nullable="false" />
+    <Property Name="RoleDescription" Type="nvarchar" MaxLength="150" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="ValidFrom" Type="date" Nullable="false" />
+    <Property Name="CreatedDate" Type="date" Nullable="false" />
+    <Property Name="CreatedTime" Type="time" Precision="7" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserRole">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="RoleID" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="ValidFrom" Type="date" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="date" Nullable="false" />
+    <Property Name="CreatedTime" Type="time" Precision="7" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Usr">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="EmpID" Type="int" Nullable="false" />
+    <Property Name="Role" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="UserKey" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="EntryKey" Type="nvarchar" MaxLength="3" Nullable="false" />
+    <Property Name="Telephone" Type="nvarchar" MaxLength="11" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" Nullable="false" />
+    <Property Name="ValidFrom" Type="date" Nullable="false" />
+    <Property Name="CreatedDate" Type="date" Nullable="false" />
+    <Property Name="CreatedTime" Type="time" Precision="6" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Meno.Emp.vUsrEmp' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vUsrEmp">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="FullName" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Meno.usr.vURoles' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vURoles">
+    <Key>
+      <PropertyRef Name="RoleID" />
+      <PropertyRef Name="RoleName" />
+      <PropertyRef Name="UserName" />
+      <PropertyRef Name="UsrRolID" />
+      <PropertyRef Name="UsrID" />
+      <PropertyRef Name="UserID" />
+      <PropertyRef Name="EntryKey" />
+      <PropertyRef Name="FullName" />
+    </Key>
+    <Property Name="RoleID" Type="int" Nullable="false" />
+    <Property Name="RoleName" Type="nvarchar" MaxLength="25" Nullable="false" />
+    <Property Name="RoleDescription" Type="nvarchar" MaxLength="150" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="UsrRolID" Type="int" Nullable="false" />
+    <Property Name="UsrID" Type="int" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="EntryKey" Type="nvarchar" MaxLength="3" Nullable="false" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="MenoModelStoreContainer">
+    <EntitySet Name="Depts" EntityType="Self.Depts" Schema="Emp" store:Type="Tables" />
+    <EntitySet Name="EmpHis" EntityType="Self.EmpHis" Schema="Emp" store:Type="Tables" />
+    <EntitySet Name="EmpInfo" EntityType="Self.EmpInfo" Schema="Emp" store:Type="Tables" />
+    <EntitySet Name="EmpShft" EntityType="Self.EmpShft" Schema="Emp" store:Type="Tables" />
+    <EntitySet Name="Jop" EntityType="Self.Jop" Schema="Emp" store:Type="Tables" />
+    <EntitySet Name="Loan" EntityType="Self.Loan" Schema="Emp" store:Type="Tables" />
+    <EntitySet Name="Mors" EntityType="Self.Mors" Schema="Emp" store:Type="Tables" />
+    <EntitySet Name="Punsh" EntityType="Self.Punsh" Schema="Emp" store:Type="Tables" />
+    <EntitySet Name="Sal" EntityType="Self.Sal" Schema="Emp" store:Type="Tables" />
+    <EntitySet Name="Vac" EntityType="Self.Vac" Schema="Emp" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="usr" store:Type="Tables" />
+    <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="usr" store:Type="Tables" />
+    <EntitySet Name="Usr" EntityType="Self.Usr" Schema="usr" store:Type="Tables" />
+    <EntitySet Name="vUsrEmp" EntityType="Self.vUsrEmp" store:Type="Views" store:Schema="Emp">
+      <DefiningQuery>SELECT 
+    [vUsrEmp].[ID] AS [ID], 
+    [vUsrEmp].[FullName] AS [FullName]
+    FROM [Emp].[vUsrEmp] AS [vUsrEmp]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vURoles" EntityType="Self.vURoles" store:Type="Views" store:Schema="usr">
+      <DefiningQuery>SELECT 
+    [vURoles].[RoleID] AS [RoleID], 
+    [vURoles].[RoleName] AS [RoleName], 
+    [vURoles].[RoleDescription] AS [RoleDescription], 
+    [vURoles].[UserName] AS [UserName], 
+    [vURoles].[UsrRolID] AS [UsrRolID], 
+    [vURoles].[UsrID] AS [UsrID], 
+    [vURoles].[UserID] AS [UserID], 
+    [vURoles].[EntryKey] AS [EntryKey], 
+    [vURoles].[FullName] AS [FullName]
+    FROM [usr].[vURoles] AS [vURoles]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>
