@@ -90,8 +90,8 @@ namespace Doctors.Controllers
         {
 
             ShiftList shft = new ShiftList();
-            var isactive = db.ShiftLists.Where(x => x.IsActive == true).Single();
-            isactive.IsActive = false;
+            var isactive = db.ShiftLists.Where(x => x.IsActive == true).ToList();
+            isactive.ForEach(x => x.IsActive = false);
             db.SaveChanges();
             
             shft.ShftDate = DateTime.Now;
@@ -101,6 +101,14 @@ namespace Doctors.Controllers
             db.SaveChanges();
             return Json(new { Success = true }, JsonRequestBehavior.AllowGet);
         }
+        // function get last shift number 
+        public JsonResult Tcount()
+        {
+
+            var query = db.ShiftLists.Count();
+            return Json(query, JsonRequestBehavior.AllowGet);
+        }
+
         //public JsonResult Konafa()
         //{
         //    DB db = new DB();

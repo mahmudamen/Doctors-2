@@ -11,8 +11,8 @@
     }
     function Gent() {
         $.ajax({
-            url: '/Erp/Pro/Tcount', cache: false, type: "POST", success: function (data) {
-                $('#tcount').text(parseFloat(data).toFixed(0))
+            url: '/Doctors/Admin/Tcount', cache: false, type: "POST", success: function (data) {
+                $('#shiftid').val(parseFloat(data).toFixed(0))
             }
         });
     }
@@ -224,59 +224,28 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="MdAdPatAnz">
+<div class="modal fade" id="mdshift">
     <div class="modal-med">
         <div class="modal-content">
             <div class="modal-header">
-                <label class="modal-title">تحاليل </label>
+                <label class="modal-title">شفت العمل اليومي </label>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="form-inline ls_form">
                         <div class="form-group" style="margin:0px 5px 0px 5px">
-                            <label>اسم المريض</label>
-                            <input type="text" id="azpatientname" class="form-control text-center" style="width:250px" readonly="readonly" />
-                            <input type="hidden" id="azpatid" />
+                            <label>رقم الشفت </label>
+                            <input type="text" id="shiftid" class="form-control text-center"  style="width:250px" readonly="readonly" />
                         </div>
                         <div class="form-group" style="margin:0px 5px 0px 5px">
-                            <label>التحليل</label>
-                            <input type="text" id="anz" class="form-control text-center" style="width:250px" />
-                            <input type="hidden" id="anzz" class="form-control text-center" style="width:250px" />
-                            <input type="hidden" id="acc" />
-                            <input type="hidden" id="code" />
-                        </div>
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="form-inline ls_form">
-                        <div class="form-group" style="margin:0px 5px 0px 5px">
-                            <label>الدفع</label>
-                            <select id="paytype" class="form-control" style="max-width:100px">
-                                <option value=true>كاش</option>
-                                <option value=true>تعاقد</option>
-                            </select>
-                        </div>
-                        <div class="form-group" style="margin:0px 5px 0px 5px">
-                            <label>المبلغ</label>
-                            <input type="text" id="aztotval" class="form-control text-center" style="width:80px" readonly />
-                            <input type="hidden" id="adval" />
-                        </div>
-                    </div>
-                </div>
-                <br />
-                <div class="row" id="cstr" style="display:none">
-                    <div class="form-inline ls_form">
-                        <div class="form-group" style="margin:0px 5px 0px 5px">
-                            <label>اسم الجهة</label>
-                            <input type="text" id="vendorid" class="form-control text-center" style="width:200px" />
-                            <input type="hidden" id="ivendorid" class="form-control text-center" style="width:200px" />
+                            <label>تاريخ الشفت</label>
+                            <input type="datetime" id="shiftdate"  class="form-control text-center" style="width:250px" />
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="javascript:;" id="adanz" type="button" class="btn btn-sm btn-success">اضافة</a>
+                <a href="javascript:;" id="adshift" type="button" class="btn btn-sm btn-success">اضافة</a>
                 <a type="button" href="javascript:;" class="btn btn-sm btn-danger" data-dismiss="modal">إغلاق</a>
             </div>
         </div>
@@ -937,6 +906,14 @@
         $('#btnewpat').click(function () {
             $('#MdAdPat').modal({ backdrop: false });
             $('#visitdate').val(getdate);
+        });
+        // Open model form nav shift modal
+        $('#navshift').click(function () {
+            Gent();
+            $('#mdshift').modal({ backdrop: false });
+            $('#shiftdate').val(getdate);
+
+            
         });
 
         // button add new patient 
