@@ -960,9 +960,26 @@
                 bProcessing: false, sAjaxSource: '/Doctors/Admin/WaitTbl', "order": [[0, "desc"]], bFilter: true, bInfo: false, lengthChange: false, scrollY: '250px', scrollCollapse: true, bPaginate: true,
                 columns: [
              { "data": "ID", "visible": false },
-             { "data": "PatientName", "width": "20%" },
+             { "data": "PatientName", "width": "10%" },
              { "data": "ServName", "width": "1%" },
-             { "data": "CreateDate", "width": "1%" },
+             {
+                 "data": "CreateDate", "width": "5%", "render": function (data) {
+                     if (data == null) {
+                         return "--"
+                     }
+                     else {
+
+                         var date = new Date(parseInt(data.substr(6))).getDate();
+                         var datem = new Date(parseInt(data.substr(6))).getMonth() + 1;
+                         var datey = new Date(parseInt(data.substr(6))).getFullYear();
+                         var hour = new Date(parseInt(data.substr(6))).getHours();
+                         var minute = new Date(parseInt(data.substr(6))).getMinutes();
+                         var secend = new Date(parseInt(data.substr(6))).getSeconds();
+                         var fl = datey + "-" + datem + "-" + date + " " + hour + ":" + minute + ":" + secend ;
+                         return fl
+                     }
+                 }
+             },
              { "data": "RemainingAmount", "width": "1%" }
                 ]
             });
