@@ -56,7 +56,7 @@ namespace Doctors.Controllers
         {
             DB db = new DB();
             var query = db.Patients.Where(x => x.IsActive == true)
-            .Select(p => new { p.ID, p.PatientName, p.ServName ,p.CreateDate ,p.RemainingAmount});
+            .Select(p => new { p.ID, p.PatientName, p.ServName ,p.CreateDate ,p.Sorted,p.RemainingAmount});
             return Json(new { aaData = query }, JsonRequestBehavior.AllowGet);
         }
         public JsonResult autoserv(string Prefix)
@@ -84,6 +84,22 @@ namespace Doctors.Controllers
             db.Patients.Add(m);
             db.SaveChanges();
             return Json(new { Success = true, Message = "تمت الإضافة بنجاح" }, JsonRequestBehavior.AllowGet);
+        }
+        // add new shift work 
+        public JsonResult adshift()
+        {
+
+            ShiftList shft = new ShiftList();
+            var isactive = db.ShiftLists.Where(x => x.IsActive == true).Single();
+            isactive.IsActive = false;
+            db.SaveChanges();
+            
+            shft.ShftDate = DateTime.Now;
+            shft.IsActive = true;
+
+            db.ShiftLists.Add(shft);
+            db.SaveChanges();
+            return Json(new { Success = true }, JsonRequestBehavior.AllowGet);
         }
         //public JsonResult Konafa()
         //{
