@@ -14,6 +14,7 @@ function printdiv(printpage) {
     
     document.body.innerHTML = oldstr; return !1
 }
+
 function printDiv(divID) {
     //Get the HTML of div
     var divElements = document.getElementById(divID).innerHTML;

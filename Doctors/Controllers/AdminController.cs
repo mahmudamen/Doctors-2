@@ -66,19 +66,21 @@ namespace Doctors.Controllers
             return Json(CityName, JsonRequestBehavior.AllowGet);
         }
         // add new patient
-        public JsonResult adpat(string patname, string mobile,string phone,int serv ,string servname,decimal paidamount,DateTime? birthdate,bool gender,string adress, int cby, string cbyn)
+        public JsonResult adpat(string patname, string mobile,string phone,int servID, string servname,decimal paidamount,DateTime? visitdate, bool gender,string adress, int cby, string cbyn)
         {
             Patient m = new Patient();
             m.PatientName = patname;
             m.Mobile = mobile;
             m.Phone = phone;
             m.Address = adress;
-            m.Serv = serv;
+            m.Serv = servID;
             m.PaidAmount = paidamount;
             m.ServName = servname;
             m.Gender = gender;
             m.CreateBy = cby;
-            m.CreateDate = DateTime.Now;
+            m.IsActive = true;
+            m.PatienState = 1;
+            m.CreateDate = visitdate;
             db.Patients.Add(m);
             db.SaveChanges();
             return Json(new { Success = true, Message = "تمت الإضافة بنجاح" }, JsonRequestBehavior.AllowGet);

@@ -129,7 +129,7 @@
                     <div class="form-inline ls_form">
                         <div class="form-group" style="margin:0px 5px 0px 5px">
                             <label>تاريخ الزيارة</label>
-                            <input type="date" id="birthdate" class="form-control text-center" style="width:160px" />
+                            <input type="datetime" id="visitdate" class="form-control text-center" style="width:160px" />
                         </div>
                         <div class="form-group" style="margin:0px 5px 0px 5px">
                             <label>النوع</label>
@@ -145,11 +145,11 @@
                     <div class="form-inline ls_form">
                         <div class="form-group" style="margin:0px 5px 0px 5px">
                             <label>موبايل</label>
-                            <input type="text" id="Nationalid" class="form-control text-center" style="width:200px" />
+                            <input type="text" id="mob" class="form-control text-center" style="width:200px" />
                         </div>
                         <div class="form-group" style="margin:0px 5px 0px 5px">
                             <label>تليفون</label>
-                            <input type="text" id="mob" class="form-control text-center" style="width:200px" />
+                            <input type="text" id="phone" class="form-control text-center" style="width:200px" />
                         </div>
                     </div>
                 </div>
@@ -914,16 +914,33 @@
 </div>
 <link href="~/Content/select2.css" rel="stylesheet" />
 @section scripts{
-
     <script src="~/Scripts/jquery-ui.min.js"></script>
     <script src="~/Scripts/apps.min.js"></script>
     <script src="~/Scripts/dts.js"></script>
     <script src="~/Scripts/select2.full.min.js"></script>
-
     <script>
             $(document).ready(function () {
                 App.init();
+                // date function 
+
             });
+            function getdate() {
+                var date = new Date(),
+                  year = date.getFullYear(),
+                  month = (date.getMonth() + 1).toString(),
+                  formatedMonth = (month.length === 1) ? ("0" + month) : month,
+                  day = date.getDate().toString(),
+                  formatedDay = (day.length === 1) ? ("0" + day) : day,
+                  hour = date.getHours().toString(),
+                  formatedHour = (hour.length === 1) ? ("0" + hour) : hour,
+                  minute = date.getMinutes().toString(),
+                  formatedMinute = (minute.length === 1) ? ("0" + minute) : minute,
+                  second = date.getSeconds().toString(),
+                  formatedSecond = (second.length === 1) ? ("0" + second) : second;
+                return formatedDay + "-" + formatedMonth + "-" + year + " " + formatedHour + ':' + formatedMinute + ':' + formatedSecond;
+            };
+
+
         // select2 function
             $(".js-example-basic-single").select2({
                 dir: "rtl", language: "ar", selectOnClose: true, width: '30%'
@@ -1013,7 +1030,7 @@
                 return false;
             },
             select: function (event, ui) {
-                $('#ID').val(ui.item.value);
+                $('#servID').val(ui.item.value);
                 $('#serv').val(ui.item.label);
                 $('#PaidAmount').val(ui.item.amount);
                 return false;
@@ -1039,6 +1056,7 @@
         // open add modal
         $('#btnewpat').click(function () {
             $('#MdAdPat').modal({ backdrop: false });
+            $('#visitdate').val(getdate);
         });
 
         // button add new patient 
@@ -1054,17 +1072,20 @@
                 alert('يجب تحديد نوع الزيارة');
             } else {
                 $.ajax({
-                    url: "@(Url.Action("adpat", "Rec"))",
+                    url: "@(Url.Action("adpat", "Admin"))",
                     type: "GET",
                 contentType: "application/json; charset=utf-8",
                 data: {
                     patname: $('#spatientname').val(),
+                    servID: $('#servID').val(),
+                    servname:$('#serv').val(),
                     mob: $('#mob').val(),
+                    phone:$('#phone').val(),
                     adress: $('#adress').val(),
                     cby: $('#cby').val(),
-                    birthdate: $('#birthdate').val(),
+                    paidamount: $('#PaidAmount').val(),
+                    visitdate: $('#visitdate').val(),
                     gender: $('#gender').val(),
-                    Nationalid: $('#Nationalid').val(),
                     cbyn: $('#cbyn').val()
                 },
                 dataType: "json",
@@ -1076,7 +1097,7 @@
                         table.$('tr.selected').removeClass('selected');
                         table.clear();
                         table.draw();
-                        table.ajax.url('/Haf/Rec/tbpatdef').load();
+                        table.ajax.url('/Doctors/Admin/PatTbl').load();
 
                     } else {
                         alert(data.Message)
