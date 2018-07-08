@@ -509,7 +509,7 @@
     <Content Include="Views\User\_ViewStart.cshtml" />
     <Content Include="Views\Shared\AppLayout.cshtml" />
     <Content Include="Views\Shared\Acc.cshtml" />
-    <Content Include="Views\Shared\Cash.cshtml" />
+    <Content Include="Views\Shared\_Doctor.cshtml" />
     <Content Include="Views\Shared\Rec.cshtml" />
     <Content Include="Views\Shared\InvMan.cshtml" />
     <Content Include="Views\Admin\_ViewStart.cshtml" />

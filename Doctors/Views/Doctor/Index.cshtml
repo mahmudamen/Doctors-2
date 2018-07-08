@@ -1,25 +1,25 @@
-﻿@{ViewBag.Title = " الطبيب";}
+﻿@{ViewBag.Title = " شاشة الطبيب";}
 <script language="javascript" type="text/javascript">
-    function Pcount() {
+    function shiftcount() {
         $.ajax({
-            url: '/Erp/Pro/Pcount', cache: false, type: "POST", success: function (data) {
-                $('#zpcount').text(parseFloat(data).toFixed(0))
+            url: '/Doctors/Doctor/shiftcount', cache: false, type: "POST", success: function (data) {
+                $('#shftid').val(parseFloat(data).toFixed(0))
             }
         }).then(function () {
-            setTimeout(Pcount, 900000);
+            setTimeout(shiftcount, 900000);
         });;
     }
     function Gent() {
         $.ajax({
-            url: '/Erp/Pro/Tcount', cache: false, type: "POST", success: function (data) {
-                $('#tcount').text(parseFloat(data).toFixed(0))
+            url: '/Doctors/Doctor/Tcount', cache: false, type: "POST", success: function (data) {
+                $('#shiftid').val(parseFloat(data).toFixed(0))
             }
         });
     }
-    function fcount() {
+    function shiftdate() {
         $.ajax({
-            url: '/Erp/Pro/fcount', cache: false, type: "POST", success: function (data) {
-                $('#fcount').text(parseFloat(data).toFixed(0))
+            url: '/Doctors/Doctor/shiftdate', cache: false, type: "POST", success: function (data) {
+                $('#shftdate').val(data)
             }
         });
     }
@@ -40,6 +40,7 @@
 </script>
 <link href="~/Content/bootstrap-rtl.min.css" rel="stylesheet" />
 <link href="~/Content/style.min.css" rel="stylesheet" />
+<link href="~/Content/gritter/css/jquery.gritter.css" rel="stylesheet" />
 <link href="~/Content/style-responsive.min.css" rel="stylesheet" />
 <link href="~/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
 <link href="~/Content/animate.css" rel="stylesheet" media="screen">
@@ -116,7 +117,7 @@
                         <div class="form-group" style="margin:0px 5px 0px 5px">
                             <label>نوع الزيارة</label>
                             <input type="text" id="serv" class="form-control text-center" style="width:150px" />
-                            <input type="hidden" id="servID"  />
+                            <input type="hidden" id="servID" />
                         </div>
                         <div class="form-group" style="margin:0px 5px 0px 5px">
                             <label>تكلفة</label>
@@ -129,7 +130,7 @@
                     <div class="form-inline ls_form">
                         <div class="form-group" style="margin:0px 5px 0px 5px">
                             <label>تاريخ الزيارة</label>
-                            <input type="date" id="birthdate" class="form-control text-center" style="width:160px" />
+                            <input type="datetime" id="visitdate" class="form-control text-center" style="width:160px" />
                         </div>
                         <div class="form-group" style="margin:0px 5px 0px 5px">
                             <label>النوع</label>
@@ -145,11 +146,23 @@
                     <div class="form-inline ls_form">
                         <div class="form-group" style="margin:0px 5px 0px 5px">
                             <label>موبايل</label>
-                            <input type="text" id="Nationalid" class="form-control text-center" style="width:200px" />
+                            <input type="text" id="mob" class="form-control text-center" style="width:200px" />
                         </div>
                         <div class="form-group" style="margin:0px 5px 0px 5px">
                             <label>تليفون</label>
-                            <input type="text" id="mob" class="form-control text-center" style="width:200px" />
+                            <input type="text" id="phone" class="form-control text-center" style="width:200px" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-inline ls_form">
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>رقم الشفت</label>
+                            <input type="text" id="shftid" class="form-control text-center" style="width:200px" />
+                        </div>
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>التاريخ والوقت</label>
+                            <input type="datetime" id="shftdate" class="form-control text-center" style="width:200px" />
                         </div>
                     </div>
                 </div>
@@ -224,59 +237,28 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="MdAdPatAnz">
+<div class="modal fade" id="mdshift">
     <div class="modal-med">
         <div class="modal-content">
             <div class="modal-header">
-                <label class="modal-title">تحاليل </label>
+                <label class="modal-title">شفت العمل اليومي </label>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="form-inline ls_form">
                         <div class="form-group" style="margin:0px 5px 0px 5px">
-                            <label>اسم المريض</label>
-                            <input type="text" id="azpatientname" class="form-control text-center" style="width:250px" readonly="readonly" />
-                            <input type="hidden" id="azpatid" />
+                            <label>رقم الشفت </label>
+                            <input type="text" id="shiftid" class="form-control text-center" style="width:250px" readonly="readonly" />
                         </div>
                         <div class="form-group" style="margin:0px 5px 0px 5px">
-                            <label>التحليل</label>
-                            <input type="text" id="anz" class="form-control text-center" style="width:250px" />
-                            <input type="hidden" id="anzz" class="form-control text-center" style="width:250px" />
-                            <input type="hidden" id="acc" />
-                            <input type="hidden" id="code" />
-                        </div>
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="form-inline ls_form">
-                        <div class="form-group" style="margin:0px 5px 0px 5px">
-                            <label>الدفع</label>
-                            <select id="paytype" class="form-control" style="max-width:100px">
-                                <option value=true>كاش</option>
-                                <option value=true>تعاقد</option>
-                            </select>
-                        </div>
-                        <div class="form-group" style="margin:0px 5px 0px 5px">
-                            <label>المبلغ</label>
-                            <input type="text" id="aztotval" class="form-control text-center" style="width:80px" readonly />
-                            <input type="hidden" id="adval" />
-                        </div>
-                    </div>
-                </div>
-                <br />
-                <div class="row" id="cstr" style="display:none">
-                    <div class="form-inline ls_form">
-                        <div class="form-group" style="margin:0px 5px 0px 5px">
-                            <label>اسم الجهة</label>
-                            <input type="text" id="vendorid" class="form-control text-center" style="width:200px" />
-                            <input type="hidden" id="ivendorid" class="form-control text-center" style="width:200px" />
+                            <label>تاريخ الشفت</label>
+                            <input type="datetime" id="shiftdate" class="form-control text-center" style="width:250px" />
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="javascript:;" id="adanz" type="button" class="btn btn-sm btn-success">اضافة</a>
+                <a href="javascript:;" id="adshift" type="button" class="btn btn-sm btn-success">اضافة</a>
                 <a type="button" href="javascript:;" class="btn btn-sm btn-danger" data-dismiss="modal">إغلاق</a>
             </div>
         </div>
@@ -384,14 +366,14 @@
                     <div class="form-inline ls_form">
                         <div class="form-inline" style="margin:0px 5px 0px 5px">
                             <label>الطبيب</label>
-                         @*   @Html.DropDownList("doctray", (SelectList)ViewBag.doctray, "  -----اختر من القائمة-----  ", new { @class = "js-example-basic-single form-control", @style = "width:100px", id = "doctray" })*@
+                            @*   @Html.DropDownList("doctray", (SelectList)ViewBag.doctray, "  -----اختر من القائمة-----  ", new { @class = "js-example-basic-single form-control", @style = "width:100px", id = "doctray" })*@
                             <label style="margin:0px 5px 0px 5px">مبلغ</label>
                             <input type="number" id="DoctRayVal" class="form-control text-center" style="width:100px" />
                         </div>
                         <br />
                         <div class="form-inline" style="margin:0px 5px 0px 5px">
                             <label>الفنى</label>
-                       @*     @Html.DropDownList("tech", (SelectList)ViewBag.tech, "  -----اختر من القائمة-----  ", new { @class = "js-example-basic-single form-control", @style = "width:100px", id = "tech" })*@
+                            @*     @Html.DropDownList("tech", (SelectList)ViewBag.tech, "  -----اختر من القائمة-----  ", new { @class = "js-example-basic-single form-control", @style = "width:100px", id = "tech" })*@
 
                             <label style="margin:0px 5px 0px 5px">مبلغ</label>
                             <input type="number" id="TechRayVal" class="form-control text-center" style="width:100px" />
@@ -591,6 +573,33 @@
 </div>
 <!-- begin col-4 -->
 <br />
+<div class="row">
+    <div class="col-md-2">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title bg-blue-darker">
+                <a href="javascript:void(0);" id="add-maxx" class="panel-reload" style="color:#fff"><i class="glyphicon glyphicon-refresh"></i></a>
+                <span> الكاش</span>
+            </div>
+            <div class="ibox-content">
+                <h3 class="no-margins text-center" id="pcount"></h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title bg-green">
+                <a href="javascript:void(0);" class="panel-reload" style="color:#fff" onclick="Gent()"><i class="glyphicon glyphicon-refresh"></i></a>
+                <span> عدد المرضي</span>
+            </div>
+            <div class="ibox-content">
+                <h3 class="no-margins text-center" id="tcount"></h3>
+            </div>
+        </div>
+    </div>
+
+</div>
+<hr />
+<br />
 <div id="content" class="content">
     <div class="row">
         <div class="col-md-6">
@@ -637,10 +646,11 @@
                     </table>
                 </div>
             </div>
+
         </div>
         <div class="col-md-6">
             <div id="b-panal" class="panel panel-warning" style="margin-bottom:5px" data-sortable-id="index-3">
-                <div class="panel-heading">
+                <div class="panel-heading" style="height: 50px;">
                     <label class="panel-title" style="font-size:13px;">  قائمة الانتظار </label>
                     <div class="btn-group m-r-5 pull-left">
                         <button class="btn-group-sm btn-icon btn-square btn-info pull-left" title="تبديل " id="btwaitexpand"><i class="fa fa-expand"></i></button>
@@ -648,13 +658,14 @@
                         <button class="btn-group-sm btn-icon btn-square btn-warning pull-left" title="رد المبلغ للمريض " id="refund"><i class="fa fa-eraser"></i> </button>
                     </div>
                 </div>
-                <div class="panel-body" id="panelwaitlist" style="max-height:400px;  display:none; min-height:200px; padding:10px">
+                <div class="panel-body" id="panelwaitlist" style="max-height:400px;   min-height:200px; padding:10px">
                     <table id="tbwait" class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
                         <thead>
                             <tr>
                                 <th>رقم الملف</th>
                                 <th class="text-center"> المريض</th>
                                 <th>خدمة</th>
+                                <th>وقت الحضور</th>
                                 <th>ترتيب</th>
                                 <th>باقي</th>
                             </tr>
@@ -666,13 +677,52 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="i-panal" class="panel panel-primary" style="margin-bottom:5px" data-sortable-id="index-2">
+                <div class="panel-heading" style="height:50px">
+                    <label class="panel-title" style="font-size:13px;"> حالات الاشعة   </label>
+                    <div class="btn-group m-r-5 pull-left">
+                        <button class="btn-group-sm btn-icon btn-square btn-info pull-left" title="تبديل " id="expray"><i class="fa fa-expand"></i></button>
+                        <button class="btn-group-sm btn-icon btn-square btn-success pull-left" title="تحديث البيانات " id="refreshray"><i class="fa fa-repeat"></i></button>
+                        <button class="btn-group-sm btn-icon btn-square btn-warning pull-left" title="رد المبلغ للمريض " id="cnla"><i class="fa fa-eraser"></i></button>
+                    </div>
+                </div>
+                <div class="panel-body" id="pnlray" style="max-height:300px; display:none; min-height:200px; padding:10px">
+                    <table id="tbray" class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th class="text-center">مريض</th>
+                                <th class="text-center">الاشعة</th>
+                                <th class="text-center">مبلغ </th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th class="text-center">الإجمالي</th>
+                                <th></th>
+                                <th class="text-center"></th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
             <div id="c-panal" class="panel panel-danger" style="margin-bottom:5px" data-sortable-id="ui-index-2">
-                <div class="panel-heading">
+                <div class="panel-heading" style="height: 50px;">
 
                     <label class="panel-title" style="font-size:13px;"> سجل الحالات التحاليل </label>
                     <div class="btn-group m-r-5 pull-left">
@@ -710,203 +760,15 @@
                     </table>
                 </div>
             </div>
-            <div id="i-panal" class="panel panel-primary" style="margin-bottom:5px" data-sortable-id="index-2">
-                <div class="panel-heading">
-                    <label class="panel-title" style="font-size:13px;"> حالات الاشعة   </label>
-                    <div class="btn-group m-r-5 pull-left">
-                        <button class="btn-group-sm btn-icon btn-square btn-info pull-left" title="تبديل " id="expray"><i class="fa fa-expand"></i></button>
-                        <button class="btn-group-sm btn-icon btn-square btn-success pull-left" title="تحديث البيانات " id="refreshray"><i class="fa fa-repeat"></i></button>
-                        <button class="btn-group-sm btn-icon btn-square btn-warning pull-left" title="رد المبلغ للمريض " id="cnla"><i class="fa fa-eraser"></i></button>
-                    </div>
-                </div>
-                <div class="panel-body" id="pnlray" style="max-height:300px; display:none; min-height:200px; padding:10px">
-                    <table id="tbray" class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th class="text-center">مريض</th>
-                                <th class="text-center">الاشعة</th>
-                                <th class="text-center">مبلغ </th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <th></th>
-                                <th class="text-center">الإجمالي</th>
-                                <th></th>
-                                <th class="text-center"></th>
-                            </tr>
-                        </tfoot>
-                        <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div id="n-panal" class="panel panel-success" style="margin-bottom:5px" data-sortable-id="ui-index-2">
-                <div class="panel-heading">
-                    <label class="panel-title" style="font-size:13px;"> حالات الداخلى </label>
-                    <div class="btn-group m-r-5 pull-left">
-                        <button class="btn-group-sm btn-icon btn-square btn-info pull-left" title="تبديل " id="expin"><i class="fa fa-expand"></i></button>
-                        <button class="btn-group-sm btn-icon btn-square btn-success pull-left" title="تحديث البيانات " id="refreshin"><i class="fa fa-repeat"></i></button>
-
-                    </div>
-                </div>
-                <div class="panel-body" id="pnlin" style="max-height:300px; display:none; min-height:200px; padding:10px">
-                    <table id="tbPatIn" class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th class="text-center">مريض</th>
-                                <th class="text-center">عملية</th>
-                                <th class="text-center">مبلغ </th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <th></th>
-                                <th class="text-center">الإجمالي</th>
-                                <th></th>
-                                <th class="text-center"></th>
-                            </tr>
-                        </tfoot>
-                        <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div id="m-panal" class="panel panel-danger" style="margin-bottom:5px" data-sortable-id="ui-index-2">
-                <div class="panel-heading">
-                    <label class="panel-title" style="font-size:13px;"> سجل العناية المركزة </label>
-                    <div class="btn-group m-r-5 pull-left">
-                        <button class="btn-group-sm btn-icon btn-square btn-info pull-left" title="تبديل " id="expcary"><i class="fa fa-expand"></i></button>
-                        <button class="btn-group-sm btn-icon btn-square btn-success pull-left" title="تحديث البيانات " id="refreshcare"><i class="fa fa-repeat"></i></button>
-
-                    </div>
-                </div>
-                <div class="panel-body" id="pnlcare" style="max-height:300px; display:none; min-height:200px; padding:10px">
-                    <table id="tbPatCare" class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th class="text-center">مريض</th>
-                                <th class="text-center">غرفة</th>
-                                <th class="text-center">مبلغ </th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <th></th>
-                                <th class="text-center">الإجمالي</th>
-                                <th></th>
-                                <th class="text-center"></th>
-                            </tr>
-                        </tfoot>
-                        <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
         </div>
         <!-- end col-4 -->
     </div>
     <div class="row">
         <div class="col-md-6">
-            <div id="er-panal" class="panel panel-warning" style="margin-bottom:5px" data-sortable-id="ui-index-3">
-                <div class="panel-heading">
-                    <label class="panel-title" style="font-size:13px;"> سجل الطوارئ </label>
-                    <div class="btn-group m-r-5 pull-left">
-                        <button class="btn-group-sm btn-icon btn-square btn-info pull-left" title="تبديل " id="exper"><i class="fa fa-expand"></i></button>
-                        <button class="btn-group-sm btn-icon btn-square btn-success pull-left" title="تحديث البيانات " id="refresher"><i class="fa fa-repeat"></i></button>
 
-                    </div>
-                </div>
-                <div class="panel-body" id="pnler" style="max-height:300px; display:none; min-height:200px; padding:10px">
-                    <table id="tbPatEr" class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th class="text-center">مريض</th>
-                                <th class="text-center">خدمة </th>
-                                <th class="text-center">مبلغ </th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <th></th>
-                                <th class="text-center">الإجمالي</th>
-                                <th></th>
-                                <th class="text-center"></th>
-                            </tr>
-                        </tfoot>
-                        <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
         </div>
         <div class="col-md-6">
-            <div id="h-panal" class="panel panel-primary" style="margin-bottom:5px" data-sortable-id="ui-index-3">
-                <div class="panel-heading">
-                    <label class="panel-title" style="font-size:13px;"> سجل الحضانة </label>
-                    <div class="btn-group m-r-5 pull-left">
-                        <button class="btn-group-sm btn-icon btn-square btn-info pull-left" title="تبديل " id="exper"><i class="fa fa-expand"></i></button>
-                        <button class="btn-group-sm btn-icon btn-square btn-success pull-left" title="تحديث البيانات " id="refresher"><i class="fa fa-repeat"></i></button>
 
-                    </div>
-                </div>
-                <div class="panel-body" id="pnler" style="max-height:300px; display:none; min-height:200px; padding:10px">
-                    <table id="tbPatEr" class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th class="text-center">مريض</th>
-                                <th class="text-center">غرفة</th>
-                                <th class="text-center">مبلغ </th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <th></th>
-                                <th class="text-center">الإجمالي</th>
-                                <th></th>
-                                <th class="text-center"></th>
-                            </tr>
-                        </tfoot>
-                        <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
 
         </div>
         <!-- end col-4 -->
@@ -921,29 +783,67 @@
     <script>
             $(document).ready(function () {
                 App.init();
+                // date function
+
             });
+            function getdate() {
+                var date = new Date(),
+                  year = date.getFullYear(),
+                  month = (date.getMonth() + 1).toString(),
+                  formatedMonth = (month.length === 1) ? ("0" + month) : month,
+                  day = date.getDate().toString(),
+                  formatedDay = (day.length === 1) ? ("0" + day) : day,
+                  hour = date.getHours().toString(),
+                  formatedHour = (hour.length === 1) ? ("0" + hour) : hour,
+                  minute = date.getMinutes().toString(),
+                  formatedMinute = (minute.length === 1) ? ("0" + minute) : minute,
+                  second = date.getSeconds().toString(),
+                  formatedSecond = (second.length === 1) ? ("0" + second) : second;
+                return formatedDay + "-" + formatedMonth + "-" + year + " " + formatedHour + ':' + formatedMinute + ':' + formatedSecond;
+            };
+
+
         // select2 function
             $(".js-example-basic-single").select2({
                 dir: "rtl", language: "ar", selectOnClose: true, width: '30%'
             });
             var table = $('#patlist').DataTable({
                 cache: true,
-                bProcessing: false, sAjaxSource: '/Doctors/Admin/PatTbl', "order": [[0, "desc"]], bFilter: true, bInfo: false, lengthChange: false, scrollY: '350px', scrollCollapse: true, bPaginate: true,
+                bProcessing: false, sAjaxSource: '/Doctors/Doctor/PatTbl', "order": [[0, "desc"]], bFilter: true, bInfo: false, lengthChange: false, scrollY: '300px', scrollCollapse: true, bPaginate: true,
                 columns: [
              { "data": "ID", "visible": false },
-             { "data": "PatientName", "width": "20%" },
+             { "data": "PatientName", "width": "2%" },
              { "data": "Serv", "width": "1%" },
              { "data": "PaidAmount" , "width":"1%" }
                          ]
             });
             var table = $('#tbwait').DataTable({
                 cache: true,
-                bProcessing: false, sAjaxSource: '/Doctors/Admin/WaitTbl', "order": [[0, "desc"]], bFilter: true, bInfo: false, lengthChange: false, scrollY: '250px', scrollCollapse: true, bPaginate: true,
+                bProcessing: false, sAjaxSource: '/Doctors/Doctor/WaitTbl', "order": [[0, "desc"]], bFilter: true, bInfo: false, lengthChange: false, scrollY: '250px', scrollCollapse: true, bPaginate: true,
                 columns: [
              { "data": "ID", "visible": false },
-             { "data": "PatientName", "width": "20%" },
+             { "data": "PatientName", "width": "2%" },
              { "data": "ServName", "width": "1%" },
-             { "data": "CreateDate", "width": "1%" }
+             {
+                 "data": "CreateDate", "width": "5%", "render": function (data) {
+                     if (data == null) {
+                         return "--"
+                     }
+                     else {
+
+                         var date = new Date(parseInt(data.substr(6))).getDate();
+                         var datem = new Date(parseInt(data.substr(6))).getMonth() + 1;
+                         var datey = new Date(parseInt(data.substr(6))).getFullYear();
+                         var hour = new Date(parseInt(data.substr(6))).getHours();
+                         var minute = new Date(parseInt(data.substr(6))).getMinutes();
+                         var secend = new Date(parseInt(data.substr(6))).getSeconds();
+                         var fl = datey + "-" + datem + "-" + date + " " + hour + ":" + minute + ":" + secend ;
+                         return fl
+                     }
+                 }
+             },
+             { "data": "Sorted", "width": "1%" },
+             { "data": "RemainingAmount", "width": "1%" }
                 ]
             });
             $('#patogele').click(function () {
@@ -951,37 +851,46 @@
                 var table = $('#patlist').DataTable();
                 table.clear();
                 table.draw();
-                table.ajax.url('/Doctors/Admin/PatTbl').load();
+                table.ajax.url('/Doctors/Doctor/PatTbl').load();
             });
-            
+
             $('#btwaitexpand').click(function () {
                 $('#panelwaitlist').toggle();
                 var table = $('#tbwait').DataTable();
                 table.clear();
                 table.draw();
-                table.ajax.url('/Doctors/Admin/WaitTbl').load();
+                table.ajax.url('/Doctors/Doctor/WaitTbl').load();
             });
-        // refresh table 
+        // refresh table
             $('#refreshz').click(function () {
                 var table = $('#patlist').DataTable();
                 table.clear();
                 table.draw();
-                table.ajax.url('/Doctors/Admin/PatTbl').load();
+                table.ajax.url('/Doctors/Doctor/PatTbl').load();
             });
             $('#refresh').click(function () {
                 var table = $('#tbwait').DataTable();
                 table.clear();
                 table.draw();
-                table.ajax.url('/Doctors/Admin/WaitTbl').load();
+                table.ajax.url('/Doctors/Doctor/WaitTbl').load();
             });
-        // select table 
+        // select table patlist
             $('#patlist tbody').on('click', 'tr', function () {
                 var table = $("#patlist").DataTable();
                 table.$('tr.selected').removeClass('selected');
                 $(this).closest('tr').addClass('selected');
-                var m = table.cell('.selected', 0).data();
+                var m = table.cell('.selected', 1).data();
                 console.log(m);
-               
+
+            });
+        // select table wait list
+            $('#tbwait tbody').on('click', 'tr', function () {
+                var table = $("#tbwait").DataTable();
+                table.$('tr.selected').removeClass('selected');
+                $(this).closest('tr').addClass('selected');
+                var h = table.cell('.selected', 1).data();
+                console.log(h);
+
             });
         // auto complete for serv id
             $('#serv').autocomplete({
@@ -990,7 +899,7 @@
                 appendTo: $('#MdAdPat'),
                 source: function (request, response) {
                     $.ajax({
-                        url: "@(Url.Action("autoserv", "Admin"))",
+                        url: "@(Url.Action("autoserv", "Doctor"))",
                         type: 'GET',
                     cache: false,
                     dataType: 'json',
@@ -1010,7 +919,7 @@
                 return false;
             },
             select: function (event, ui) {
-                $('#ID').val(ui.item.value);
+                $('#servID').val(ui.item.value);
                 $('#serv').val(ui.item.label);
                 $('#PaidAmount').val(ui.item.amount);
                 return false;
@@ -1036,9 +945,50 @@
         // open add modal
         $('#btnewpat').click(function () {
             $('#MdAdPat').modal({ backdrop: false });
+            shiftcount();
+            shiftdate();
+            $('#visitdate').val(getdate);
         });
+        // Open model form nav shift modal
+        $('#navshift').click(function () {
+            Gent();
+            $('#mdshift').modal({ backdrop: false });
+            $('#shiftdate').val(getdate);
+        });
+        // add new shift work modal shift
+        $('#adshift').click(function () {
+            var conf = confirm("سوف يتم انشاء شفت جديد و يتم اغلاق اخر شفت عمل نهائياً  ");
+            if (conf) {
+                $.ajax({
+                    url: "@(Url.Action("adshift", "Doctor"))",
+                    type: "GET",
+                contentType: "application/json; charset=utf-8",
+                data: {
+                    shiftdate: $('#shiftdate').val(),
+                    cbyn: $('#cbyn').val()
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data.Success) {
+                        alert(data.Message)
+                        $("#mdshift").modal("hide");
+                        var table = $("#patlist").DataTable();
+                        table.$('tr.selected').removeClass('selected');
+                        table.clear();
+                        table.draw();
+                        table.ajax.url('/Doctors/Doctor/PatTbl').load();
 
-        // button add new patient 
+                    } else {
+                        alert(data.Message)
+                    }
+                }
+            });
+            } else {
+
+            }
+
+        })
+        // button add new patient
         $('#adnpat').click(function () {
             if ($('#spatientname').val() == ' ') {
                 $('#spatientname').focus();
@@ -1050,18 +1000,22 @@
                 $('#serv').addClass('input-validation-error');
                 alert('يجب تحديد نوع الزيارة');
             } else {
+
                 $.ajax({
-                    url: "@(Url.Action("adpat", "Rec"))",
+                    url: "@(Url.Action("adpat", "Doctor"))",
                     type: "GET",
                 contentType: "application/json; charset=utf-8",
                 data: {
                     patname: $('#spatientname').val(),
+                    servID: $('#servID').val(),
+                    servname:$('#serv').val(),
                     mob: $('#mob').val(),
+                    phone:$('#phone').val(),
                     adress: $('#adress').val(),
                     cby: $('#cby').val(),
-                    birthdate: $('#birthdate').val(),
+                    paidamount: $('#PaidAmount').val(),
+                    visitdate: $('#visitdate').val(),
                     gender: $('#gender').val(),
-                    Nationalid: $('#Nationalid').val(),
                     cbyn: $('#cbyn').val()
                 },
                 dataType: "json",
@@ -1073,7 +1027,7 @@
                         table.$('tr.selected').removeClass('selected');
                         table.clear();
                         table.draw();
-                        table.ajax.url('/Haf/Rec/tbpatdef').load();
+                        table.ajax.url('/Doctors/Doctor/PatTbl').load();
 
                     } else {
                         alert(data.Message)

@@ -16,7 +16,7 @@ namespace Doctors
             bundles.Add(new StyleBundle("~/Content/css").Include(
                                                       "~/Content/bootstrap.css",
                                       "~/Content/bootstrap-rtl.min.css",
-                     "~/Content/dt.css"
+                     "~/Content/dt.css", "~/Content/theme.css" , "~/Content/bootstrap-theme.css"
                       ));
         }
     }
