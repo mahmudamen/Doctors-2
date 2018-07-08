@@ -86,29 +86,37 @@ namespace Doctors.Controllers
             return Json(new { Success = true, Message = "تمت الإضافة بنجاح" }, JsonRequestBehavior.AllowGet);
         }
         // add new shift work 
-        public JsonResult adshift()
+        public JsonResult adshift(DateTime shiftdate , string cbyn)
         {
-
             ShiftList shft = new ShiftList();
             var isactive = db.ShiftLists.Where(x => x.IsActive == true).ToList();
             isactive.ForEach(x => x.IsActive = false);
             db.SaveChanges();
             
-            shft.ShftDate = DateTime.Now;
+            shft.ShftDate = shiftdate;
             shft.IsActive = true;
 
             db.ShiftLists.Add(shft);
             db.SaveChanges();
-            return Json(new { Success = true }, JsonRequestBehavior.AllowGet);
+            return Json(new { Success = true, Message = "تمت الإضافة  شفت بنجاح" }, JsonRequestBehavior.AllowGet);
         }
         // function get last shift number 
         public JsonResult Tcount()
         {
 
-            var query = db.ShiftLists.Count();
+            var query = db.ShiftLists.Count() + 1 ;
             return Json(query, JsonRequestBehavior.AllowGet);
         }
-
+        public JsonResult shiftcount()
+        {
+            var query = db.ShiftLists.Where(x => x.IsActive == true).Single().ID;
+            return Json(query, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult shiftdate()
+        {
+            var query = db.ShiftLists.Where(x => x.IsActive == true).Single().ShftDate;
+            return Json(query, JsonRequestBehavior.AllowGet);
+        }
         //public JsonResult Konafa()
         //{
         //    DB db = new DB();

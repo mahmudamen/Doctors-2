@@ -1,9 +1,9 @@
 ﻿@{ViewBag.Title = " الاستقبال";}
 <script language="javascript" type="text/javascript">
-    function Pcount() {
+    function shiftcount() {
         $.ajax({
-            url: '/Erp/Pro/Pcount', cache: false, type: "POST", success: function (data) {
-                $('#zpcount').text(parseFloat(data).toFixed(0))
+            url: '/Doctors/Admin/shiftcount', cache: false, type: "POST", success: function (data) {
+                $('#shftid').val(parseFloat(data).toFixed(0))
             }
         }).then(function () {
             setTimeout(Pcount, 900000);
@@ -16,10 +16,10 @@
             }
         });
     }
-    function fcount() {
+    function shiftdate() {
         $.ajax({
-            url: '/Erp/Pro/fcount', cache: false, type: "POST", success: function (data) {
-                $('#fcount').text(parseFloat(data).toFixed(0))
+            url: '/Doctors/Admin/shiftdate', cache: false, type: "POST", success: function (data) {
+                $('#shftdate').val(data)
             }
         });
     }
@@ -150,6 +150,18 @@
                         <div class="form-group" style="margin:0px 5px 0px 5px">
                             <label>تليفون</label>
                             <input type="text" id="phone" class="form-control text-center" style="width:200px" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-inline ls_form">
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>رقم الشفت</label>
+                            <input type="text" id="shftid" class="form-control text-center" style="width:200px" />
+                        </div>
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>التاريخ والوقت</label>
+                            <input type="datetime" id="shftdate" class="form-control text-center" style="width:200px" />
                         </div>
                     </div>
                 </div>
@@ -905,6 +917,8 @@
         // open add modal
         $('#btnewpat').click(function () {
             $('#MdAdPat').modal({ backdrop: false });
+            shiftcount();
+            shiftdate();
             $('#visitdate').val(getdate);
         });
         // Open model form nav shift modal
@@ -915,7 +929,39 @@
 
             
         });
+        // add new shift work modal shift 
+        $('#adshift').click(function () {
+            var conf = confirm("سوف يتم انشاء شفت جديد و يتم اغلاق اخر شفت عمل نهائياً  ");
+            if (conf) {
+                $.ajax({
+                    url: "@(Url.Action("adshift", "Admin"))",
+                    type: "GET",
+                contentType: "application/json; charset=utf-8",
+                data: {
+                    shiftdate: $('#shiftdate').val(),
+                    cbyn: $('#cbyn').val()
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data.Success) {
+                        alert(data.Message)
+                        $("#mdshift").modal("hide");
+                        var table = $("#patlist").DataTable();
+                        table.$('tr.selected').removeClass('selected');
+                        table.clear();
+                        table.draw();
+                        table.ajax.url('/Doctors/Admin/PatTbl').load();
 
+                    } else {
+                        alert(data.Message)
+                    }
+                }
+            });
+            } else {
+
+            }
+            
+        })
         // button add new patient 
         $('#adnpat').click(function () {
             if ($('#spatientname').val() == ' ') {
@@ -928,6 +974,7 @@
                 $('#serv').addClass('input-validation-error');
                 alert('يجب تحديد نوع الزيارة');
             } else {
+
                 $.ajax({
                     url: "@(Url.Action("adpat", "Admin"))",
                     type: "GET",
