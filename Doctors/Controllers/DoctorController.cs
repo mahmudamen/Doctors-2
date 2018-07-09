@@ -31,8 +31,8 @@ namespace Doctors.Controllers
         public JsonResult PatTbl()
         {
             DB db = new DB();
-            var query = db.Patients.Where(x => x.IsActive == true)
-            .Select(p => new { p.ID, p.PatientName, p.Serv, p.PaidAmount });
+            var query = db.Patients.Where(x => x.IsActive == true && x.PatienState == 3)
+            .Select(p => new { p.ID, p.PatientName, p.ServName , p.CreateDate });
             return Json(new { aaData = query }, JsonRequestBehavior.AllowGet);
         }
         public JsonResult WaitTbl()
