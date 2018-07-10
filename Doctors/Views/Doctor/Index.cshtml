@@ -719,7 +719,7 @@
             });
             var table = $('#tbwait').DataTable({
                 cache: true,
-                bProcessing: false, sAjaxSource: '/Doctors/Doctor/WaitTbl', "order": [[0, "desc"]], bFilter: true, bInfo: false, lengthChange: false, scrollY: '250px', scrollCollapse: true, bPaginate: true,
+                bProcessing: false, sAjaxSource: '/Doctors/Doctor/WaitTbl', "order": [[4, "asc"]], bFilter: true, bInfo: false, lengthChange: false, scrollY: '250px', scrollCollapse: true, bPaginate: true,
                 columns: [
              { "data": "ID", "visible": false },
              { "data": "PatientName", "width": "2%" },
@@ -730,7 +730,6 @@
                          return "--"
                      }
                      else {
-
                          var date = new Date(parseInt(data.substr(6))).getDate();
                          var datem = new Date(parseInt(data.substr(6))).getMonth() + 1;
                          var datey = new Date(parseInt(data.substr(6))).getFullYear();
@@ -916,6 +915,7 @@
                     paidamount: $('#PaidAmount').val(),
                     visitdate: $('#visitdate').val(),
                     gender: $('#gender').val(),
+
                     cbyn: $('#cbyn').val()
                 },
                 dataType: "json",

@@ -38,7 +38,7 @@ namespace Doctors.Controllers
         public JsonResult WaitTbl()
         {
             DB db = new DB();
-            var query = db.Patients.Where(x => x.IsActive == true)
+            var query = db.Vwaitlists.Where(x => x.shfactive == true)
             .Select(p => new { p.ID, p.PatientName, p.ServName, p.CreateDate, p.Sorted, p.RemainingAmount });
             return Json(new { aaData = query }, JsonRequestBehavior.AllowGet);
         }

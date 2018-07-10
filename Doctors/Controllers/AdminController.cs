@@ -37,7 +37,7 @@ namespace Doctors.Controllers
         public JsonResult WaitTbl()
         {
             DB db = new DB();
-            var query = db.Patients.Where(x => x.IsActive == true)
+            var query = db.Vwaitlists.Where(x => x.shfactive == true)
             .Select(p => new { p.ID, p.PatientName, p.ServName ,p.CreateDate ,p.Sorted,p.RemainingAmount});
             return Json(new { aaData = query }, JsonRequestBehavior.AllowGet);
         }
@@ -48,7 +48,7 @@ namespace Doctors.Controllers
             return Json(CityName, JsonRequestBehavior.AllowGet);
         }
         // add new patient
-        public JsonResult adpat(string patname, string mobile,string phone,int servID, string servname,decimal paidamount,DateTime? visitdate, bool gender,string adress, int cby, string cbyn)
+        public JsonResult adpat(string patname, string mobile,string phone,int servID,int shftid, string servname,decimal paidamount,DateTime? visitdate, bool gender,string adress, int cby, string cbyn)
         {
             Patient m = new Patient();
             m.PatientName = patname;
@@ -63,6 +63,7 @@ namespace Doctors.Controllers
             m.IsActive = true;
             m.PatienState = 1;
             m.CreateDate = visitdate;
+            m.ShiftID = shftid;
             db.Patients.Add(m);
             db.SaveChanges();
             return Json(new { Success = true, Message = "تمت الإضافة بنجاح" }, JsonRequestBehavior.AllowGet);

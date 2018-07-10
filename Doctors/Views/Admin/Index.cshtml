@@ -19,7 +19,7 @@
     function shiftdate() {
         $.ajax({
             url: '/Doctors/Admin/shiftdate', cache: false, type: "POST", success: function (data) {
-                $('#shftdate').val(data)
+                $('#shftdate').val(getdateconv(data))
             }
         });
     }
@@ -153,15 +153,16 @@
                         </div>
                     </div>
                 </div>
+                <hr />
                 <div class="row">
                     <div class="form-inline ls_form">
                         <div class="form-group" style="margin:0px 5px 0px 5px">
                             <label>رقم الشفت</label>
-                            <input type="text" id="shftid" class="form-control text-center" style="width:80px" />
+                            <input type="text" id="shftid" class="form-control text-center" readonly="readonly" style="width:80px" />
                         </div>
                         <div class="form-group" style="margin:0px 5px 0px 5px">
                             <label>التاريخ والوقت</label>
-                            <input type="datetime" id="shftdate" class="form-control text-center" style="width:200px" />
+                            <input type="datetime" id="shftdate" class="form-control text-center" readonly="readonly" style="width:200px" />
                         </div>
                     </div>
                 </div>
@@ -677,7 +678,21 @@
                 return formatedDay + "-" + formatedMonth + "-" + year + " " + formatedHour + ':' + formatedMinute + ':' + formatedSecond;
             };
 
-
+            function getdateconv(date) {
+                  date = new Date(),
+                  year = date.getFullYear(),
+                  month = (date.getMonth() + 1).toString(),
+                  formatedMonth = (month.length === 1) ? ("0" + month) : month,
+                  day = date.getDate().toString(),
+                  formatedDay = (day.length === 1) ? ("0" + day) : day,
+                  hour = date.getHours().toString(),
+                  formatedHour = (hour.length === 1) ? ("0" + hour) : hour,
+                  minute = date.getMinutes().toString(),
+                  formatedMinute = (minute.length === 1) ? ("0" + minute) : minute,
+                  second = date.getSeconds().toString(),
+                  formatedSecond = (second.length === 1) ? ("0" + second) : second;
+                return formatedDay + "-" + formatedMonth + "-" + year + " " + formatedHour + ':' + formatedMinute + ':' + formatedSecond;
+            };
         // select2 function
             $(".js-example-basic-single").select2({
                 dir: "rtl", language: "ar", selectOnClose: true, width: '30%'
@@ -692,7 +707,7 @@
              { "data": "PaidAmount", "width": "1%" },
              {
                "data": null, "sClass": "dt-center", "width": "1%", "orderable": false,
-               "defaultContent": "<button  class='xbutton small btn-danger'id='post'><i class='fa fa-step-backward'></button>"
+               "defaultContent": "<button  class='sendwait small btn-danger'id='post'><i class='fa fa-step-backward'></button>"
              }
                          ]
             });
@@ -701,6 +716,7 @@
                 bProcessing: false, sAjaxSource: '/Doctors/Admin/WaitTbl', "order": [[0, "desc"]], bFilter: true, bInfo: false, lengthChange: false, scrollY: '250px', scrollCollapse: true, bPaginate: true,
                 columns: [
              { "data": "ID", "visible": false },
+             { "data": "ShiftID", "visible": false },
              { "data": "PatientName", "width": "2%" },
              { "data": "ServName", "width": "1%" },
              {
@@ -709,7 +725,6 @@
                          return "--"
                      }
                      else {
-
                          var date = new Date(parseInt(data.substr(6))).getDate();
                          var datem = new Date(parseInt(data.substr(6))).getMonth() + 1;
                          var datey = new Date(parseInt(data.substr(6))).getFullYear();
@@ -732,7 +747,6 @@
                 table.draw();
                 table.ajax.url('/Doctors/Admin/PatTbl').load();
             });
-            
             $('#btwaitexpand').click(function () {
                 $('#panelwaitlist').toggle();
                 var table = $('#tbwait').DataTable();
@@ -895,6 +909,7 @@
                     paidamount: $('#PaidAmount').val(),
                     visitdate: $('#visitdate').val(),
                     gender: $('#gender').val(),
+                    shftid: $('#shftid').val(),
                     cbyn: $('#cbyn').val()
                 },
                 dataType: "json",
@@ -914,6 +929,34 @@
                 }
             });
         }
+        });
+        // table button action send to wait list 
+        $('#patlist tbody').on('click', '.sendwait', function () {
+            var table = $("#patlist").DataTable();
+            table.$('tr.selected').removeClass('selected');
+            $(this).closest('tr').addClass('selected');
+            var idv = table.cell('.selected', 0).data();
+            var shft = table.cell('.selected', 0).data();
+            $.ajax({
+                url: "@(Url.Action("sendtowaitlist", "Admin"))",
+                type: "GET",
+            contentType: "application/json; charset=utf-8",
+            data: { ID: idv, Shft: shft },
+            dataType: "json",
+            success: function (data) {
+                if (data.Success) {
+                  //  alert(data.Message)
+                } else {
+                    alert(data.Message)
+                }
+            }
+
+        });
+        var table = $("#tbfinprolist").DataTable();
+        table.$('tr.selected').removeClass('selected');
+        table.clear();
+        table.draw();
+        table.ajax.url('/ERP/Pro/tbfixprolistdef').load();
         });
     </script>
 }

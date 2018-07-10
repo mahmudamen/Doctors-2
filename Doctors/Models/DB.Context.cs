@@ -66,5 +66,6 @@ namespace Doctors.Models
         public virtual DbSet<ServList> ServLists { get; set; }
         public virtual DbSet<ShiftList> ShiftLists { get; set; }
         public virtual DbSet<StateList> StateLists { get; set; }
+        public virtual DbSet<Vwaitlist> Vwaitlists { get; set; }
     }
 }

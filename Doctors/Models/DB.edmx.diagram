@@ -53,6 +53,7 @@
         <AssociationConnector Association="SyrnModel.FK_Patient_ServList" />
         <AssociationConnector Association="SyrnModel.FK_Patient_ShiftList" />
         <AssociationConnector Association="SyrnModel.FK_Patient_StateList" />
+        <EntityTypeShape EntityType="SyrnModel.Vwaitlist" Width="1.5" PointX="9.375" PointY="18.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
