@@ -727,6 +727,7 @@
       <End Role="Shft" EntitySet="Shfts" />
       <End Role="OrdList" EntitySet="OrdLists" />
     </AssociationSet>
+    <EntitySet Name="Vwaitlists" EntityType="SyrnModel.Vwaitlist" />
     <EntitySet Name="Patients" EntityType="SyrnModel.Patient" />
     <EntitySet Name="ServLists" EntityType="SyrnModel.ServList" />
     <EntitySet Name="ShiftLists" EntityType="SyrnModel.ShiftList" />
@@ -743,8 +744,33 @@
       <End Role="StateList" EntitySet="StateLists" />
       <End Role="Patient" EntitySet="Patients" />
     </AssociationSet>
-    <EntitySet Name="Vwaitlists" EntityType="SyrnModel.Vwaitlist" />
+    <EntitySet Name="VpatientLists" EntityType="SyrnModel.VpatientList" />
+    <EntitySet Name="VshiftTotals" EntityType="SyrnModel.VshiftTotal" />
   </EntityContainer>
+  <EntityType Name="Vwaitlist">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="PatientName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Gender" Type="Boolean" />
+    <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
+    <Property Name="Mobile" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
+    <Property Name="PaidAmount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="RemainingAmount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Serv" Type="Int32" />
+    <Property Name="ServName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="CreateBy" Type="Int32" />
+    <Property Name="PatienState" Type="Int32" />
+    <Property Name="StartWait" Type="DateTime" Precision="3" />
+    <Property Name="Sorted" Type="Int32" />
+    <Property Name="ShiftID" Type="Int32" />
+    <Property Name="ShftDate" Type="DateTime" Precision="3" />
+    <Property Name="shfactive" Type="Boolean" />
+  </EntityType>
   <EntityType Name="Patient">
     <Key>
       <PropertyRef Name="ID" />
@@ -764,8 +790,8 @@
     <Property Name="CreateBy" Type="Int32" />
     <Property Name="PatienState" Type="Int32" />
     <Property Name="StartWait" Type="DateTime" Precision="3" />
-    <Property Name="Sorted" Type="Int32" />
-    <Property Name="ShiftID" Type="Int32" />
+    <Property Name="Sorted" Type="Int32" Nullable="false" />
+    <Property Name="ShiftID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="ServList" Relationship="SyrnModel.FK_Patient_ServList" FromRole="Patient" ToRole="ServList" />
     <NavigationProperty Name="ShiftList" Relationship="SyrnModel.FK_Patient_ShiftList" FromRole="Patient" ToRole="ShiftList" />
     <NavigationProperty Name="StateList" Relationship="SyrnModel.FK_Patient_StateList" FromRole="Patient" ToRole="StateList" />
@@ -811,7 +837,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Patient_ShiftList">
-    <End Type="SyrnModel.ShiftList" Role="ShiftList" Multiplicity="0..1" />
+    <End Type="SyrnModel.ShiftList" Role="ShiftList" Multiplicity="1" />
     <End Type="SyrnModel.Patient" Role="Patient" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="ShiftList">
@@ -834,11 +860,14 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityType Name="Vwaitlist">
+  <EntityType Name="VpatientList">
     <Key>
       <PropertyRef Name="ID" />
+      <PropertyRef Name="Sorted" />
+      <PropertyRef Name="ShiftID" />
+      <PropertyRef Name="Expr1" />
     </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="PatientName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Gender" Type="Boolean" />
     <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
@@ -853,9 +882,18 @@
     <Property Name="CreateBy" Type="Int32" />
     <Property Name="PatienState" Type="Int32" />
     <Property Name="StartWait" Type="DateTime" Precision="3" />
-    <Property Name="Sorted" Type="Int32" />
-    <Property Name="ShiftID" Type="Int32" />
+    <Property Name="Sorted" Type="Int32" Nullable="false" />
+    <Property Name="ShiftID" Type="Int32" Nullable="false" />
+    <Property Name="Expr1" Type="Int32" Nullable="false" />
     <Property Name="ShftDate" Type="DateTime" Precision="3" />
-    <Property Name="shfactive" Type="Boolean" />
+    <Property Name="shiftacitve" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="VshiftTotal">
+    <Key>
+      <PropertyRef Name="ShiftID" />
+    </Key>
+    <Property Name="ShiftID" Type="Int32" Nullable="false" />
+    <Property Name="ShftDate" Type="DateTime" Precision="3" />
+    <Property Name="total" Type="Decimal" Precision="38" Scale="2" />
   </EntityType>
 </Schema>

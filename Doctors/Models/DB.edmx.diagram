@@ -46,14 +46,16 @@
         <AssociationConnector Association="SyrnModel.FK_orditm_ItmList" ManuallyRouted="false" />
         <AssociationConnector Association="SyrnModel.FK_orditm_OrdList" ManuallyRouted="false" />
         <AssociationConnector Association="SyrnModel.FK_OrdList_Shft" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="SyrnModel.Vwaitlist" Width="1.5" PointX="9.375" PointY="18.75" />
         <EntityTypeShape EntityType="SyrnModel.Patient" Width="1.5" PointX="21.625" PointY="13.125" />
         <EntityTypeShape EntityType="SyrnModel.ServList" Width="1.5" PointX="19.375" PointY="17.25" />
-        <EntityTypeShape EntityType="SyrnModel.ShiftList" Width="1.5" PointX="19.375" PointY="14.625" />
-        <EntityTypeShape EntityType="SyrnModel.StateList" Width="1.5" PointX="19.375" PointY="20" />
+        <EntityTypeShape EntityType="SyrnModel.ShiftList" Width="1.5" PointX="19.375" PointY="20" />
+        <EntityTypeShape EntityType="SyrnModel.StateList" Width="1.5" PointX="19.375" PointY="14.625" />
         <AssociationConnector Association="SyrnModel.FK_Patient_ServList" />
         <AssociationConnector Association="SyrnModel.FK_Patient_ShiftList" />
         <AssociationConnector Association="SyrnModel.FK_Patient_StateList" />
-        <EntityTypeShape EntityType="SyrnModel.Vwaitlist" Width="1.5" PointX="9.375" PointY="18.75" />
+        <EntityTypeShape EntityType="SyrnModel.VpatientList" Width="1.5" PointX="0.75" PointY="19.75" />
+        <EntityTypeShape EntityType="SyrnModel.VshiftTotal" Width="1.5" PointX="5.375" PointY="5.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

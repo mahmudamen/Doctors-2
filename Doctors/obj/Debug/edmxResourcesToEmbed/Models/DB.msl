@@ -576,6 +576,31 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Vwaitlists">
+      <EntityTypeMapping TypeName="SyrnModel.Vwaitlist">
+        <MappingFragment StoreEntitySet="Vwaitlist">
+          <ScalarProperty Name="shfactive" ColumnName="shfactive" />
+          <ScalarProperty Name="ShftDate" ColumnName="ShftDate" />
+          <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
+          <ScalarProperty Name="Sorted" ColumnName="Sorted" />
+          <ScalarProperty Name="StartWait" ColumnName="StartWait" />
+          <ScalarProperty Name="PatienState" ColumnName="PatienState" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="ServName" ColumnName="ServName" />
+          <ScalarProperty Name="Serv" ColumnName="Serv" />
+          <ScalarProperty Name="RemainingAmount" ColumnName="RemainingAmount" />
+          <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="PatientName" ColumnName="PatientName" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Patients">
       <EntityTypeMapping TypeName="SyrnModel.Patient">
         <MappingFragment StoreEntitySet="Patient">
@@ -627,11 +652,12 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Vwaitlists">
-      <EntityTypeMapping TypeName="SyrnModel.Vwaitlist">
-        <MappingFragment StoreEntitySet="Vwaitlist">
-          <ScalarProperty Name="shfactive" ColumnName="shfactive" />
+    <EntitySetMapping Name="VpatientLists">
+      <EntityTypeMapping TypeName="SyrnModel.VpatientList">
+        <MappingFragment StoreEntitySet="VpatientList">
+          <ScalarProperty Name="shiftacitve" ColumnName="shiftacitve" />
           <ScalarProperty Name="ShftDate" ColumnName="ShftDate" />
+          <ScalarProperty Name="Expr1" ColumnName="Expr1" />
           <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
           <ScalarProperty Name="Sorted" ColumnName="Sorted" />
           <ScalarProperty Name="StartWait" ColumnName="StartWait" />
@@ -649,6 +675,15 @@
           <ScalarProperty Name="Gender" ColumnName="Gender" />
           <ScalarProperty Name="PatientName" ColumnName="PatientName" />
           <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VshiftTotals">
+      <EntityTypeMapping TypeName="SyrnModel.VshiftTotal">
+        <MappingFragment StoreEntitySet="VshiftTotal">
+          <ScalarProperty Name="total" ColumnName="total" />
+          <ScalarProperty Name="ShftDate" ColumnName="ShftDate" />
+          <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -62,10 +62,12 @@ namespace Doctors.Models
         public virtual DbSet<vUsrEmp> vUsrEmps { get; set; }
         public virtual DbSet<vVacE> vVacEs { get; set; }
         public virtual DbSet<vURole> vURoles { get; set; }
+        public virtual DbSet<Vwaitlist> Vwaitlists { get; set; }
         public virtual DbSet<Patient> Patients { get; set; }
         public virtual DbSet<ServList> ServLists { get; set; }
         public virtual DbSet<ShiftList> ShiftLists { get; set; }
         public virtual DbSet<StateList> StateLists { get; set; }
-        public virtual DbSet<Vwaitlist> Vwaitlists { get; set; }
+        public virtual DbSet<VpatientList> VpatientLists { get; set; }
+        public virtual DbSet<VshiftTotal> VshiftTotals { get; set; }
     }
 }

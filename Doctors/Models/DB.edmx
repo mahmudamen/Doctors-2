@@ -263,8 +263,8 @@
           <Property Name="CreateBy" Type="int" />
           <Property Name="PatienState" Type="int" />
           <Property Name="StartWait" Type="datetime" />
-          <Property Name="Sorted" Type="int" />
-          <Property Name="ShiftID" Type="int" />
+          <Property Name="Sorted" Type="int" Nullable="false" />
+          <Property Name="ShiftID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ServList">
           <Key>
@@ -371,6 +371,16 @@ warning 6002: The table/view 'Syrn.dbo.vOrdList' does not have a primary key def
           <Property Name="OrdDate" Type="date" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="shitfk" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Syrn.dbo.VshiftTotal' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VshiftTotal">
+          <Key>
+            <PropertyRef Name="ShiftID" />
+          </Key>
+          <Property Name="ShiftID" Type="int" Nullable="false" />
+          <Property Name="ShftDate" Type="datetime" />
+          <Property Name="total" Type="decimal" Precision="38" Scale="2" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'Syrn.Emp.vDepts' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -684,6 +694,36 @@ warning 6002: The table/view 'Syrn.Emp.vVacE' does not have a primary key define
           <Property Name="OrderBy" Type="nvarchar" MaxLength="10" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'Syrn.Recep.VpatientList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VpatientList">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Sorted" />
+            <PropertyRef Name="ShiftID" />
+            <PropertyRef Name="Expr1" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PatientName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Gender" Type="bit" />
+          <Property Name="Address" Type="nvarchar" MaxLength="150" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="14" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="14" />
+          <Property Name="PaidAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="RemainingAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Serv" Type="int" />
+          <Property Name="ServName" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="CreateBy" Type="int" />
+          <Property Name="PatienState" Type="int" />
+          <Property Name="StartWait" Type="datetime" />
+          <Property Name="Sorted" Type="int" Nullable="false" />
+          <Property Name="ShiftID" Type="int" Nullable="false" />
+          <Property Name="Expr1" Type="int" Nullable="false" />
+          <Property Name="ShftDate" Type="datetime" />
+          <Property Name="shiftacitve" Type="bit" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'Syrn.Recep.Vwaitlist' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Vwaitlist">
           <Key>
@@ -792,7 +832,7 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Patient_ShiftList">
-          <End Role="ShiftList" Type="Self.ShiftList" Multiplicity="0..1" />
+          <End Role="ShiftList" Type="Self.ShiftList" Multiplicity="1" />
           <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ShiftList">
@@ -865,6 +905,13 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
     [vOrdList].[IsActive] AS [IsActive], 
     [vOrdList].[shitfk] AS [shitfk]
     FROM [dbo].[vOrdList] AS [vOrdList]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VshiftTotal" EntityType="Self.VshiftTotal" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VshiftTotal].[ShiftID] AS [ShiftID], 
+    [VshiftTotal].[ShftDate] AS [ShftDate], 
+    [VshiftTotal].[total] AS [total]
+    FROM [dbo].[VshiftTotal] AS [VshiftTotal]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vDepts" EntityType="Self.vDepts" store:Type="Views" store:Schema="Emp">
             <DefiningQuery>SELECT 
@@ -1062,6 +1109,30 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
     [vVacE].[Nots] AS [Nots], 
     [vVacE].[OrderBy] AS [OrderBy]
     FROM [Emp].[vVacE] AS [vVacE]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VpatientList" EntityType="Self.VpatientList" store:Type="Views" store:Schema="Recep">
+            <DefiningQuery>SELECT 
+    [VpatientList].[ID] AS [ID], 
+    [VpatientList].[PatientName] AS [PatientName], 
+    [VpatientList].[Gender] AS [Gender], 
+    [VpatientList].[Address] AS [Address], 
+    [VpatientList].[Phone] AS [Phone], 
+    [VpatientList].[Mobile] AS [Mobile], 
+    [VpatientList].[PaidAmount] AS [PaidAmount], 
+    [VpatientList].[RemainingAmount] AS [RemainingAmount], 
+    [VpatientList].[Serv] AS [Serv], 
+    [VpatientList].[ServName] AS [ServName], 
+    [VpatientList].[IsActive] AS [IsActive], 
+    [VpatientList].[CreateDate] AS [CreateDate], 
+    [VpatientList].[CreateBy] AS [CreateBy], 
+    [VpatientList].[PatienState] AS [PatienState], 
+    [VpatientList].[StartWait] AS [StartWait], 
+    [VpatientList].[Sorted] AS [Sorted], 
+    [VpatientList].[ShiftID] AS [ShiftID], 
+    [VpatientList].[Expr1] AS [Expr1], 
+    [VpatientList].[ShftDate] AS [ShftDate], 
+    [VpatientList].[shiftacitve] AS [shiftacitve]
+    FROM [Recep].[VpatientList] AS [VpatientList]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="Vwaitlist" EntityType="Self.Vwaitlist" store:Type="Views" store:Schema="Recep">
             <DefiningQuery>SELECT 
@@ -1859,6 +1930,7 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
             <End Role="Shft" EntitySet="Shfts" />
             <End Role="OrdList" EntitySet="OrdLists" />
           </AssociationSet>
+          <EntitySet Name="Vwaitlists" EntityType="SyrnModel.Vwaitlist" />
           <EntitySet Name="Patients" EntityType="SyrnModel.Patient" />
           <EntitySet Name="ServLists" EntityType="SyrnModel.ServList" />
           <EntitySet Name="ShiftLists" EntityType="SyrnModel.ShiftList" />
@@ -1875,8 +1947,33 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
             <End Role="StateList" EntitySet="StateLists" />
             <End Role="Patient" EntitySet="Patients" />
           </AssociationSet>
-          <EntitySet Name="Vwaitlists" EntityType="SyrnModel.Vwaitlist" />
+          <EntitySet Name="VpatientLists" EntityType="SyrnModel.VpatientList" />
+          <EntitySet Name="VshiftTotals" EntityType="SyrnModel.VshiftTotal" />
           </EntityContainer>
+        <EntityType Name="Vwaitlist">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="PatientName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="Boolean" />
+          <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
+          <Property Name="PaidAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="RemainingAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Serv" Type="Int32" />
+          <Property Name="ServName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="Int32" />
+          <Property Name="PatienState" Type="Int32" />
+          <Property Name="StartWait" Type="DateTime" Precision="3" />
+          <Property Name="Sorted" Type="Int32" />
+          <Property Name="ShiftID" Type="Int32" />
+          <Property Name="ShftDate" Type="DateTime" Precision="3" />
+          <Property Name="shfactive" Type="Boolean" />
+        </EntityType>
         <EntityType Name="Patient">
           <Key>
             <PropertyRef Name="ID" />
@@ -1896,8 +1993,8 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
           <Property Name="CreateBy" Type="Int32" />
           <Property Name="PatienState" Type="Int32" />
           <Property Name="StartWait" Type="DateTime" Precision="3" />
-          <Property Name="Sorted" Type="Int32" />
-          <Property Name="ShiftID" Type="Int32" />
+          <Property Name="Sorted" Type="Int32" Nullable="false" />
+          <Property Name="ShiftID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ServList" Relationship="SyrnModel.FK_Patient_ServList" FromRole="Patient" ToRole="ServList" />
           <NavigationProperty Name="ShiftList" Relationship="SyrnModel.FK_Patient_ShiftList" FromRole="Patient" ToRole="ShiftList" />
           <NavigationProperty Name="StateList" Relationship="SyrnModel.FK_Patient_StateList" FromRole="Patient" ToRole="StateList" />
@@ -1943,7 +2040,7 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Patient_ShiftList">
-          <End Type="SyrnModel.ShiftList" Role="ShiftList" Multiplicity="0..1" />
+          <End Type="SyrnModel.ShiftList" Role="ShiftList" Multiplicity="1" />
           <End Type="SyrnModel.Patient" Role="Patient" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ShiftList">
@@ -1966,11 +2063,14 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Vwaitlist">
+        <EntityType Name="VpatientList">
           <Key>
             <PropertyRef Name="ID" />
+            <PropertyRef Name="Sorted" />
+            <PropertyRef Name="ShiftID" />
+            <PropertyRef Name="Expr1" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PatientName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Gender" Type="Boolean" />
           <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
@@ -1985,10 +2085,19 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
           <Property Name="CreateBy" Type="Int32" />
           <Property Name="PatienState" Type="Int32" />
           <Property Name="StartWait" Type="DateTime" Precision="3" />
-          <Property Name="Sorted" Type="Int32" />
-          <Property Name="ShiftID" Type="Int32" />
+          <Property Name="Sorted" Type="Int32" Nullable="false" />
+          <Property Name="ShiftID" Type="Int32" Nullable="false" />
+          <Property Name="Expr1" Type="Int32" Nullable="false" />
           <Property Name="ShftDate" Type="DateTime" Precision="3" />
-          <Property Name="shfactive" Type="Boolean" />
+          <Property Name="shiftacitve" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="VshiftTotal">
+          <Key>
+            <PropertyRef Name="ShiftID" />
+          </Key>
+          <Property Name="ShiftID" Type="Int32" Nullable="false" />
+          <Property Name="ShftDate" Type="DateTime" Precision="3" />
+          <Property Name="total" Type="Decimal" Precision="38" Scale="2" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2571,6 +2680,31 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Vwaitlists">
+            <EntityTypeMapping TypeName="SyrnModel.Vwaitlist">
+              <MappingFragment StoreEntitySet="Vwaitlist">
+                <ScalarProperty Name="shfactive" ColumnName="shfactive" />
+                <ScalarProperty Name="ShftDate" ColumnName="ShftDate" />
+                <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
+                <ScalarProperty Name="Sorted" ColumnName="Sorted" />
+                <ScalarProperty Name="StartWait" ColumnName="StartWait" />
+                <ScalarProperty Name="PatienState" ColumnName="PatienState" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ServName" ColumnName="ServName" />
+                <ScalarProperty Name="Serv" ColumnName="Serv" />
+                <ScalarProperty Name="RemainingAmount" ColumnName="RemainingAmount" />
+                <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="PatientName" ColumnName="PatientName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Patients">
             <EntityTypeMapping TypeName="SyrnModel.Patient">
               <MappingFragment StoreEntitySet="Patient">
@@ -2622,11 +2756,12 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Vwaitlists">
-            <EntityTypeMapping TypeName="SyrnModel.Vwaitlist">
-              <MappingFragment StoreEntitySet="Vwaitlist">
-                <ScalarProperty Name="shfactive" ColumnName="shfactive" />
+          <EntitySetMapping Name="VpatientLists">
+            <EntityTypeMapping TypeName="SyrnModel.VpatientList">
+              <MappingFragment StoreEntitySet="VpatientList">
+                <ScalarProperty Name="shiftacitve" ColumnName="shiftacitve" />
                 <ScalarProperty Name="ShftDate" ColumnName="ShftDate" />
+                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
                 <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
                 <ScalarProperty Name="Sorted" ColumnName="Sorted" />
                 <ScalarProperty Name="StartWait" ColumnName="StartWait" />
@@ -2644,6 +2779,15 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="PatientName" ColumnName="PatientName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VshiftTotals">
+            <EntityTypeMapping TypeName="SyrnModel.VshiftTotal">
+              <MappingFragment StoreEntitySet="VshiftTotal">
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="ShftDate" ColumnName="ShftDate" />
+                <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

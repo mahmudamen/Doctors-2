@@ -12,7 +12,7 @@ namespace Doctors.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Patient
+    public partial class VpatientList
     {
         public int ID { get; set; }
         public string PatientName { get; set; }
@@ -31,9 +31,8 @@ namespace Doctors.Models
         public Nullable<System.DateTime> StartWait { get; set; }
         public int Sorted { get; set; }
         public int ShiftID { get; set; }
-    
-        public virtual ServList ServList { get; set; }
-        public virtual ShiftList ShiftList { get; set; }
-        public virtual StateList StateList { get; set; }
+        public int Expr1 { get; set; }
+        public Nullable<System.DateTime> ShftDate { get; set; }
+        public Nullable<bool> shiftacitve { get; set; }
     }
 }

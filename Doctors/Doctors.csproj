@@ -284,6 +284,9 @@
     <Compile Include="Models\vOrdList.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\VpatientList.cs">
+      <DependentUpon>DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vPunE.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
@@ -291,6 +294,9 @@
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vSalEntry.cs">
+      <DependentUpon>DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VshiftTotal.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vTSal.cs">

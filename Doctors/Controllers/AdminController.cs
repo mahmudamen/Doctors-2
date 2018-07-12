@@ -30,15 +30,16 @@ namespace Doctors.Controllers
         public JsonResult PatTbl()
         {
             DB db = new DB();
-            var query = db.Patients.Where(x =>  x.IsActive == true)
-            .Select(p => new { p.ID, p.PatientName, p.Serv ,p.PaidAmount });
+            var query = db.VpatientLists.Where(x =>  x.IsActive == true )
+            .Select(p => new { p.ID, p.PatientName, p.Serv ,p.PaidAmount ,p.ShiftID });
             return Json(new { aaData = query }, JsonRequestBehavior.AllowGet);
         }
+
         public JsonResult WaitTbl()
         {
             DB db = new DB();
             var query = db.Vwaitlists.Where(x => x.shfactive == true)
-            .Select(p => new { p.ID, p.PatientName, p.ServName ,p.CreateDate ,p.Sorted,p.RemainingAmount});
+            .Select(p => new { p.ID, p.PatientName, p.ServName ,p.CreateDate ,p.Sorted,p.RemainingAmount ,p.ShiftID});
             return Json(new { aaData = query }, JsonRequestBehavior.AllowGet);
         }
         public JsonResult autoserv(string Prefix)
@@ -97,6 +98,15 @@ namespace Doctors.Controllers
         {
             var query = db.ShiftLists.Where(x => x.IsActive == true).Single().ShftDate;
             return Json(query, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult sendtowaitlist(int ID , int Shft)
+        {
+            var query = db.Patients.Where(x => x.ID == ID && x.ShiftID == Shft && x.IsActive == true).ToList();
+            var sort = db.Patients.Where(x => x.ShiftID == Shft && x.IsActive == true).Select(s => s.Sorted).Max();
+            query.ForEach(x => x.Sorted  = sort + 1);
+            query.ForEach(x => x.PatienState = 2);
+            db.SaveChanges();
+            return Json(new { Success = true, Message = "تمت اضافته الي قائمة الانتظار "}, JsonRequestBehavior.AllowGet);
         }
     }
 }
