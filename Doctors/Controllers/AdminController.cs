@@ -108,5 +108,10 @@ namespace Doctors.Controllers
             db.SaveChanges();
             return Json(new { Success = true, Message = "تمت اضافته الي قائمة الانتظار "}, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult ShiftReportTbl()
+        {
+            var query = db.VshiftTotals.Select(x => new { x.ShiftID, x.ShftDate, x.total });
+            return Json(new { aaData = query }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
