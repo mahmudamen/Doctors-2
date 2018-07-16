@@ -31,6 +31,11 @@ namespace Doctors.Models
         public Nullable<System.DateTime> StartWait { get; set; }
         public int Sorted { get; set; }
         public int ShiftID { get; set; }
+        public string MedicalHistory { get; set; }
+        public string Examination { get; set; }
+        public string PrevDiagnosis { get; set; }
+        public string Diagnosis { get; set; }
+        public string Treatment { get; set; }
     
         public virtual ServList ServList { get; set; }
         public virtual ShiftList ShiftList { get; set; }

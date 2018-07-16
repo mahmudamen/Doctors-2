@@ -244,6 +244,39 @@
           <Property Name="CreateBy" Type="int" Nullable="false" />
           <Property Name="CreateDate" Type="date" Nullable="false" />
         </EntityType>
+        <EntityType Name="DoseList">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DoseName" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="ItemMedic">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Categ" Type="int" />
+          <Property Name="SCateg" Type="int" />
+          <Property Name="EnName" Type="nvarchar" MaxLength="255" />
+          <Property Name="ArName" Type="nvarchar" MaxLength="255" />
+          <Property Name="ItemMinPack" Type="int" />
+          <Property Name="Barcod" Type="nvarchar" MaxLength="255" />
+          <Property Name="Type" Type="nvarchar" MaxLength="255" />
+          <Property Name="Materialact" Type="nvarchar" MaxLength="255" />
+          <Property Name="PurPrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SellPrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="MinStock" Type="int" />
+          <Property Name="Reord" Type="int" />
+          <Property Name="Experiod" Type="nvarchar" MaxLength="255" />
+          <Property Name="PurUnit" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SellUnit" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="LPur" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="LSell" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Balance" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
         <EntityType Name="Patient">
           <Key>
             <PropertyRef Name="ID" />
@@ -265,6 +298,20 @@
           <Property Name="StartWait" Type="datetime" />
           <Property Name="Sorted" Type="int" Nullable="false" />
           <Property Name="ShiftID" Type="int" Nullable="false" />
+          <Property Name="MedicalHistory" Type="nvarchar" MaxLength="250" />
+          <Property Name="Examination" Type="nvarchar" MaxLength="250" />
+          <Property Name="PrevDiagnosis" Type="nvarchar" MaxLength="250" />
+          <Property Name="Diagnosis" Type="nvarchar" MaxLength="250" />
+          <Property Name="Treatment" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="PatientItemMedic">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PatientID" Type="int" />
+          <Property Name="ItemMedic" Type="int" />
+          <Property Name="DoseID" Type="int" />
         </EntityType>
         <EntityType Name="ServList">
           <Key>
@@ -694,6 +741,15 @@ warning 6002: The table/view 'Syrn.Emp.vVacE' does not have a primary key define
           <Property Name="OrderBy" Type="nvarchar" MaxLength="10" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'Syrn.Recep.VnextPatient' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VnextPatient">
+          <Key>
+            <PropertyRef Name="ShiftID" />
+          </Key>
+          <Property Name="ShiftID" Type="int" Nullable="false" />
+          <Property Name="NextPatient" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'Syrn.Recep.VpatientList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="VpatientList">
           <Key>
@@ -872,7 +928,10 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
           <EntitySet Name="Punsh" EntityType="Self.Punsh" Schema="Emp" store:Type="Tables" />
           <EntitySet Name="Sal" EntityType="Self.Sal" Schema="Emp" store:Type="Tables" />
           <EntitySet Name="Vac" EntityType="Self.Vac" Schema="Emp" store:Type="Tables" />
+          <EntitySet Name="DoseList" EntityType="Self.DoseList" Schema="Recep" store:Type="Tables" />
+          <EntitySet Name="ItemMedic" EntityType="Self.ItemMedic" Schema="Recep" store:Type="Tables" />
           <EntitySet Name="Patient" EntityType="Self.Patient" Schema="Recep" store:Type="Tables" />
+          <EntitySet Name="PatientItemMedic" EntityType="Self.PatientItemMedic" Schema="Recep" store:Type="Tables" />
           <EntitySet Name="ServList" EntityType="Self.ServList" Schema="Recep" store:Type="Tables" />
           <EntitySet Name="ShiftList" EntityType="Self.ShiftList" Schema="Recep" store:Type="Tables" />
           <EntitySet Name="StateList" EntityType="Self.StateList" Schema="Recep" store:Type="Tables" />
@@ -1109,6 +1168,12 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
     [vVacE].[Nots] AS [Nots], 
     [vVacE].[OrderBy] AS [OrderBy]
     FROM [Emp].[vVacE] AS [vVacE]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VnextPatient" EntityType="Self.VnextPatient" store:Type="Views" store:Schema="Recep">
+            <DefiningQuery>SELECT 
+    [VnextPatient].[ShiftID] AS [ShiftID], 
+    [VnextPatient].[NextPatient] AS [NextPatient]
+    FROM [Recep].[VnextPatient] AS [VnextPatient]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VpatientList" EntityType="Self.VpatientList" store:Type="Views" store:Schema="Recep">
             <DefiningQuery>SELECT 
@@ -1931,10 +1996,15 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
             <End Role="OrdList" EntitySet="OrdLists" />
           </AssociationSet>
           <EntitySet Name="Vwaitlists" EntityType="SyrnModel.Vwaitlist" />
-          <EntitySet Name="Patients" EntityType="SyrnModel.Patient" />
           <EntitySet Name="ServLists" EntityType="SyrnModel.ServList" />
           <EntitySet Name="ShiftLists" EntityType="SyrnModel.ShiftList" />
           <EntitySet Name="StateLists" EntityType="SyrnModel.StateList" />
+          <EntitySet Name="VpatientLists" EntityType="SyrnModel.VpatientList" />
+          <EntitySet Name="VshiftTotals" EntityType="SyrnModel.VshiftTotal" />
+          <EntitySet Name="DoseLists" EntityType="SyrnModel.DoseList" />
+          <EntitySet Name="ItemMedics" EntityType="SyrnModel.ItemMedic" />
+          <EntitySet Name="PatientItemMedics" EntityType="SyrnModel.PatientItemMedic" />
+          <EntitySet Name="Patients" EntityType="SyrnModel.Patient" />
           <AssociationSet Name="FK_Patient_ServList" Association="SyrnModel.FK_Patient_ServList">
             <End Role="ServList" EntitySet="ServLists" />
             <End Role="Patient" EntitySet="Patients" />
@@ -1947,8 +2017,7 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
             <End Role="StateList" EntitySet="StateLists" />
             <End Role="Patient" EntitySet="Patients" />
           </AssociationSet>
-          <EntitySet Name="VpatientLists" EntityType="SyrnModel.VpatientList" />
-          <EntitySet Name="VshiftTotals" EntityType="SyrnModel.VshiftTotal" />
+          <EntitySet Name="VnextPatients" EntityType="SyrnModel.VnextPatient" />
           </EntityContainer>
         <EntityType Name="Vwaitlist">
           <Key>
@@ -1973,31 +2042,6 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
           <Property Name="ShiftID" Type="Int32" />
           <Property Name="ShftDate" Type="DateTime" Precision="3" />
           <Property Name="shfactive" Type="Boolean" />
-        </EntityType>
-        <EntityType Name="Patient">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PatientName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Gender" Type="Boolean" />
-          <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Phone" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
-          <Property Name="Mobile" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
-          <Property Name="PaidAmount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="RemainingAmount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Serv" Type="Int32" />
-          <Property Name="ServName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="CreateBy" Type="Int32" />
-          <Property Name="PatienState" Type="Int32" />
-          <Property Name="StartWait" Type="DateTime" Precision="3" />
-          <Property Name="Sorted" Type="Int32" Nullable="false" />
-          <Property Name="ShiftID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ServList" Relationship="SyrnModel.FK_Patient_ServList" FromRole="Patient" ToRole="ServList" />
-          <NavigationProperty Name="ShiftList" Relationship="SyrnModel.FK_Patient_ShiftList" FromRole="Patient" ToRole="ShiftList" />
-          <NavigationProperty Name="StateList" Relationship="SyrnModel.FK_Patient_StateList" FromRole="Patient" ToRole="StateList" />
         </EntityType>
         <EntityType Name="ServList">
           <Key>
@@ -2026,6 +2070,114 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
           <Property Name="StateName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" />
           <NavigationProperty Name="Patients" Relationship="SyrnModel.FK_Patient_StateList" FromRole="StateList" ToRole="Patient" />
+        </EntityType>
+        <EntityType Name="VpatientList">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Sorted" />
+            <PropertyRef Name="ShiftID" />
+            <PropertyRef Name="Expr1" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PatientName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="Boolean" />
+          <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
+          <Property Name="PaidAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="RemainingAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Serv" Type="Int32" />
+          <Property Name="ServName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="Int32" />
+          <Property Name="PatienState" Type="Int32" />
+          <Property Name="StartWait" Type="DateTime" Precision="3" />
+          <Property Name="Sorted" Type="Int32" Nullable="false" />
+          <Property Name="ShiftID" Type="Int32" Nullable="false" />
+          <Property Name="Expr1" Type="Int32" Nullable="false" />
+          <Property Name="ShftDate" Type="DateTime" Precision="3" />
+          <Property Name="shiftacitve" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="VshiftTotal">
+          <Key>
+            <PropertyRef Name="ShiftID" />
+          </Key>
+          <Property Name="ShiftID" Type="Int32" Nullable="false" />
+          <Property Name="ShftDate" Type="DateTime" Precision="3" />
+          <Property Name="total" Type="Decimal" Precision="38" Scale="2" />
+        </EntityType>
+        <EntityType Name="DoseList">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DoseName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="ItemMedic">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Categ" Type="Int32" />
+          <Property Name="SCateg" Type="Int32" />
+          <Property Name="EnName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ArName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ItemMinPack" Type="Int32" />
+          <Property Name="Barcod" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Materialact" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PurPrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SellPrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="MinStock" Type="Int32" />
+          <Property Name="Reord" Type="Int32" />
+          <Property Name="Experiod" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PurUnit" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SellUnit" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="LPur" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="LSell" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Balance" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="PatientItemMedic">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PatientID" Type="Int32" />
+          <Property Name="ItemMedic" Type="Int32" />
+          <Property Name="DoseID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PatientName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="Boolean" />
+          <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
+          <Property Name="PaidAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="RemainingAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Serv" Type="Int32" />
+          <Property Name="ServName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="Int32" />
+          <Property Name="PatienState" Type="Int32" />
+          <Property Name="StartWait" Type="DateTime" Precision="3" />
+          <Property Name="Sorted" Type="Int32" Nullable="false" />
+          <Property Name="ShiftID" Type="Int32" Nullable="false" />
+          <Property Name="MedicalHistory" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Examination" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="PrevDiagnosis" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Diagnosis" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Treatment" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ServList" Relationship="SyrnModel.FK_Patient_ServList" FromRole="Patient" ToRole="ServList" />
+          <NavigationProperty Name="ShiftList" Relationship="SyrnModel.FK_Patient_ShiftList" FromRole="Patient" ToRole="ShiftList" />
+          <NavigationProperty Name="StateList" Relationship="SyrnModel.FK_Patient_StateList" FromRole="Patient" ToRole="StateList" />
         </EntityType>
         <Association Name="FK_Patient_ServList">
           <End Type="SyrnModel.ServList" Role="ServList" Multiplicity="0..1" />
@@ -2063,41 +2215,12 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="VpatientList">
-          <Key>
-            <PropertyRef Name="ID" />
-            <PropertyRef Name="Sorted" />
-            <PropertyRef Name="ShiftID" />
-            <PropertyRef Name="Expr1" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PatientName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Gender" Type="Boolean" />
-          <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Phone" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
-          <Property Name="Mobile" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
-          <Property Name="PaidAmount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="RemainingAmount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Serv" Type="Int32" />
-          <Property Name="ServName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="CreateBy" Type="Int32" />
-          <Property Name="PatienState" Type="Int32" />
-          <Property Name="StartWait" Type="DateTime" Precision="3" />
-          <Property Name="Sorted" Type="Int32" Nullable="false" />
-          <Property Name="ShiftID" Type="Int32" Nullable="false" />
-          <Property Name="Expr1" Type="Int32" Nullable="false" />
-          <Property Name="ShftDate" Type="DateTime" Precision="3" />
-          <Property Name="shiftacitve" Type="Boolean" />
-        </EntityType>
-        <EntityType Name="VshiftTotal">
+        <EntityType Name="VnextPatient">
           <Key>
             <PropertyRef Name="ShiftID" />
           </Key>
           <Property Name="ShiftID" Type="Int32" Nullable="false" />
-          <Property Name="ShftDate" Type="DateTime" Precision="3" />
-          <Property Name="total" Type="Decimal" Precision="38" Scale="2" />
+          <Property Name="NextPatient" Type="Int32" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2705,29 +2828,6 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Patients">
-            <EntityTypeMapping TypeName="SyrnModel.Patient">
-              <MappingFragment StoreEntitySet="Patient">
-                <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
-                <ScalarProperty Name="Sorted" ColumnName="Sorted" />
-                <ScalarProperty Name="StartWait" ColumnName="StartWait" />
-                <ScalarProperty Name="PatienState" ColumnName="PatienState" />
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="ServName" ColumnName="ServName" />
-                <ScalarProperty Name="Serv" ColumnName="Serv" />
-                <ScalarProperty Name="RemainingAmount" ColumnName="RemainingAmount" />
-                <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
-                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="PatientName" ColumnName="PatientName" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ServLists">
             <EntityTypeMapping TypeName="SyrnModel.ServList">
               <MappingFragment StoreEntitySet="ServList">
@@ -2787,6 +2887,87 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
               <MappingFragment StoreEntitySet="VshiftTotal">
                 <ScalarProperty Name="total" ColumnName="total" />
                 <ScalarProperty Name="ShftDate" ColumnName="ShftDate" />
+                <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DoseLists">
+            <EntityTypeMapping TypeName="SyrnModel.DoseList">
+              <MappingFragment StoreEntitySet="DoseList">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DoseName" ColumnName="DoseName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemMedics">
+            <EntityTypeMapping TypeName="SyrnModel.ItemMedic">
+              <MappingFragment StoreEntitySet="ItemMedic">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="LSell" ColumnName="LSell" />
+                <ScalarProperty Name="LPur" ColumnName="LPur" />
+                <ScalarProperty Name="SellUnit" ColumnName="SellUnit" />
+                <ScalarProperty Name="PurUnit" ColumnName="PurUnit" />
+                <ScalarProperty Name="Experiod" ColumnName="Experiod" />
+                <ScalarProperty Name="Reord" ColumnName="Reord" />
+                <ScalarProperty Name="MinStock" ColumnName="MinStock" />
+                <ScalarProperty Name="SellPrice" ColumnName="SellPrice" />
+                <ScalarProperty Name="PurPrice" ColumnName="PurPrice" />
+                <ScalarProperty Name="Materialact" ColumnName="Materialact" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Barcod" ColumnName="Barcod" />
+                <ScalarProperty Name="ItemMinPack" ColumnName="ItemMinPack" />
+                <ScalarProperty Name="ArName" ColumnName="ArName" />
+                <ScalarProperty Name="EnName" ColumnName="EnName" />
+                <ScalarProperty Name="SCateg" ColumnName="SCateg" />
+                <ScalarProperty Name="Categ" ColumnName="Categ" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PatientItemMedics">
+            <EntityTypeMapping TypeName="SyrnModel.PatientItemMedic">
+              <MappingFragment StoreEntitySet="PatientItemMedic">
+                <ScalarProperty Name="DoseID" ColumnName="DoseID" />
+                <ScalarProperty Name="ItemMedic" ColumnName="ItemMedic" />
+                <ScalarProperty Name="PatientID" ColumnName="PatientID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Patients">
+            <EntityTypeMapping TypeName="SyrnModel.Patient">
+              <MappingFragment StoreEntitySet="Patient">
+                <ScalarProperty Name="Treatment" ColumnName="Treatment" />
+                <ScalarProperty Name="Diagnosis" ColumnName="Diagnosis" />
+                <ScalarProperty Name="PrevDiagnosis" ColumnName="PrevDiagnosis" />
+                <ScalarProperty Name="Examination" ColumnName="Examination" />
+                <ScalarProperty Name="MedicalHistory" ColumnName="MedicalHistory" />
+                <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
+                <ScalarProperty Name="Sorted" ColumnName="Sorted" />
+                <ScalarProperty Name="StartWait" ColumnName="StartWait" />
+                <ScalarProperty Name="PatienState" ColumnName="PatienState" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ServName" ColumnName="ServName" />
+                <ScalarProperty Name="Serv" ColumnName="Serv" />
+                <ScalarProperty Name="RemainingAmount" ColumnName="RemainingAmount" />
+                <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="PatientName" ColumnName="PatientName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VnextPatients">
+            <EntityTypeMapping TypeName="SyrnModel.VnextPatient">
+              <MappingFragment StoreEntitySet="VnextPatient">
+                <ScalarProperty Name="NextPatient" ColumnName="NextPatient" />
                 <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
               </MappingFragment>
             </EntityTypeMapping>

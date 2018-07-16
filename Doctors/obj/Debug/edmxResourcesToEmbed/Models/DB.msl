@@ -601,29 +601,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Patients">
-      <EntityTypeMapping TypeName="SyrnModel.Patient">
-        <MappingFragment StoreEntitySet="Patient">
-          <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
-          <ScalarProperty Name="Sorted" ColumnName="Sorted" />
-          <ScalarProperty Name="StartWait" ColumnName="StartWait" />
-          <ScalarProperty Name="PatienState" ColumnName="PatienState" />
-          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-          <ScalarProperty Name="ServName" ColumnName="ServName" />
-          <ScalarProperty Name="Serv" ColumnName="Serv" />
-          <ScalarProperty Name="RemainingAmount" ColumnName="RemainingAmount" />
-          <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
-          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
-          <ScalarProperty Name="Phone" ColumnName="Phone" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="Gender" ColumnName="Gender" />
-          <ScalarProperty Name="PatientName" ColumnName="PatientName" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="ServLists">
       <EntityTypeMapping TypeName="SyrnModel.ServList">
         <MappingFragment StoreEntitySet="ServList">
@@ -683,6 +660,87 @@
         <MappingFragment StoreEntitySet="VshiftTotal">
           <ScalarProperty Name="total" ColumnName="total" />
           <ScalarProperty Name="ShftDate" ColumnName="ShftDate" />
+          <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DoseLists">
+      <EntityTypeMapping TypeName="SyrnModel.DoseList">
+        <MappingFragment StoreEntitySet="DoseList">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="DoseName" ColumnName="DoseName" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ItemMedics">
+      <EntityTypeMapping TypeName="SyrnModel.ItemMedic">
+        <MappingFragment StoreEntitySet="ItemMedic">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Balance" ColumnName="Balance" />
+          <ScalarProperty Name="LSell" ColumnName="LSell" />
+          <ScalarProperty Name="LPur" ColumnName="LPur" />
+          <ScalarProperty Name="SellUnit" ColumnName="SellUnit" />
+          <ScalarProperty Name="PurUnit" ColumnName="PurUnit" />
+          <ScalarProperty Name="Experiod" ColumnName="Experiod" />
+          <ScalarProperty Name="Reord" ColumnName="Reord" />
+          <ScalarProperty Name="MinStock" ColumnName="MinStock" />
+          <ScalarProperty Name="SellPrice" ColumnName="SellPrice" />
+          <ScalarProperty Name="PurPrice" ColumnName="PurPrice" />
+          <ScalarProperty Name="Materialact" ColumnName="Materialact" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Barcod" ColumnName="Barcod" />
+          <ScalarProperty Name="ItemMinPack" ColumnName="ItemMinPack" />
+          <ScalarProperty Name="ArName" ColumnName="ArName" />
+          <ScalarProperty Name="EnName" ColumnName="EnName" />
+          <ScalarProperty Name="SCateg" ColumnName="SCateg" />
+          <ScalarProperty Name="Categ" ColumnName="Categ" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PatientItemMedics">
+      <EntityTypeMapping TypeName="SyrnModel.PatientItemMedic">
+        <MappingFragment StoreEntitySet="PatientItemMedic">
+          <ScalarProperty Name="DoseID" ColumnName="DoseID" />
+          <ScalarProperty Name="ItemMedic" ColumnName="ItemMedic" />
+          <ScalarProperty Name="PatientID" ColumnName="PatientID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Patients">
+      <EntityTypeMapping TypeName="SyrnModel.Patient">
+        <MappingFragment StoreEntitySet="Patient">
+          <ScalarProperty Name="Treatment" ColumnName="Treatment" />
+          <ScalarProperty Name="Diagnosis" ColumnName="Diagnosis" />
+          <ScalarProperty Name="PrevDiagnosis" ColumnName="PrevDiagnosis" />
+          <ScalarProperty Name="Examination" ColumnName="Examination" />
+          <ScalarProperty Name="MedicalHistory" ColumnName="MedicalHistory" />
+          <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
+          <ScalarProperty Name="Sorted" ColumnName="Sorted" />
+          <ScalarProperty Name="StartWait" ColumnName="StartWait" />
+          <ScalarProperty Name="PatienState" ColumnName="PatienState" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="ServName" ColumnName="ServName" />
+          <ScalarProperty Name="Serv" ColumnName="Serv" />
+          <ScalarProperty Name="RemainingAmount" ColumnName="RemainingAmount" />
+          <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="PatientName" ColumnName="PatientName" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VnextPatients">
+      <EntityTypeMapping TypeName="SyrnModel.VnextPatient">
+        <MappingFragment StoreEntitySet="VnextPatient">
+          <ScalarProperty Name="NextPatient" ColumnName="NextPatient" />
           <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
         </MappingFragment>
       </EntityTypeMapping>

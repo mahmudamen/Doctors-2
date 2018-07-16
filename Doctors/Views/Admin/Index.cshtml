@@ -243,7 +243,7 @@
                     <div class="btn-group m-r-5 pull-left">
                         <button class="btn-group-sm btn-icon btn-square btn-info pull-left" title="تبديل " id="patogele"><i class="fa fa-expand"></i></button>
                         <button class="btn-group-sm btn-icon btn-square btn-success pull-left" title="تحديث " id="refreshz"><i class="fa fa-repeat"></i></button>
-                        <button class="btn-group-sm btn-icon btn-square btn-warning pull-left" title="تسجيل بيانات مريض " id="btnewpat"><i class="fa fa-plus"></i></button>
+                        <button class="btn-group-sm btn-icon btn-square btn-danger pull-left" title="تسجيل بيانات مريض " id="btnewpat"><i class="fa fa-plus"></i></button>
                     </div>
                     
                 </div>
@@ -274,13 +274,14 @@
 
         </div>
         <div class="col-md-6">
-            <div id="b-panal" class="panel panel-warning" style="margin-bottom:5px" data-sortable-id="index-3">
+            <div id="b-panal" class="panel panel-info" style="margin-bottom:5px" data-sortable-id="index-3">
                 <div class="panel-heading" style="height: 50px;">
                     <label class="panel-title" style="font-size:13px;">  قائمة الانتظار </label>
                     <div class="btn-group m-r-5 pull-left">
                         <button class="btn-group-sm btn-icon btn-square btn-info pull-left" title="تبديل " id="btwaitexpand"><i class="fa fa-expand"></i></button>
                         <button class="btn-group-sm btn-icon btn-square btn-success pull-left" title="تحديث " id="refresh"><i class="fa fa-repeat"></i></button>
-                        <button class="btn-group-sm btn-icon btn-square btn-warning pull-left" title="رد المبلغ للمريض " id="refund"><i class="fa fa-eraser"></i> </button>
+                        @*<button class="btn-group-sm btn-icon btn-square btn-danger pull-left" title="المريض التالي  " id="SendToDoctor"><i class="fa fa-backward"></i></button>*@
+                        <button class="btn-group-sm btn-icon btn-square btn-danger pull-left" title="رد المبلغ للمريض " id="refund"><i class="fa fa-eraser"></i> </button>
                     </div>
                 </div>
                 <div class="panel-body" id="panelwaitlist" style="max-height:400px;   min-height:200px; padding:10px">
@@ -288,16 +289,18 @@
                         <thead>
                             <tr>
                                 <th>رقم الملف</th>
-                                <th>رقم الشفت</th>
+                                <th class="text-center">رقم الشفت</th>
                                 <th class="text-center"> المريض</th>
-                                <th>خدمة</th>
-                                <th>وقت الحضور</th>
-                                <th>ترتيب</th>
-                                <th>باقي</th>
+                                <th class="text-center">خدمة</th>
+                                <th class="text-center">وقت الحضور</th>
+                                <th class="text-center">ترتيب</th>
+                                <th class="text-center">دخول</th>
+                                <th class="text-center">رد</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -319,11 +322,11 @@
     <script src="~/Scripts/apps.min.js"></script>
     <script src="~/Scripts/dts.js"></script>
     <script src="~/Scripts/select2.full.min.js"></script>
+
     <script>
             $(document).ready(function () {
                 App.init();
                 // date function 
-
             });
             function getdate() {
                 var date = new Date(),
@@ -370,6 +373,7 @@
             $(".js-example-basic-single").select2({
                 dir: "rtl", language: "ar", selectOnClose: true, width: '30%'
             });
+        // var table patient list reception 
             var table = $('#patlist').DataTable({
                 cache: true,
                 bProcessing: false, sAjaxSource: '/Doctors/Admin/PatTbl', "order": [[0, "desc"]], bFilter: true, bInfo: false, lengthChange: false, scrollY: '300px', scrollCollapse: true, bPaginate: true,
@@ -385,6 +389,7 @@
              }
                          ]
             });
+        // var table patient queue list reception 
             var table = $('#tbwait').DataTable({
                 cache: true,
                 bProcessing: false, sAjaxSource: '/Doctors/Admin/WaitTbl', "order": [[5, "asc"]], bFilter: true, bInfo: false, lengthChange: false, scrollY: '250px', scrollCollapse: true, bPaginate: true,
@@ -392,8 +397,8 @@
              { "data": "ID", "visible": false },
              { "data": "ShiftID", "visible": false },
              { "data": "PatientName", "width": "2%" },
-             { "data": "ServName", "width": "1%" },
-             {"data": "CreateDate", "width": "5%", "render": function (data) {
+             { "data": "ServName", "width": "2%" },
+             {"data": "CreateDate", "width": "3%", "render": function (data) {
                      if (data == null) {
                          return "--"
                      }
@@ -410,9 +415,17 @@
                  }
              },
              { "data": "Sorted", "width": "1%" },
-             { "data": "RemainingAmount", "width": "1%" }
+             {
+                 "data": null, "sClass": "dt-center", "width": "1%", "orderable": false,
+                 "defaultContent": "<button  class='quebutton small btn-success'id='zpost'><i class='fa fa-step-backward'></button>"
+             },
+             {
+                 "data": null, "sClass": "dt-center", "width": "1%", "orderable": false,
+                 "defaultContent": "<button  class='rebutton small btn-warning'id='spost'><i class='fa fa-eraser'></button>"
+             }
                 ]
             });
+        // var table shift report daily 
             var table = $('#shiftreport').DataTable({
                 cache: true,
                 bProcessing: false, sAjaxSource: '/Doctors/Admin/ShiftReportTbl', "order": [[0, "desc"]], bFilter: true, bInfo: false, lengthChange: false, scrollY: '250px', scrollCollapse: true, bPaginate: true,
@@ -473,6 +486,12 @@
         // select table wait list
             $('#tbwait tbody').on('click', 'tr', function () {
                 var table = $("#tbwait").DataTable();
+                table.$('tr.selected').removeClass('selected');
+                $(this).closest('tr').addClass('selected');
+            });
+        // select table shiftreport
+            $('#shiftreport tbody').on('click', 'tr', function () {
+                var table = $("#shiftreport").DataTable();
                 table.$('tr.selected').removeClass('selected');
                 $(this).closest('tr').addClass('selected');
             });
@@ -547,8 +566,7 @@
             table.clear();
             table.draw();
             table.ajax.url('/Doctors/Admin/ShiftReportTbl').load();
-
-        })
+        });
         // add new shift work modal shift 
         $('#adshift').click(function () {
             var conf = confirm("سوف يتم انشاء شفت جديد و يتم اغلاق اخر شفت عمل نهائياً  ");
@@ -591,7 +609,6 @@
                 $('#serv').addClass('input-validation-error');
                 alert('يجب تحديد نوع الزيارة');
             } else {
-
                 $.ajax({
                     url: "@(Url.Action("adpat", "Admin"))",
                     type: "GET",
@@ -620,7 +637,6 @@
                         table.clear();
                         table.draw();
                         table.ajax.url('/Doctors/Admin/PatTbl').load();
-
                     } else {
                         alert(data.Message)
                     }
@@ -649,8 +665,48 @@
                         alert(data.Message)
                     }
                 }
-
             });
+        });
+        // button send next patient to doctor's screen
+        $('#SendToDoctor').click(function () {
+            
+            $.ajax({
+                url: "@(Url.Action("SendtoDoct", "Admin"))",
+                type: "GET",
+            contentType: "application/json; charset=utf-8",
+
+            dataType: "json",
+            success: function (data) {
+                if (data.Success) {
+                    alert(data.Message)
+                    refresh()
+                } else {
+                    alert("حدث خطاء ")
+                }
+            }
+        });
+        });
+        // table button action send to doctor list 
+        $('#tbwait tbody').on('click', '.rebutton', function () {
+            var table = $("#tbwait").DataTable();
+            table.$('tr.selected').removeClass('selected');
+            $(this).closest('tr').addClass('selected');
+            var idv = table.cell('.selected', 0).data();
+            $.ajax({
+                url: "@(Url.Action("Refund", "Admin"))",
+                type: "GET",
+            contentType: "application/json; charset=utf-8",
+            data: { ID: idv},
+            dataType: "json",
+            success: function (data) {
+                if (data.Success) {
+                    alert(data.Message)
+                    refresh()
+                } else {
+                    alert("حدث خطاء ")
+                }
+            }
+        });
         });
     </script>
 }

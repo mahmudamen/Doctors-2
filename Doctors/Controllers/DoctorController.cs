@@ -30,17 +30,19 @@ namespace Doctors.Controllers
         }
         public JsonResult PatTbl()
         {
-            DB db = new DB();
             var query = db.Patients.Where(x => x.IsActive == true && x.PatienState == 3)
-            .Select(p => new { p.ID, p.PatientName, p.ServName , p.CreateDate });
+            .Select(p => new { p.ID, p.PatientName, p.ServName , p.CreateDate , p.MedicalHistory , p.PrevDiagnosis , p.Diagnosis ,p.Examination });
             return Json(new { aaData = query }, JsonRequestBehavior.AllowGet);
         }
         public JsonResult WaitTbl()
         {
-            DB db = new DB();
             var query = db.Vwaitlists.Where(x => x.shfactive == true)
             .Select(p => new { p.ID, p.PatientName, p.ServName, p.CreateDate, p.Sorted, p.RemainingAmount });
             return Json(new { aaData = query }, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult DrugsTbl() {
+            var query = db.ItemMedics.Where(x => x.IsActive == true).Select(n => new {n.ID, n.EnName , n.Materialact  });
+            return Json(new {aaData = query }, JsonRequestBehavior.AllowGet);
         }
         public JsonResult autoserv(string Prefix)
         {
@@ -86,7 +88,6 @@ namespace Doctors.Controllers
         // function get last shift number 
         public JsonResult Tcount()
         {
-
             var query = db.ShiftLists.Count() + 1;
             return Json(query, JsonRequestBehavior.AllowGet);
         }
@@ -100,6 +101,5 @@ namespace Doctors.Controllers
             var query = db.ShiftLists.Where(x => x.IsActive == true).Single().ShftDate;
             return Json(query, JsonRequestBehavior.AllowGet);
         }
-        
     }
 }

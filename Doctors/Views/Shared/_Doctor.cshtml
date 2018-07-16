@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
-<html lang="ar-EG">
+<html lang="ar-eg">
 <head>
+
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,24 +10,31 @@
     @Styles.Render("~/Content/css")
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top glyphicon-text-height">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
+            @*<div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>*@
+            <ul class="nav navbar-nav">
+                <li class="active" style="background: blue;" id="navdose"><a href="javascript:;">الجرعات العلاجية</a></li>
+                <li class="active" style="background: blue;" id="navitemmedic"><a href="javascript:;"> الادوية</a></li>
+                <li class="active" style="background: blue;" id="navanalysis"><a href="javascript:;"> تحليل </a></li>
+                <li class="active" style="background: blue;" id="navrays"><a href="javascript:;"> اشعة</a></li>
+                <li class="active" style="background: blue;" id="navshiftreport"><a href="javascript:;">تقرير الشفت </a></li>
+                @*<li class="active" id="bbexplist"><a href="javascript:;"> دليل المصروفات</a></li>
+                    <li class="active" id="topten"><a href="javascript:;">Top 10 AG</a></li>
+                    <li class="active" id="toptenfd"><a href="javascript:;">Top 10 FD</a></li>
+                    <li class="active"><a href="/Doctors/User/Index">UseAdmin</a></li>*@
+                @*<li class="active"><a href="/Meno/Finance/Finance">الحسابات</a></li>
+                    <li class="active"><a href="/Meno/HR/Index">شئون العاملين</a></li>
+                    <li class="active"><a href="/Meno/InvMan/Index">المخازن</a></li>*@
+            </ul>
             <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    @*<li class="active"><a href="/Doctors/Admin/Index">الرئيسية</a></li>
-                    <li class="active"><a href="/Doctors/Rec/RecAdmin">مدير النظام</a></li>
-                    <li class="active"><a href="/Doctors/Finance/Index">الحسابات</a></li>
-                    <li class="active"><a href="/Doctors/HR/Index">شئون العاملين</a></li>
-                    <li class="active"><a href="/Doctors/InvMan/Index">المخازن</a></li>*@
-                </ul>
                 <ul class="nav navbar-nav navbar-right flip">
                     <li>
                         <a class="label-danger" href="/Doctors/Home/LogOut">
@@ -34,48 +42,10 @@
                         </a>
                     </li>
                 </ul>
-            </div><!--/.nav-collapse -->
+            </div>
         </div>
     </nav>
     <div class="container body-content">
-        @*<nav>
-            <ul class="nav nav-justified nav-fixed-top">
-                <li class="dropdown"><a herf="#" class="dropdown-toggle" role="button" data-toggle="dropdown" >حسابات عامة <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href='@Url.Action("AccTree", "Finance")'>دليل الحسابات</a></li><li class="divider"></li>
-                        <li><a href='@Url.Action("Per", "Finance")'>الفترات المالية</a></li><li class="divider"></li>
-                        <li><a href='@Url.Action("JEntry", "Finance")'>قيود اليومية</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown"><a herf="#" class="dropdown-toggle" role="button" data-toggle="dropdown">النقدية <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href='@Url.Action("CashIndex", "Finance")'>حركة الخزينة</a></li><li class="divider"></li>
-                        <li><a href='@Url.Action("Bank", "Finance")'>البنك</a></li><li class="divider"></li>
-                        <li><a href='@Url.Action("Cashtrans", "Finance")'>تحويلات</a></li><li class="divider"></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a herf="#" class="dropdown-toggle" role="button" data-toggle="dropdown">المساهمين <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href='@Url.Action("GetHolds", "Shar")'>المساهمين</a></li>
-                        <li><a href='@Url.Action("Getshrs", "Shar")'>الأسهم</a></li>
-                        <li><a href='@Url.Action("GetAccSh", "Shar")'>حسابات المساهمين</a></li>
-                    </ul>
-                </li>
-                <li><a href='@Url.Action("CostCenter", "Finance")'>التكاليف</a></li>
-                <li class="dropdown">
-                    <a herf="#" class="dropdown-toggle" role="button" data-toggle="dropdown">الموردين <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href='@Url.Action("GetVendors", "Shar")'>قائمة الموردين</a></li>
-                        <li><a href='@Url.Action("Vendors", "Shar")'>مجموعات الموردين</a></li>
-                        <li><a href='@Url.Action("GetAccVen", "Shar")'>حـ/ الموردين</a></li>
-                    </ul>
-                </li>
-                <li><a href='@Url.Action("Mor", "HR")'>الأصول الثابتة</a></li>
-                <li><a href='@Url.Action("Pun", "HR")'>التعاقدات</a></li>
-            </ul>
-        </nav>*@
-        <br />
         @RenderBody()
     </div>
     @Scripts.Render("~/bundles/jquery")

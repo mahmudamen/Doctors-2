@@ -728,10 +728,15 @@
       <End Role="OrdList" EntitySet="OrdLists" />
     </AssociationSet>
     <EntitySet Name="Vwaitlists" EntityType="SyrnModel.Vwaitlist" />
-    <EntitySet Name="Patients" EntityType="SyrnModel.Patient" />
     <EntitySet Name="ServLists" EntityType="SyrnModel.ServList" />
     <EntitySet Name="ShiftLists" EntityType="SyrnModel.ShiftList" />
     <EntitySet Name="StateLists" EntityType="SyrnModel.StateList" />
+    <EntitySet Name="VpatientLists" EntityType="SyrnModel.VpatientList" />
+    <EntitySet Name="VshiftTotals" EntityType="SyrnModel.VshiftTotal" />
+    <EntitySet Name="DoseLists" EntityType="SyrnModel.DoseList" />
+    <EntitySet Name="ItemMedics" EntityType="SyrnModel.ItemMedic" />
+    <EntitySet Name="PatientItemMedics" EntityType="SyrnModel.PatientItemMedic" />
+    <EntitySet Name="Patients" EntityType="SyrnModel.Patient" />
     <AssociationSet Name="FK_Patient_ServList" Association="SyrnModel.FK_Patient_ServList">
       <End Role="ServList" EntitySet="ServLists" />
       <End Role="Patient" EntitySet="Patients" />
@@ -744,8 +749,7 @@
       <End Role="StateList" EntitySet="StateLists" />
       <End Role="Patient" EntitySet="Patients" />
     </AssociationSet>
-    <EntitySet Name="VpatientLists" EntityType="SyrnModel.VpatientList" />
-    <EntitySet Name="VshiftTotals" EntityType="SyrnModel.VshiftTotal" />
+    <EntitySet Name="VnextPatients" EntityType="SyrnModel.VnextPatient" />
   </EntityContainer>
   <EntityType Name="Vwaitlist">
     <Key>
@@ -770,31 +774,6 @@
     <Property Name="ShiftID" Type="Int32" />
     <Property Name="ShftDate" Type="DateTime" Precision="3" />
     <Property Name="shfactive" Type="Boolean" />
-  </EntityType>
-  <EntityType Name="Patient">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="PatientName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="Gender" Type="Boolean" />
-    <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-    <Property Name="Phone" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
-    <Property Name="Mobile" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
-    <Property Name="PaidAmount" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="RemainingAmount" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="Serv" Type="Int32" />
-    <Property Name="ServName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="IsActive" Type="Boolean" />
-    <Property Name="CreateDate" Type="DateTime" Precision="3" />
-    <Property Name="CreateBy" Type="Int32" />
-    <Property Name="PatienState" Type="Int32" />
-    <Property Name="StartWait" Type="DateTime" Precision="3" />
-    <Property Name="Sorted" Type="Int32" Nullable="false" />
-    <Property Name="ShiftID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="ServList" Relationship="SyrnModel.FK_Patient_ServList" FromRole="Patient" ToRole="ServList" />
-    <NavigationProperty Name="ShiftList" Relationship="SyrnModel.FK_Patient_ShiftList" FromRole="Patient" ToRole="ShiftList" />
-    <NavigationProperty Name="StateList" Relationship="SyrnModel.FK_Patient_StateList" FromRole="Patient" ToRole="StateList" />
   </EntityType>
   <EntityType Name="ServList">
     <Key>
@@ -823,6 +802,114 @@
     <Property Name="StateName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="IsActive" Type="Boolean" />
     <NavigationProperty Name="Patients" Relationship="SyrnModel.FK_Patient_StateList" FromRole="StateList" ToRole="Patient" />
+  </EntityType>
+  <EntityType Name="VpatientList">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="Sorted" />
+      <PropertyRef Name="ShiftID" />
+      <PropertyRef Name="Expr1" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PatientName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Gender" Type="Boolean" />
+    <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
+    <Property Name="Mobile" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
+    <Property Name="PaidAmount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="RemainingAmount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Serv" Type="Int32" />
+    <Property Name="ServName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="CreateBy" Type="Int32" />
+    <Property Name="PatienState" Type="Int32" />
+    <Property Name="StartWait" Type="DateTime" Precision="3" />
+    <Property Name="Sorted" Type="Int32" Nullable="false" />
+    <Property Name="ShiftID" Type="Int32" Nullable="false" />
+    <Property Name="Expr1" Type="Int32" Nullable="false" />
+    <Property Name="ShftDate" Type="DateTime" Precision="3" />
+    <Property Name="shiftacitve" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="VshiftTotal">
+    <Key>
+      <PropertyRef Name="ShiftID" />
+    </Key>
+    <Property Name="ShiftID" Type="Int32" Nullable="false" />
+    <Property Name="ShftDate" Type="DateTime" Precision="3" />
+    <Property Name="total" Type="Decimal" Precision="38" Scale="2" />
+  </EntityType>
+  <EntityType Name="DoseList">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DoseName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="ItemMedic">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Categ" Type="Int32" />
+    <Property Name="SCateg" Type="Int32" />
+    <Property Name="EnName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="ArName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="ItemMinPack" Type="Int32" />
+    <Property Name="Barcod" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Type" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Materialact" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="PurPrice" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="SellPrice" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="MinStock" Type="Int32" />
+    <Property Name="Reord" Type="Int32" />
+    <Property Name="Experiod" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="PurUnit" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="SellUnit" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="LPur" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="LSell" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Balance" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="IsActive" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="PatientItemMedic">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PatientID" Type="Int32" />
+    <Property Name="ItemMedic" Type="Int32" />
+    <Property Name="DoseID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Patient">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PatientName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Gender" Type="Boolean" />
+    <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
+    <Property Name="Mobile" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
+    <Property Name="PaidAmount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="RemainingAmount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Serv" Type="Int32" />
+    <Property Name="ServName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="CreateBy" Type="Int32" />
+    <Property Name="PatienState" Type="Int32" />
+    <Property Name="StartWait" Type="DateTime" Precision="3" />
+    <Property Name="Sorted" Type="Int32" Nullable="false" />
+    <Property Name="ShiftID" Type="Int32" Nullable="false" />
+    <Property Name="MedicalHistory" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Examination" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="PrevDiagnosis" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Diagnosis" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Treatment" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ServList" Relationship="SyrnModel.FK_Patient_ServList" FromRole="Patient" ToRole="ServList" />
+    <NavigationProperty Name="ShiftList" Relationship="SyrnModel.FK_Patient_ShiftList" FromRole="Patient" ToRole="ShiftList" />
+    <NavigationProperty Name="StateList" Relationship="SyrnModel.FK_Patient_StateList" FromRole="Patient" ToRole="StateList" />
   </EntityType>
   <Association Name="FK_Patient_ServList">
     <End Type="SyrnModel.ServList" Role="ServList" Multiplicity="0..1" />
@@ -860,40 +947,11 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityType Name="VpatientList">
-    <Key>
-      <PropertyRef Name="ID" />
-      <PropertyRef Name="Sorted" />
-      <PropertyRef Name="ShiftID" />
-      <PropertyRef Name="Expr1" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="PatientName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="Gender" Type="Boolean" />
-    <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-    <Property Name="Phone" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
-    <Property Name="Mobile" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
-    <Property Name="PaidAmount" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="RemainingAmount" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="Serv" Type="Int32" />
-    <Property Name="ServName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="IsActive" Type="Boolean" />
-    <Property Name="CreateDate" Type="DateTime" Precision="3" />
-    <Property Name="CreateBy" Type="Int32" />
-    <Property Name="PatienState" Type="Int32" />
-    <Property Name="StartWait" Type="DateTime" Precision="3" />
-    <Property Name="Sorted" Type="Int32" Nullable="false" />
-    <Property Name="ShiftID" Type="Int32" Nullable="false" />
-    <Property Name="Expr1" Type="Int32" Nullable="false" />
-    <Property Name="ShftDate" Type="DateTime" Precision="3" />
-    <Property Name="shiftacitve" Type="Boolean" />
-  </EntityType>
-  <EntityType Name="VshiftTotal">
+  <EntityType Name="VnextPatient">
     <Key>
       <PropertyRef Name="ShiftID" />
     </Key>
     <Property Name="ShiftID" Type="Int32" Nullable="false" />
-    <Property Name="ShftDate" Type="DateTime" Precision="3" />
-    <Property Name="total" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="NextPatient" Type="Int32" />
   </EntityType>
 </Schema>

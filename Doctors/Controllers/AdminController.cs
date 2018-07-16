@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace Doctors.Controllers
 {
-     [AuthorizeRoles("Admin")]
+     [AuthorizeRoles("Admin" , "Doctor")]
     public class AdminController : Controller
     {
         DB db = new DB();
@@ -112,6 +112,29 @@ namespace Doctors.Controllers
         {
             var query = db.VshiftTotals.Select(x => new { x.ShiftID, x.ShftDate, x.total });
             return Json(new { aaData = query }, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult PatQue(int id ) {
+            var query = db.Patients.Where(x => x.ID == id).SingleOrDefault();
+            var patin = db.Patients.Where(x => x.PatienState == 3).SingleOrDefault();
+            patin.PatienState = 4;
+            query.PatienState = 3;
+            db.SaveChanges();
+            return Json(new { Success = true, Message = "تم نقل بيانات المريض الي شاشة الطبيب" }, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult SendtoDoct() {
+            var query = db.Patients.Where(x => x.PatienState == 3).Select( x => new { x.Sorted });
+            var patin = db.Patients.Where(x => x.PatienState == 3).SingleOrDefault();
+            patin.PatienState = 4;
+
+            return Json(new { Success = true, Message = "تم نقل بيانات المريض الي شاشة الطبيب" }, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult Refund(int id) {
+            var query = db.Patients.Where(x => x.ID == id).SingleOrDefault();
+            query.PaidAmount = 0;
+            query.IsActive = false;
+            query.PatienState = 5;
+            db.SaveChanges();
+            return Json(null, JsonRequestBehavior.AllowGet);
         }
     }
 }
