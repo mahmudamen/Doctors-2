@@ -42,6 +42,7 @@
 <link href="~/Content/style.min.css" rel="stylesheet" />
 <link href="~/Content/style-responsive.min.css" rel="stylesheet" />
 <link href="~/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+<link href="~/Content/google-grid.css" rel="stylesheet" />
 <link href="~/Content/animate.css" rel="stylesheet" media="screen">
 <input type="hidden" id="cby" value=@HttpContext.Current.User.Identity.Name.Split('|')[1] />
 <input type="hidden" id="cbyn" value=@HttpContext.Current.User.Identity.Name.Split('|')[0] />
@@ -265,6 +266,80 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="Mdeditpro">
+    <div class="modal-med">
+        <div class="modal-content">
+            <div class="modal-header">
+                <label class="modal-title">الاشاعة </label>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-inline ls_form">
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <input type="hidden" id="zvid" />
+                            <label>اسم المريض</label>
+                            <input type="text" id="vname" class="form-control text-center" style="width:350px" readonly="readonly" />
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="form-inline ls_form">
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>اسم الاشعة</label>
+                            <input type="text" id="ReNamePic" class="form-control text-center" style="width:200px" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-inline ls_form">
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>تقرير الاشعة </label>
+                            <input type="text" lang="ar-eg" placeholder="شرح توضيحي للمستند" id="Subject" class="form-control text-center" style="width:600px" />
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="form-group" style="margin:0px 5px 0px 5px">
+                        <div class="fileUpload btn btn-primary">
+                            <span>اختار صورة</span>
+                            <input type="file" id="FileUpload1" class="upload" />
+                        </div>
+                        <div class="fileUpload btn btn-primary">
+                            <span>تحميل </span>
+                            <input type="button" id="btnUpload" class="upload" value="Upload Files" />
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div id="grid-gallery" class="grid-gallery">
+                            <section class="grid-wrap">
+                                <ul class="grid">
+                                    <li class="grid-sizer"></li><!-- for Masonry column width -->
+                                    <li>
+                                        <figure>
+                                            <img id="targetImg" src=" " alt="صورة الاشاعة  " />
+                                            <figcaption>
+                                                <label id="namefiles"></label>
+                                            </figcaption>
+                                        </figure>
+                                    </li>
+                                </ul>
+                            </section><!-- // grid-wrap -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:;" id="btneditpro" type="button" class="btn btn-sm btn-success">اضافة</a>
+                <a type="button" href="javascript:;" class="btn btn-sm btn-danger" data-dismiss="modal">إغلاق</a>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- begin col-4 -->
 <br />
 <div id="content" class="content">
@@ -294,6 +369,7 @@
                         </thead>
                         <tbody>
                             <tr>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -329,10 +405,13 @@
                                 <th class="text-center">ترتيب</th>
                                 <th class="text-center">دخول</th>
                                 <th class="text-center">رد</th>
+                                <th class="text-center">أشعة</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
+                                <td></td>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -351,7 +430,7 @@
 </div>
 <link href="~/Content/select2.css" rel="stylesheet" />
 @section scripts{
-<link href="~/Content/google-grid.css" rel="stylesheet" />
+
     <script src="~/Scripts/jquery-ui.min.js"></script>
     <script src="~/Scripts/apps.min.js"></script>
     <script src="~/Scripts/dts.js"></script>
@@ -360,7 +439,49 @@
     <script>
             $(document).ready(function () {
                 App.init();
-                // date function 
+                // date function
+            });
+            $('#btnUpload').click(function () {
+                // Checking whether FormData is available in browser
+                if (window.FormData !== undefined) {
+
+                    var fileUpload = $("#FileUpload1").get(0);
+                    var files = fileUpload.files;
+
+                    // Create FormData object
+                    var fileData = new FormData();
+
+                    // Looping over all files and add it to FormData object
+                    for (var i = 0; i < files.length; i++) {
+                        fileData.append(files[i].name, files[i]);
+                    }
+                    // Adding one more key to FormData object
+                    fileData.append('cby', $('#cby').val());
+                    fileData.append('vid', $('#vid').val());
+                    fileData.append('Galery', $('#Galery').val());
+                    fileData.append('ReNamePic', $('#ReNamePic').val());
+                    fileData.append('Subject', $('#Subject').val());
+                    $.ajax({
+                        url: '/Doctors/Img/UploadFiles',
+                        type: "POST",
+                        contentType: false, // Not to set any content header
+                        processData: false, // Not to process data
+                        data: fileData,
+                        success: function (data) {
+                            //   $('#targetImg').append("<img src='/Erp/Img/" + data.resulte + "'><br>");
+                            $('#targetImg').attr('src', '/Doctors/Rays/Img/' + data.resulte)
+                            $('#namefiles').text(data.resulte)
+                            // $('#FileUpload1').empty()
+                            alert(data.Message);
+
+                        },
+                        error: function (err) {
+                            alert(err.statusText);
+                        }
+                    });
+                } else {
+                    alert("FormData is not supported.");
+                }
             });
             function getdate() {
                 var date = new Date(),
@@ -407,7 +528,7 @@
             $(".js-example-basic-single").select2({
                 dir: "rtl", language: "ar", selectOnClose: true, width: '30%'
             });
-        // var table patient list reception 
+        // var table patient list reception
             var table = $('#patlist').DataTable({
                 cache: true,
                 bProcessing: false, sAjaxSource: '/Doctors/Admin/PatTbl', "order": [[0, "desc"]], bFilter: true, bInfo: false, lengthChange: false, scrollY: '300px', scrollCollapse: true, bPaginate: true,
@@ -421,9 +542,9 @@
                "data": null, "sClass": "dt-center", "width": "1%", "orderable": false,
                "defaultContent": "<button  class='sendwait small btn-danger'id='post'><i class='fa fa-step-backward'></button>"
              }
-                         ]
+            ]
             });
-        // var table patient queue list reception 
+        // var table patient queue list reception
             var table = $('#tbwait').DataTable({
                 cache: true,
                 bProcessing: false, sAjaxSource: '/Doctors/Admin/WaitTbl', "order": [[5, "asc"]], bFilter: true, bInfo: false, lengthChange: false, scrollY: '250px', scrollCollapse: true, bPaginate: true,
@@ -456,10 +577,14 @@
              {
                  "data": null, "sClass": "dt-center", "width": "1%", "orderable": false,
                  "defaultContent": "<button  class='rebutton small btn-warning'id='spost'><i class='fa fa-eraser'></button>"
+             },
+             {
+                 "data": null, "sClass": "dt-center", "width": "1%", "orderable": false,
+                 "defaultContent": "<button  class='openray small btn-danger'id='apost'><i class='fa fa-step-backward'></button>"
              }
                 ]
-            });           
-        // var table refund report 
+            });
+        // var table refund report
             var table = $('#Refundeport').DataTable({
                 cache: true,
                 bProcessing: false, sAjaxSource: '/Doctors/Admin/RefundRp', "order": [[0, "desc"]], bFilter: true, bInfo: false, lengthChange: false, scrollY: '250px', scrollCollapse: true, bPaginate: true,
@@ -486,7 +611,7 @@
              }
                 ]
             });
-        // var table shift report daily 
+        // var table shift report daily
             var table = $('#shiftreport').DataTable({
                 cache: true,
                 bProcessing: false, sAjaxSource: '/Doctors/Admin/ShiftReportTbl', "order": [[0, "desc"]], bFilter: true, bInfo: false, lengthChange: false, scrollY: '250px', scrollCollapse: true, bPaginate: true,
@@ -525,7 +650,7 @@
                 table.draw();
                 table.ajax.url('/Doctors/Admin/WaitTbl').load();
             });
-        // refresh table 
+        // refresh table
             $('#refreshz').click(function () {
                 var table = $('#patlist').DataTable();
                 table.clear();
@@ -538,7 +663,7 @@
                 table.draw();
                 table.ajax.url('/Doctors/Admin/WaitTbl').load();
             });
-        // select table patlist 
+        // select table patlist
             $('#patlist tbody').on('click', 'tr', function () {
                 var table = $("#patlist").DataTable();
                 table.$('tr.selected').removeClass('selected');
@@ -622,7 +747,7 @@
         $('#navRefundRp').click(function () {
             $('#mdRefundreport').modal({ backdrop: false });
         });
-        // Open modal form nav shift report total 
+        // Open modal form nav shift report total
         $('#navshiftreport').click(function () {
             $('#mdshiftreport').modal({ backdrop: false });
             var table = $("#shiftreport").DataTable();
@@ -631,7 +756,7 @@
             table.draw();
             table.ajax.url('/Doctors/Admin/ShiftReportTbl').load();
         });
-        // add new shift work modal shift 
+        // add new shift work modal shift
         $('#adshift').click(function () {
             var conf = confirm("سوف يتم انشاء شفت جديد و يتم اغلاق اخر شفت عمل نهائياً  ");
             if (conf) {
@@ -661,7 +786,7 @@
             } else {
             }
         })
-        // button add new patient 
+        // button add new patient
         $('#adnpat').click(function () {
             if ($('#spatientname').val() == ' ') {
                 $('#spatientname').focus();
@@ -708,7 +833,7 @@
             });
         }
         });
-        // table button action send to wait list 
+        // table button action send to wait list
         $('#patlist tbody').on('click', '.sendwait', function () {
             var table = $("#patlist").DataTable();
             table.$('tr.selected').removeClass('selected');
@@ -733,7 +858,7 @@
         });
         // button send next patient to doctor's screen
         $('#SendToDoctor').click(function () {
-            
+
             $.ajax({
                 url: "@(Url.Action("SendtoDoct", "Admin"))",
                 type: "GET",
@@ -750,7 +875,55 @@
             }
         });
         });
-        // table button action send to doctor list 
+        // table button action open rays modal
+
+        $('#tbwait tbody').on('click', '.openray', function () {
+            var table = $("#tbwait").DataTable();
+            table.$('tr.selected').removeClass('selected');
+            $(this).closest('tr').addClass('selected');
+            var idv = table.cell('.selected', 0).data();
+// Checking whether FormData is available in browser
+                if (window.FormData !== undefined) {
+
+                    var fileUpload = $("#FileUpload1").get(0);
+                    var files = fileUpload.files;
+
+                    // Create FormData object
+                    var fileData = new FormData();
+
+                    // Looping over all files and add it to FormData object
+                    for (var i = 0; i < files.length; i++) {
+                        fileData.append(files[i].name, files[i]);
+                    }
+                    // Adding one more key to FormData object
+                    fileData.append('cby', $('#cby').val());
+                    fileData.append('vid', $('#vid').val());
+                    fileData.append('Galery', $('#Galery').val());
+                    fileData.append('ReNamePic', $('#ReNamePic').val());
+                    fileData.append('Subject', $('#Subject').val());
+                    $.ajax({
+                        url: '/Doctors/Img/UploadFiles',
+                        type: "POST",
+                        contentType: false, // Not to set any content header
+                        processData: false, // Not to process data
+                        data: fileData,
+                        success: function (data) {
+                            //   $('#targetImg').append("<img src='/Erp/Img/" + data.resulte + "'><br>");
+                            $('#targetImg').attr('src', '/Doctors/Rays/Img/' + data.resulte)
+                            $('#namefiles').text(data.resulte)
+                            // $('#FileUpload1').empty()
+                            alert(data.Message);
+
+                        },
+                        error: function (err) {
+                            alert(err.statusText);
+                        }
+                    });
+                } else {
+                    alert("FormData is not supported.");
+                }
+        });
+        // table button action send to doctor list
         $('#tbwait tbody').on('click', '.rebutton', function () {
             var table = $("#tbwait").DataTable();
             table.$('tr.selected').removeClass('selected');

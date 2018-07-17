@@ -748,5 +748,20 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ArchProes">
+      <EntityTypeMapping TypeName="SyrnModel.ArchPro">
+        <MappingFragment StoreEntitySet="ArchPro">
+          <ScalarProperty Name="PosteDate" ColumnName="PosteDate" />
+          <ScalarProperty Name="Posted" ColumnName="Posted" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="ReNamePic" ColumnName="ReNamePic" />
+          <ScalarProperty Name="PicPath" ColumnName="PicPath" />
+          <ScalarProperty Name="PatientID" ColumnName="PatientID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

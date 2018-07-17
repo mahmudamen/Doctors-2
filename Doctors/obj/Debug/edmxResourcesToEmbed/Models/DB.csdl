@@ -750,6 +750,7 @@
       <End Role="Patient" EntitySet="Patients" />
     </AssociationSet>
     <EntitySet Name="vRefundRps" EntityType="SyrnModel.vRefundRp" />
+    <EntitySet Name="ArchProes" EntityType="SyrnModel.ArchPro" />
   </EntityContainer>
   <EntityType Name="Vwaitlist">
     <Key>
@@ -956,5 +957,19 @@
     <Property Name="Serv" Type="Int32" />
     <Property Name="ServName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="CreateDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="ArchPro">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PatientID" Type="Int32" Nullable="false" />
+    <Property Name="PicPath" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+    <Property Name="ReNamePic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreateBy" Type="Int32" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="Posted" Type="Boolean" />
+    <Property Name="PosteDate" Type="DateTime" Precision="3" />
   </EntityType>
 </Schema>

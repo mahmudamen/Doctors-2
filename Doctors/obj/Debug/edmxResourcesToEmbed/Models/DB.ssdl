@@ -239,6 +239,20 @@
     <Property Name="CreateBy" Type="int" Nullable="false" />
     <Property Name="CreateDate" Type="date" Nullable="false" />
   </EntityType>
+  <EntityType Name="ArchPro">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PatientID" Type="int" Nullable="false" />
+    <Property Name="PicPath" Type="nvarchar" MaxLength="350" />
+    <Property Name="ReNamePic" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreateBy" Type="int" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="Posted" Type="bit" />
+    <Property Name="PosteDate" Type="datetime" />
+  </EntityType>
   <EntityType Name="DoseList">
     <Key>
       <PropertyRef Name="ID" />
@@ -926,6 +940,7 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
     <EntitySet Name="Punsh" EntityType="Self.Punsh" Schema="Emp" store:Type="Tables" />
     <EntitySet Name="Sal" EntityType="Self.Sal" Schema="Emp" store:Type="Tables" />
     <EntitySet Name="Vac" EntityType="Self.Vac" Schema="Emp" store:Type="Tables" />
+    <EntitySet Name="ArchPro" EntityType="Self.ArchPro" Schema="Recep" store:Type="Tables" />
     <EntitySet Name="DoseList" EntityType="Self.DoseList" Schema="Recep" store:Type="Tables" />
     <EntitySet Name="ItemMedic" EntityType="Self.ItemMedic" Schema="Recep" store:Type="Tables" />
     <EntitySet Name="Patient" EntityType="Self.Patient" Schema="Recep" store:Type="Tables" />

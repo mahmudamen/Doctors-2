@@ -177,7 +177,6 @@ namespace Doctors.Controllers
                         {
                             string[] testfiles = file.FileName.Split(new char[] { '\\' });
                             fname = testfiles[testfiles.Length - 1];
-
                         }
                         else
                         {
@@ -185,7 +184,6 @@ namespace Doctors.Controllers
                         }
                         // Get the complete folder path and store the file inside it. 
                         var m = Convert.ToString(DateTime.Now);
-
                         fname = Path.Combine(Server.MapPath("~/Img"), fname);
                         ArchPro h = new ArchPro();
                         //h.ProListFK = Convert.ToInt32(vid);
@@ -200,7 +198,6 @@ namespace Doctors.Controllers
                         db.SaveChanges();
                         file.SaveAs(fname);
                     }
-
                     // Returns message that successfully uploaded  
                     return Json(new { Success = true, resulte = ename, Message = "   بنجاح" + ename + " تم إضافة الصورة" }, JsonRequestBehavior.AllowGet);
                 }
