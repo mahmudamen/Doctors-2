@@ -244,6 +244,20 @@
           <Property Name="CreateBy" Type="int" Nullable="false" />
           <Property Name="CreateDate" Type="date" Nullable="false" />
         </EntityType>
+        <EntityType Name="ArchPro">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PatientID" Type="int" Nullable="false" />
+          <Property Name="PicPath" Type="nvarchar" MaxLength="350" />
+          <Property Name="ReNamePic" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateBy" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="Posted" Type="bit" />
+          <Property Name="PosteDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="DoseList">
           <Key>
             <PropertyRef Name="ID" />
@@ -741,15 +755,6 @@ warning 6002: The table/view 'Syrn.Emp.vVacE' does not have a primary key define
           <Property Name="OrderBy" Type="nvarchar" MaxLength="10" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'Syrn.Recep.VnextPatient' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="VnextPatient">
-          <Key>
-            <PropertyRef Name="ShiftID" />
-          </Key>
-          <Property Name="ShiftID" Type="int" Nullable="false" />
-          <Property Name="NextPatient" Type="int" />
-        </EntityType>
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'Syrn.Recep.VpatientList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="VpatientList">
           <Key>
@@ -778,6 +783,18 @@ warning 6002: The table/view 'Syrn.Recep.VpatientList' does not have a primary k
           <Property Name="Expr1" Type="int" Nullable="false" />
           <Property Name="ShftDate" Type="datetime" />
           <Property Name="shiftacitve" Type="bit" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Syrn.Recep.vRefundRp' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vRefundRp">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PatientName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Serv" Type="int" />
+          <Property Name="ServName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'Syrn.Recep.Vwaitlist' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -928,6 +945,7 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
           <EntitySet Name="Punsh" EntityType="Self.Punsh" Schema="Emp" store:Type="Tables" />
           <EntitySet Name="Sal" EntityType="Self.Sal" Schema="Emp" store:Type="Tables" />
           <EntitySet Name="Vac" EntityType="Self.Vac" Schema="Emp" store:Type="Tables" />
+          <EntitySet Name="ArchPro" EntityType="Self.ArchPro" Schema="Recep" store:Type="Tables" />
           <EntitySet Name="DoseList" EntityType="Self.DoseList" Schema="Recep" store:Type="Tables" />
           <EntitySet Name="ItemMedic" EntityType="Self.ItemMedic" Schema="Recep" store:Type="Tables" />
           <EntitySet Name="Patient" EntityType="Self.Patient" Schema="Recep" store:Type="Tables" />
@@ -1169,12 +1187,6 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
     [vVacE].[OrderBy] AS [OrderBy]
     FROM [Emp].[vVacE] AS [vVacE]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="VnextPatient" EntityType="Self.VnextPatient" store:Type="Views" store:Schema="Recep">
-            <DefiningQuery>SELECT 
-    [VnextPatient].[ShiftID] AS [ShiftID], 
-    [VnextPatient].[NextPatient] AS [NextPatient]
-    FROM [Recep].[VnextPatient] AS [VnextPatient]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="VpatientList" EntityType="Self.VpatientList" store:Type="Views" store:Schema="Recep">
             <DefiningQuery>SELECT 
     [VpatientList].[ID] AS [ID], 
@@ -1198,6 +1210,15 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
     [VpatientList].[ShftDate] AS [ShftDate], 
     [VpatientList].[shiftacitve] AS [shiftacitve]
     FROM [Recep].[VpatientList] AS [VpatientList]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vRefundRp" EntityType="Self.vRefundRp" store:Type="Views" store:Schema="Recep">
+            <DefiningQuery>SELECT 
+    [vRefundRp].[ID] AS [ID], 
+    [vRefundRp].[PatientName] AS [PatientName], 
+    [vRefundRp].[Serv] AS [Serv], 
+    [vRefundRp].[ServName] AS [ServName], 
+    [vRefundRp].[CreateDate] AS [CreateDate]
+    FROM [Recep].[vRefundRp] AS [vRefundRp]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="Vwaitlist" EntityType="Self.Vwaitlist" store:Type="Views" store:Schema="Recep">
             <DefiningQuery>SELECT 
@@ -2017,7 +2038,8 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
             <End Role="StateList" EntitySet="StateLists" />
             <End Role="Patient" EntitySet="Patients" />
           </AssociationSet>
-          <EntitySet Name="VnextPatients" EntityType="SyrnModel.VnextPatient" />
+          <EntitySet Name="vRefundRps" EntityType="SyrnModel.vRefundRp" />
+          <EntitySet Name="ArchProes" EntityType="SyrnModel.ArchPro" />
           </EntityContainer>
         <EntityType Name="Vwaitlist">
           <Key>
@@ -2215,12 +2237,29 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="VnextPatient">
+        <EntityType Name="vRefundRp">
           <Key>
-            <PropertyRef Name="ShiftID" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ShiftID" Type="Int32" Nullable="false" />
-          <Property Name="NextPatient" Type="Int32" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PatientName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Serv" Type="Int32" />
+          <Property Name="ServName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="ArchPro">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PatientID" Type="Int32" Nullable="false" />
+          <Property Name="PicPath" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="ReNamePic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateBy" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="Posted" Type="Boolean" />
+          <Property Name="PosteDate" Type="DateTime" Precision="3" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2964,11 +3003,29 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="VnextPatients">
-            <EntityTypeMapping TypeName="SyrnModel.VnextPatient">
-              <MappingFragment StoreEntitySet="VnextPatient">
-                <ScalarProperty Name="NextPatient" ColumnName="NextPatient" />
-                <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
+          <EntitySetMapping Name="vRefundRps">
+            <EntityTypeMapping TypeName="SyrnModel.vRefundRp">
+              <MappingFragment StoreEntitySet="vRefundRp">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ServName" ColumnName="ServName" />
+                <ScalarProperty Name="Serv" ColumnName="Serv" />
+                <ScalarProperty Name="PatientName" ColumnName="PatientName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ArchProes">
+            <EntityTypeMapping TypeName="SyrnModel.ArchPro">
+              <MappingFragment StoreEntitySet="ArchPro">
+                <ScalarProperty Name="PosteDate" ColumnName="PosteDate" />
+                <ScalarProperty Name="Posted" ColumnName="Posted" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="ReNamePic" ColumnName="ReNamePic" />
+                <ScalarProperty Name="PicPath" ColumnName="PicPath" />
+                <ScalarProperty Name="PatientID" ColumnName="PatientID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

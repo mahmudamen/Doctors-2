@@ -736,15 +736,6 @@ warning 6002: The table/view 'Syrn.Emp.vVacE' does not have a primary key define
     <Property Name="OrderBy" Type="nvarchar" MaxLength="10" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'Syrn.Recep.VnextPatient' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-  <EntityType Name="VnextPatient">
-    <Key>
-      <PropertyRef Name="ShiftID" />
-    </Key>
-    <Property Name="ShiftID" Type="int" Nullable="false" />
-    <Property Name="NextPatient" Type="int" />
-  </EntityType>
-  <!--Errors Found During Generation:
 warning 6002: The table/view 'Syrn.Recep.VpatientList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="VpatientList">
     <Key>
@@ -773,6 +764,18 @@ warning 6002: The table/view 'Syrn.Recep.VpatientList' does not have a primary k
     <Property Name="Expr1" Type="int" Nullable="false" />
     <Property Name="ShftDate" Type="datetime" />
     <Property Name="shiftacitve" Type="bit" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Syrn.Recep.vRefundRp' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vRefundRp">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PatientName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Serv" Type="int" />
+    <Property Name="ServName" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreateDate" Type="datetime" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'Syrn.Recep.Vwaitlist' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1164,12 +1167,6 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
     [vVacE].[OrderBy] AS [OrderBy]
     FROM [Emp].[vVacE] AS [vVacE]</DefiningQuery>
     </EntitySet>
-    <EntitySet Name="VnextPatient" EntityType="Self.VnextPatient" store:Type="Views" store:Schema="Recep">
-      <DefiningQuery>SELECT 
-    [VnextPatient].[ShiftID] AS [ShiftID], 
-    [VnextPatient].[NextPatient] AS [NextPatient]
-    FROM [Recep].[VnextPatient] AS [VnextPatient]</DefiningQuery>
-    </EntitySet>
     <EntitySet Name="VpatientList" EntityType="Self.VpatientList" store:Type="Views" store:Schema="Recep">
       <DefiningQuery>SELECT 
     [VpatientList].[ID] AS [ID], 
@@ -1193,6 +1190,15 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
     [VpatientList].[ShftDate] AS [ShftDate], 
     [VpatientList].[shiftacitve] AS [shiftacitve]
     FROM [Recep].[VpatientList] AS [VpatientList]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vRefundRp" EntityType="Self.vRefundRp" store:Type="Views" store:Schema="Recep">
+      <DefiningQuery>SELECT 
+    [vRefundRp].[ID] AS [ID], 
+    [vRefundRp].[PatientName] AS [PatientName], 
+    [vRefundRp].[Serv] AS [Serv], 
+    [vRefundRp].[ServName] AS [ServName], 
+    [vRefundRp].[CreateDate] AS [CreateDate]
+    FROM [Recep].[vRefundRp] AS [vRefundRp]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="Vwaitlist" EntityType="Self.Vwaitlist" store:Type="Views" store:Schema="Recep">
       <DefiningQuery>SELECT 

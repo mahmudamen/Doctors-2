@@ -749,7 +749,7 @@
       <End Role="StateList" EntitySet="StateLists" />
       <End Role="Patient" EntitySet="Patients" />
     </AssociationSet>
-    <EntitySet Name="VnextPatients" EntityType="SyrnModel.VnextPatient" />
+    <EntitySet Name="vRefundRps" EntityType="SyrnModel.vRefundRp" />
   </EntityContainer>
   <EntityType Name="Vwaitlist">
     <Key>
@@ -947,11 +947,14 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityType Name="VnextPatient">
+  <EntityType Name="vRefundRp">
     <Key>
-      <PropertyRef Name="ShiftID" />
+      <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ShiftID" Type="Int32" Nullable="false" />
-    <Property Name="NextPatient" Type="Int32" />
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PatientName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Serv" Type="Int32" />
+    <Property Name="ServName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
   </EntityType>
 </Schema>

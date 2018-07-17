@@ -59,7 +59,8 @@
         <AssociationConnector Association="SyrnModel.FK_Patient_ServList" />
         <AssociationConnector Association="SyrnModel.FK_Patient_ShiftList" />
         <AssociationConnector Association="SyrnModel.FK_Patient_StateList" />
-        <EntityTypeShape EntityType="SyrnModel.VnextPatient" Width="1.5" PointX="21.375" PointY="3.75" />
+        <EntityTypeShape EntityType="SyrnModel.vRefundRp" Width="1.5" PointX="21.375" PointY="6.75" />
+        <EntityTypeShape EntityType="SyrnModel.ArchPro" Width="1.5" PointX="21.375" PointY="9.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

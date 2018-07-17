@@ -290,9 +290,6 @@
     <Compile Include="Models\vMorsE.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\VnextPatient.cs">
-      <DependentUpon>DB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\vOrdList.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
@@ -300,6 +297,9 @@
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vPunE.cs">
+      <DependentUpon>DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vRefundRp.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vSalary.cs">

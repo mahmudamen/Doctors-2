@@ -4,7 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.IO;
+using System.Web.Mvc.Async;
 using System.Web.Mvc;
+
 
 namespace Doctors.Controllers
 {
@@ -134,7 +137,82 @@ namespace Doctors.Controllers
             query.IsActive = false;
             query.PatienState = 5;
             db.SaveChanges();
-            return Json(null, JsonRequestBehavior.AllowGet);
+            return Json(new { Success = true, Message = " تم إلغاء الحجز " }, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult RefundRp()
+        {
+            var query = db.vRefundRps.Select(x => new { x.ID , x.PatientName , x.ServName , x.CreateDate });
+
+            return Json(new { aaData = query } , JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public ActionResult UploadFiles()
+        {
+            HttpFileCollectionBase ha = Request.Files;
+            HttpPostedFileBase g = ha[0];
+            string ename = g.FileName;
+            // Checking no of files injected in Request object  
+            if (Request.Files.Count > 0)
+            {
+                try
+                {
+                    //  Get all files from Request object  
+                    HttpFileCollectionBase files = Request.Files;
+                    string category = HttpContext.Request.Form["cby"];
+                    string vid = HttpContext.Request.Form["vid"];
+                    string Galry = HttpContext.Request.Form["Galery"];
+                    string Subject = HttpContext.Request.Form["Subject"];
+                    string ReNamePic = HttpContext.Request.Form["ReNamePic"];
+
+
+
+                    for (int i = 0; i < files.Count; i++)
+                    {
+                        //string path = AppDomain.CurrentDomain.BaseDirectory + "Uploads/";  
+                        //string filename = Path.GetFileName(Request.Files[i].FileName);  
+                        HttpPostedFileBase file = files[i];
+                        string fname;
+                        // Checking for Internet Explorer  
+                        if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
+                        {
+                            string[] testfiles = file.FileName.Split(new char[] { '\\' });
+                            fname = testfiles[testfiles.Length - 1];
+
+                        }
+                        else
+                        {
+                            fname = file.FileName;
+                        }
+                        // Get the complete folder path and store the file inside it. 
+                        var m = Convert.ToString(DateTime.Now);
+
+                        fname = Path.Combine(Server.MapPath("~/Img"), fname);
+                        ArchPro h = new ArchPro();
+                        //h.ProListFK = Convert.ToInt32(vid);
+                        //h.GFK = Convert.ToInt32(Galry);
+                        h.PicPath = "/Rays/Img/" + file.FileName;
+                        //h.Photo = file.FileName;
+                        //h.Subject = Subject;
+                        h.ReNamePic = ReNamePic;
+                        h.CreateBy = Convert.ToInt32(category);
+                        h.CreateDate = DateTime.Now;
+                        //db.ArchPro.Add(h);
+                        db.SaveChanges();
+                        file.SaveAs(fname);
+                    }
+
+                    // Returns message that successfully uploaded  
+                    return Json(new { Success = true, resulte = ename, Message = "   بنجاح" + ename + " تم إضافة الصورة" }, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception ex)
+                {
+                    return Json("Error occurred. Error details: " + ex.Message);
+                }
+            }
+            else
+            {
+                return Json("No files selected.");
+            }
         }
     }
 }

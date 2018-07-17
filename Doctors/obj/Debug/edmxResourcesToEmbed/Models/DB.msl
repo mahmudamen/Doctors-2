@@ -737,11 +737,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="VnextPatients">
-      <EntityTypeMapping TypeName="SyrnModel.VnextPatient">
-        <MappingFragment StoreEntitySet="VnextPatient">
-          <ScalarProperty Name="NextPatient" ColumnName="NextPatient" />
-          <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
+    <EntitySetMapping Name="vRefundRps">
+      <EntityTypeMapping TypeName="SyrnModel.vRefundRp">
+        <MappingFragment StoreEntitySet="vRefundRp">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="ServName" ColumnName="ServName" />
+          <ScalarProperty Name="Serv" ColumnName="Serv" />
+          <ScalarProperty Name="PatientName" ColumnName="PatientName" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

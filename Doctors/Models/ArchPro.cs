@@ -12,9 +12,16 @@ namespace Doctors.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class VnextPatient
+    public partial class ArchPro
     {
-        public int ShiftID { get; set; }
-        public Nullable<int> NextPatient { get; set; }
+        public int ID { get; set; }
+        public int PatientID { get; set; }
+        public string PicPath { get; set; }
+        public string ReNamePic { get; set; }
+        public Nullable<int> CreateBy { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
+        public Nullable<bool> IsActive { get; set; }
+        public Nullable<bool> Posted { get; set; }
+        public Nullable<System.DateTime> PosteDate { get; set; }
     }
 }

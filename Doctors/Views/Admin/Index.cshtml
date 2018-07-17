@@ -232,6 +232,39 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="mdRefundeport">
+    <div class="modal-med">
+        <div class="modal-content">
+            <div class="modal-header">
+                <label class="modal-title">تقرير الغاء الحجز </label>
+            </div>
+            <div class="modal-body">
+                <table id="Refundreport" class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>رقم المريض</th>
+                            <th>اسم المريض </th>
+                            <th class="text-center"> تاريخ الحجز</th>
+                            <th>الخدمة</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                @*  <a href="javascript:;" id="adshift" type="button" class="btn btn-sm btn-success">اضافة</a>*@
+                <a type="button" href="javascript:;" class="btn btn-sm btn-danger" data-dismiss="modal">إغلاق</a>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- begin col-4 -->
 <br />
 <div id="content" class="content">
@@ -318,6 +351,7 @@
 </div>
 <link href="~/Content/select2.css" rel="stylesheet" />
 @section scripts{
+<link href="~/Content/google-grid.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-ui.min.js"></script>
     <script src="~/Scripts/apps.min.js"></script>
     <script src="~/Scripts/dts.js"></script>
@@ -422,6 +456,33 @@
              {
                  "data": null, "sClass": "dt-center", "width": "1%", "orderable": false,
                  "defaultContent": "<button  class='rebutton small btn-warning'id='spost'><i class='fa fa-eraser'></button>"
+             }
+                ]
+            });           
+        // var table refund report 
+            var table = $('#Refundeport').DataTable({
+                cache: true,
+                bProcessing: false, sAjaxSource: '/Doctors/Admin/RefundRp', "order": [[0, "desc"]], bFilter: true, bInfo: false, lengthChange: false, scrollY: '250px', scrollCollapse: true, bPaginate: true,
+                columns: [
+             { "data": "ID", "width": "1%" },
+              { "data": "PatientName", "width": "1%" },
+               { "data": "ID", "width": "1%" },
+             {
+                 "data": "ServName", "width": "5%", "render": function (data) {
+                     if (data == null) {
+                         return "--"
+                     }
+                     else {
+                         var date = new Date(parseInt(data.substr(6))).getDate();
+                         var datem = new Date(parseInt(data.substr(6))).getMonth() + 1;
+                         var datey = new Date(parseInt(data.substr(6))).getFullYear();
+                         var hour = new Date(parseInt(data.substr(6))).getHours();
+                         var minute = new Date(parseInt(data.substr(6))).getMinutes();
+                         var secend = new Date(parseInt(data.substr(6))).getSeconds();
+                         var fl = datey + "-" + datem + "-" + date + " " + hour + ":" + minute + ":" + secend;
+                         return fl
+                     }
+                 }
              }
                 ]
             });
@@ -557,6 +618,9 @@
             Gent();
             $('#mdshift').modal({ backdrop: false });
             $('#shiftdate').val(getdate);
+        });
+        $('#navRefundRp').click(function () {
+            $('#mdRefundreport').modal({ backdrop: false });
         });
         // Open modal form nav shift report total 
         $('#navshiftreport').click(function () {
