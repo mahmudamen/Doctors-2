@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace Doctors.Controllers
 {
-    [AuthorizeRoles("Admin" , "Doctor")]
+    [AuthorizeRoles("Admin", "Doctor", "Screen")]
     public class DoctorController : Controller
     {
         // GET: Doctor
@@ -31,7 +31,7 @@ namespace Doctors.Controllers
         public JsonResult PatTbl()
         {
             var query = db.Patients.Where(x => x.IsActive == true && x.PatienState == 3)
-            .Select(p => new { p.ID, p.PatientName, p.ServName , p.CreateDate , p.MedicalHistory , p.PrevDiagnosis , p.Diagnosis ,p.Examination });
+            .Select(p => new { p.ID, p.PatientName, p.ServName , p.CreateDate , p.MedicalHistory , p.PrevDiagnosis ,p.Treatment, p.Diagnosis ,p.Examination , p.Code });
             return Json(new { aaData = query }, JsonRequestBehavior.AllowGet);
         }
         public JsonResult WaitTbl()
@@ -41,7 +41,7 @@ namespace Doctors.Controllers
             return Json(new { aaData = query }, JsonRequestBehavior.AllowGet);
         }
         public JsonResult DrugsTbl() {
-            var query = db.ItemMedics.Where(x => x.IsActive == true).Select(n => new {n.ID, n.EnName , n.Materialact  });
+            var query = db.ItemMedics.Where(x => x.IsActive == true).Select(n => new { n.ID , n.EnName , n.Materialact  });
             return Json(new {aaData = query }, JsonRequestBehavior.AllowGet);
         }
         public JsonResult autoserv(string Prefix)
@@ -49,6 +49,19 @@ namespace Doctors.Controllers
             var CityName = db.ServLists.Where(o => o.ServName.Contains(Prefix) && o.IsActive == true)
                     .Select(x => new { x.ID, x.ServName, x.PaidAmount }).Take(20).ToList();
             return Json(CityName, JsonRequestBehavior.AllowGet);
+        }
+        // get patient's rays
+        public JsonResult PatRay(int? id) {
+            var query = db.ArchProes.Where(x => x.PatientID == 29).Single().ReNamePic;
+
+            return Json(query, JsonRequestBehavior.AllowGet);
+        }
+        // next patient button 
+        public JsonResult NextPat(int id ) {
+            var query = db.Patients.Where(x => x.ID == id).SingleOrDefault();
+            query.PatienState = 4;
+            db.SaveChanges();
+            return Json(new { Success = true, Message = "تم انهاء زيارة المريض " }, JsonRequestBehavior.AllowGet);
         }
         // add new patient
         public JsonResult adpat(string patname, string mobile, string phone, int servID, string servname, decimal paidamount, DateTime? visitdate, bool gender, string adress, int cby, string cbyn)

@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace Doctors.Controllers
 {
-     [AuthorizeRoles("Admin" , "Doctor")]
+     [AuthorizeRoles("Admin" , "Doctor" ,"Screen")]
     public class AdminController : Controller
     {
         DB db = new DB();
@@ -68,7 +68,7 @@ namespace Doctors.Controllers
             m.CreateBy = cby;
             m.IsActive = true;
             m.PatienState = 1;
-            m.CreateDate = visitdate;
+            m.CreateDate = DateTime.Now;
             m.ShiftID = shftid;
             db.Patients.Add(m);
             db.SaveChanges();
@@ -92,7 +92,7 @@ namespace Doctors.Controllers
                 m.CreateBy = cby;
                 m.IsActive = true;
                 m.PatienState = 1;
-                m.CreateDate = visitdate;
+                m.CreateDate = DateTime.Now;
                 m.ShiftID = shftid;
                 db.Patients.Add(m);
                 db.SaveChanges();
@@ -159,8 +159,9 @@ namespace Doctors.Controllers
             return Json(new { Success = true, Message = "تم نقل بيانات المريض الي شاشة الطبيب" }, JsonRequestBehavior.AllowGet);
         }
         public JsonResult SendtoDoct(int id) {
-            var patin = db.Patients.Where(x => x.ID == id).LastOrDefault();
-            patin.PatienState = 4;
+            var patin = db.Patients.Where(x => x.ID == id).SingleOrDefault();
+            patin.PatienState = 3;
+            db.SaveChanges();
             return Json(new { Success = true, Message = "تم نقل بيانات المريض الي شاشة الطبيب" }, JsonRequestBehavior.AllowGet);
         }
         public JsonResult Refund(int id) {
@@ -220,7 +221,7 @@ namespace Doctors.Controllers
                         h.PicPath = "/Rays/Img/" + m;
                         //h.Photo = file.FileName;
                         //h.Subject = Subject;
-                   //     h.CreateBy = Convert.ToInt32(category);
+                        h.ReNamePic = m;
                         h.CreateDate = DateTime.Now;
                         db.ArchProes.Add(h);
                         db.SaveChanges();

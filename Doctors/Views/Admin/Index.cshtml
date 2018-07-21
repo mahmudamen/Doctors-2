@@ -483,7 +483,6 @@
                     </table>
                 </div>
             </div>
-
         </div>
         <div class="col-md-6">
             <div id="b-panal" class="panel panel-info" style="margin-bottom:5px" data-sortable-id="index-3">
@@ -493,7 +492,7 @@
                         <button class="btn-group-sm btn-icon btn-square btn-info pull-left" title="تبديل " id="btwaitexpand"><i class="fa fa-expand"></i></button>
                         <button class="btn-group-sm btn-icon btn-square btn-success pull-left" title="تحديث " id="refresh"><i class="fa fa-repeat"></i></button>
                         @*<button class="btn-group-sm btn-icon btn-square btn-danger pull-left" title="المريض التالي  " id="SendToDoctor"><i class="fa fa-backward"></i></button>*@
-                        <button class="btn-group-sm btn-icon btn-square btn-danger pull-left" title="رد المبلغ للمريض " id="refund"><i class="fa fa-eraser"></i> </button>
+                        @*<button class="btn-group-sm btn-icon btn-square btn-danger pull-left" title="رد المبلغ للمريض " id="refund"><i class="fa fa-eraser"></i> </button>*@
                     </div>
                 </div>
                 <div class="panel-body" id="panelwaitlist" style="max-height:400px;   min-height:200px; padding:10px">
@@ -1074,6 +1073,8 @@
             table.$('tr.selected').removeClass('selected');
             $(this).closest('tr').addClass('selected');
             var codes = table.cell('.selected', 0).data();
+            var conf = confirm("هل تريد فعلاً ارسال المريض الي شاشة الطبيب");
+            if (conf) {
             $.ajax({
                 url: "@(Url.Action("SendtoDoct", "Admin"))",
                 type: "GET",
@@ -1089,6 +1090,10 @@
                 }
             }
         });
+            } else {
+                alert('تم إلغاء العملية')
+            }
+
         });
         // table button action open rays modal
         $('#tbwait tbody').on('click', '.openray', function () {

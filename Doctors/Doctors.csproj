@@ -161,6 +161,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\DoctorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ScreenController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -535,7 +536,7 @@
     <Content Include="Views\Shared\InvMan.cshtml" />
     <Content Include="Views\Admin\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_othr.cshtml" />
-    <Content Include="Views\Shared\_opr.cshtml" />
+    <Content Include="Views\Shared\_Screen.cshtml" />
     <Content Include="Views\Shared\_invu.cshtml" />
     <Content Include="Views\Shared\_oprusr.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
@@ -543,6 +544,8 @@
     <Content Include="Views\Admin\cash.cshtml" />
     <Content Include="Views\Doctor\Index.cshtml" />
     <Content Include="Views\Doctor\_ViewStart.cshtml" />
+    <Content Include="Views\Screen\_ViewStart.cshtml" />
+    <Content Include="Views\Screen\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

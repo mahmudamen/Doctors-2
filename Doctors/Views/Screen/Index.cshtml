@@ -9,15 +9,6 @@
             setTimeout(shiftcount, 900000);
         });;
     }
-    function picpath(id) {
-        $.ajax({
-            url: '/Doctors/Doctor/PatRay', cache: false, type: "POST", success: function (data) {
-                $('#targetImg').attr('src', '/Doctors/Rays/Img/' + data)
-            }
-        }).then(function () {
-            setTimeout(shiftcount, 900000);
-        });;
-    }
     function Gent() {
         $.ajax({
             url: '/Doctors/Doctor/Tcount', cache: false, type: "POST", success: function (data) {
@@ -51,7 +42,6 @@
 <link href="~/Content/style.min.css" rel="stylesheet" />
 <link href="~/Content/gritter/css/jquery.gritter.css" rel="stylesheet" />
 <link href="~/Content/style-responsive.min.css" rel="stylesheet" />
-<link href="~/Content/google-grid.css" rel="stylesheet" />
 <link href="~/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
 <link href="~/Content/animate.css" rel="stylesheet" media="screen">
 <input type="hidden" id="cby" value=@HttpContext.Current.User.Identity.Name.Split('|')[1] />
@@ -269,12 +259,10 @@
                                 <th class="text-center">Diagnosiis</th>
                                 <th class="text-center">Examination</th>
                                 <th class="text-center">Next Patient</th>
-                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -304,7 +292,7 @@
                         <button class="btn-group-sm btn-icon btn-square btn-success pull-left" title="تحديث " id="refresh"><i class="fa fa-repeat"></i></button>
                     </div>
                 </div>
-                <div class="panel-body" id="panelitemmedic" style="max-height:400px; display:none;  min-height:200px; padding:10px">
+                <div class="panel-body" id="panelitemmedic" style="max-height:400px;   min-height:200px; padding:10px">
                     <table id="tbitemmedit" class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
                         <thead>
                             <tr>
@@ -325,89 +313,17 @@
             </div>
             <!-- end col-4 -->
         </div>
-
-        <!-- end col-4 -->
-    </div>
-    <div class="row">
-
-        <div class="col-md-6">
-            <div id="b-panal" class="panel panel-danger"  style="margin-bottom:5px;  "  data-sortable-id="index-3">
-                <div class="panel-heading" style="height: 50px;">
-                    <label class="panel-title" style="font-size:15px; align-content:center">  X-Rays </label>
-                    <div class="btn-group m-r-5 pull-left">
-                        <button class="btn-group-sm btn-icon btn-square btn-info pull-left" title="تبديل " id="btRaysexpand"><i class="fa fa-expand"></i></button>
-                       @* <button class="btn-group-sm btn-icon btn-square btn-success pull-left" title="تحديث " id="refreshwait"><i class="fa fa-repeat"></i></button>*@
-                    </div>
-                </div>
-                <div class="panel-body" id="panelraylist" style="max-height:400px;  display:none; min-height:200px; padding:10px">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div id="grid-gallery" class="grid-gallery">
-                            <section class="grid-wrap">
-                                <ul class="grid" >
-                                    <li class="grid-sizer"></li><!-- for Masonry column width -->
-                                    <li style="width: 100%">
-                                        <figure>
-                                            <img id="targetImg" src=" " alt="صورة الاشاعة  " />
-                                            <figcaption>
-                                                <label id="namefiles"></label>
-                                            </figcaption>
-                                        </figure>
-                                    </li>
-                                </ul>
-                            </section><!-- // grid-wrap -->
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div id="b-panal" class="panel panel-primary" style="margin-bottom:5px" data-sortable-id="index-3">
-                <div class="panel-heading" style="height: 50px;">
-                    <label class="panel-title" style="font-size:13px;">  Medical History </label>
-                    <div class="btn-group m-r-5 pull-left">
-                        <button class="btn-group-sm btn-icon btn-square btn-info pull-left" title="تبديل " id="btMHexpand"><i class="fa fa-expand"></i></button>
-                        <button class="btn-group-sm btn-icon btn-square btn-success pull-left" title="تحديث " id="refreshMH"><i class="fa fa-repeat"></i></button>
-
-                    </div>
-                </div>
-                <div class="panel-body" id="panelMedicalHistory" style="max-height:400px; display:none;  min-height:200px; padding:10px">
-                    <table id="tabMH" class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
-                        <thead>
-                            <tr>
-                                <th>رقم الملف</th>
-                                <th class="text-center"> المريض</th>
-                                <th>خدمة</th>
-                                <th>وقت الحضور</th>
-                                <th>ترتيب</th>
-                                <th>باقي</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
         <div class="col-md-6">
             <div id="b-panal" class="panel panel-primary" style="margin-bottom:5px" data-sortable-id="index-3">
                 <div class="panel-heading" style="height: 50px;">
                     <label class="panel-title" style="font-size:13px;">  Queue </label>
                     <div class="btn-group m-r-5 pull-left">
-                        <button class="btn-group-sm btn-icon btn-square btn-info pull-left" title="تبديل " id="btQueueexpand"><i class="fa fa-expand"></i></button>
+                        <button class="btn-group-sm btn-icon btn-square btn-info pull-left" title="تبديل " id="btwaitexpand"><i class="fa fa-expand"></i></button>
                         <button class="btn-group-sm btn-icon btn-square btn-success pull-left" title="تحديث " id="refreshwait"><i class="fa fa-repeat"></i></button>
-
+                       
                     </div>
                 </div>
-                <div class="panel-body" id="panelwaitlist" style="max-height:400px; display:none;  min-height:200px; padding:10px">
+                <div class="panel-body" id="panelwaitlist" style="max-height:400px;   min-height:200px; padding:10px">
                     <table id="tbwait" class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
                         <thead>
                             <tr>
@@ -435,6 +351,14 @@
         </div>
         <!-- end col-4 -->
     </div>
+    <div class="row">
+
+        <div class="col-md-6">
+
+
+        </div>
+        <!-- end col-4 -->
+    </div>
 </div>
 <link href="~/Content/select2.css" rel="stylesheet" />
 @section scripts{
@@ -447,17 +371,6 @@
                 App.init();
                 // date function
             });
-            function refresh() {
-                var table = $('#tbwait').DataTable();
-                table.clear();
-                table.draw();
-                table.ajax.url('/Doctors/Doctor/WaitTbl').load();
-
-                var table = $('#dcpatient').DataTable();
-                table.clear();
-                table.draw();
-                table.ajax.url('/Doctors/Doctor/PatTbl').load();
-            }
             function getdate() {
                 var date = new Date(),
                   year = date.getFullYear(),
@@ -473,7 +386,6 @@
                   formatedSecond = (second.length === 1) ? ("0" + second) : second;
                 return formatedDay + "-" + formatedMonth + "-" + year + " " + formatedHour + ':' + formatedMinute + ':' + formatedSecond;
             };
-
         // select2 function
             $(".js-example-basic-single").select2({
                 dir: "rtl", language: "ar", selectOnClose: true, width: '30%'
@@ -483,7 +395,7 @@
                 cache: true,
                 bProcessing: false, sAjaxSource: '/Doctors/Doctor/PatTbl', "order": [[0, "desc"]], bFilter: false, bInfo: false, lengthChange: false, scrollY: false, scrollCollapse: false, bPaginate: false,
                 columns: [
-             { "data": "ID", "visible": false },        
+             { "data": "ID", "visible": false },
              { "data": "PatientName", "width": "1%" },
              { "data": "ServName", "width": "1%" },
              {"data": "CreateDate", "width": "1%", "render": function (data) {
@@ -496,16 +408,18 @@
                          var secend = new Date(parseInt(data.substr(6))).getSeconds();
                          var fl = datey + "-" + datem + "-" + date + " " + hour + ":" + minute + ":" + secend ;
               return fl}}},
+              {
+                  "data": null, "sClass": "dt-center", "width": "1%", "orderable": false,
+                  "defaultContent": "<button  class='xbutton small btn-danger'id='post'><i class='fa fa-flask'></button>"
+              },
              { "data": "MedicalHistory", "width": "1%" },
-             {"data":"Treatment","width": "1%"},
              { "data": "PrevDiagnosis", "width": "1%" },
              { "data": "Diagnosis", "width": "1%" },
              { "data": "Examination", "width": "1%" },
              {
                  "data": null, "sClass": "dt-center", "width": "1%", "orderable": false,
-                 "defaultContent": "<button  class='nextpatient small btn-success'id='post'><i class='fa fa-step-backward'></button>"
-             },
-                { "data": "Code", "visible": false }
+                 "defaultContent": "<button  class='xbutton small btn-success'id='post'><i class='fa fa-step-backward'></button>"
+             }
                 ]
             });
         // var data table wait quee list 
@@ -591,13 +505,7 @@
                 table.draw();
                 table.ajax.url('/Doctors/Doctor/PatTbl').load();
             });
-            $('#btRaysexpand').click(function () {
-                $('#panelraylist').toggle();
-
-            });
-            $('#btQueueexpand').click(function () {
-                $('#panelwaitlist').toggle();
-            });
+            
             // expand item medic list 
             $('#btitem').click(function () {
                 $('#panelitemmedic').toggle();
@@ -633,9 +541,6 @@
                 var table = $("#dcpatient").DataTable();
                 table.$('tr.selected').removeClass('selected');
                 $(this).closest('tr').addClass('selected');
-                var vid = table.cell('.selected', 0).data();
-                console.log(vid);
-                picpath(29);
             });
         // select table wait list
             $('#tbwait tbody').on('click', 'tr', function () {
@@ -648,34 +553,6 @@
                 var table = $("#shiftreport").DataTable();
                 table.$('tr.selected').removeClass('selected');
                 $(this).closest('tr').addClass('selected');
-            });
-        // nextpatient
-            $('#dcpatient tbody').on('click', '.nextpatient', function () {
-                var table = $("#dcpatient").DataTable();
-                table.$('tr.selected').removeClass('selected');
-                $(this).closest('tr').addClass('selected');
-                var idv  = table.cell('.selected', 0).data();
-                var conf = confirm("هل تريد انهاء الزيارة  ");
-                if (conf) {
-                    $.ajax({
-                        url: "@(Url.Action("NextPat", "Doctor"))",
-                        type: "GET",
-                    contentType: "application/json; charset=utf-8",
-                    data: { ID: idv },
-                    dataType: "json",
-                    success: function (data) {
-                        if (data.Success) {
-                            alert(data.Message)
-                            refresh()
-                        } else {
-                            alert(data.Message)
-                        }
-                    }
-                });
-            } else {
-                alert('لقد تم الغاء العملية')
-            }
-
             });
             // auto complete for serv id
             $('#serv').autocomplete({
