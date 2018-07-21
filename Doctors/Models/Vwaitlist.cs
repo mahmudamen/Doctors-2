@@ -29,9 +29,10 @@ namespace Doctors.Models
         public Nullable<int> CreateBy { get; set; }
         public Nullable<int> PatienState { get; set; }
         public Nullable<System.DateTime> StartWait { get; set; }
-        public Nullable<int> Sorted { get; set; }
-        public Nullable<int> ShiftID { get; set; }
+        public int Sorted { get; set; }
+        public int ShiftID { get; set; }
         public Nullable<System.DateTime> ShftDate { get; set; }
         public Nullable<bool> shfactive { get; set; }
+        public Nullable<int> Code { get; set; }
     }
 }

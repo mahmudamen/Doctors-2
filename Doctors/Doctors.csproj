@@ -341,9 +341,6 @@
     <Content Include="Assets\black-0.6.png" />
     <Content Include="Assets\black-0.8.png" />
     <Content Include="Assets\favicon.ico" />
-    <Content Include="Assets\konafaico.ico" />
-    <Content Include="Assets\logo.png" />
-    <Content Include="Assets\shawrma.png" />
     <Content Include="Assets\style.min.css" />
     <Content Include="Assets\white-0.98.png" />
     <Content Include="Content\AboutME.css" />

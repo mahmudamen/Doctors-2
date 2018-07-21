@@ -54,3 +54,4 @@ C:\Doctors\Doctors\bin\Antlr3.Runtime.pdb
 C:\Doctors\Doctors\bin\Newtonsoft.Json.xml
 C:\Doctors\Doctors\obj\Debug\Doctors.dll
 C:\Doctors\Doctors\obj\Debug\Doctors.pdb
+C:\Doctors\Doctors\obj\Debug\Doctors.csprojResolveAssemblyReference.cache

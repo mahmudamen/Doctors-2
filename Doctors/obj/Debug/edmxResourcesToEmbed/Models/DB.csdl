@@ -771,10 +771,11 @@
     <Property Name="CreateBy" Type="Int32" />
     <Property Name="PatienState" Type="Int32" />
     <Property Name="StartWait" Type="DateTime" Precision="3" />
-    <Property Name="Sorted" Type="Int32" />
-    <Property Name="ShiftID" Type="Int32" />
+    <Property Name="Sorted" Type="Int32" Nullable="false" />
+    <Property Name="ShiftID" Type="Int32" Nullable="false" />
     <Property Name="ShftDate" Type="DateTime" Precision="3" />
     <Property Name="shfactive" Type="Boolean" />
+    <Property Name="Code" Type="Int32" />
   </EntityType>
   <EntityType Name="ServList">
     <Key>
@@ -831,6 +832,7 @@
     <Property Name="Expr1" Type="Int32" Nullable="false" />
     <Property Name="ShftDate" Type="DateTime" Precision="3" />
     <Property Name="shiftacitve" Type="Boolean" />
+    <Property Name="Code" Type="Int32" />
   </EntityType>
   <EntityType Name="VshiftTotal">
     <Key>
@@ -911,6 +913,7 @@
     <NavigationProperty Name="ServList" Relationship="SyrnModel.FK_Patient_ServList" FromRole="Patient" ToRole="ServList" />
     <NavigationProperty Name="ShiftList" Relationship="SyrnModel.FK_Patient_ShiftList" FromRole="Patient" ToRole="ShiftList" />
     <NavigationProperty Name="StateList" Relationship="SyrnModel.FK_Patient_StateList" FromRole="Patient" ToRole="StateList" />
+    <Property Name="Code" Type="Int32" />
   </EntityType>
   <Association Name="FK_Patient_ServList">
     <End Type="SyrnModel.ServList" Role="ServList" Multiplicity="0..1" />
@@ -957,6 +960,7 @@
     <Property Name="Serv" Type="Int32" />
     <Property Name="ServName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="Code" Type="Int32" />
   </EntityType>
   <EntityType Name="ArchPro">
     <Key>

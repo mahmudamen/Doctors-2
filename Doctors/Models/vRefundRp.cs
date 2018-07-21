@@ -19,5 +19,6 @@ namespace Doctors.Models
         public Nullable<int> Serv { get; set; }
         public string ServName { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
+        public Nullable<int> Code { get; set; }
     }
 }

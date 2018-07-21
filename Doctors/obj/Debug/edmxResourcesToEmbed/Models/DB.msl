@@ -579,6 +579,7 @@
     <EntitySetMapping Name="Vwaitlists">
       <EntityTypeMapping TypeName="SyrnModel.Vwaitlist">
         <MappingFragment StoreEntitySet="Vwaitlist">
+          <ScalarProperty Name="Code" ColumnName="Code" />
           <ScalarProperty Name="shfactive" ColumnName="shfactive" />
           <ScalarProperty Name="ShftDate" ColumnName="ShftDate" />
           <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
@@ -632,6 +633,7 @@
     <EntitySetMapping Name="VpatientLists">
       <EntityTypeMapping TypeName="SyrnModel.VpatientList">
         <MappingFragment StoreEntitySet="VpatientList">
+          <ScalarProperty Name="Code" ColumnName="Code" />
           <ScalarProperty Name="shiftacitve" ColumnName="shiftacitve" />
           <ScalarProperty Name="ShftDate" ColumnName="ShftDate" />
           <ScalarProperty Name="Expr1" ColumnName="Expr1" />
@@ -712,6 +714,7 @@
     <EntitySetMapping Name="Patients">
       <EntityTypeMapping TypeName="SyrnModel.Patient">
         <MappingFragment StoreEntitySet="Patient">
+          <ScalarProperty Name="Code" ColumnName="Code" />
           <ScalarProperty Name="Treatment" ColumnName="Treatment" />
           <ScalarProperty Name="Diagnosis" ColumnName="Diagnosis" />
           <ScalarProperty Name="PrevDiagnosis" ColumnName="PrevDiagnosis" />
@@ -740,6 +743,7 @@
     <EntitySetMapping Name="vRefundRps">
       <EntityTypeMapping TypeName="SyrnModel.vRefundRp">
         <MappingFragment StoreEntitySet="vRefundRp">
+          <ScalarProperty Name="Code" ColumnName="Code" />
           <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
           <ScalarProperty Name="ServName" ColumnName="ServName" />
           <ScalarProperty Name="Serv" ColumnName="Serv" />

@@ -36,6 +36,7 @@ namespace Doctors.Models
         public string PrevDiagnosis { get; set; }
         public string Diagnosis { get; set; }
         public string Treatment { get; set; }
+        public Nullable<int> Code { get; set; }
     
         public virtual ServList ServList { get; set; }
         public virtual ShiftList ShiftList { get; set; }

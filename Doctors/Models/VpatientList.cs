@@ -34,5 +34,6 @@ namespace Doctors.Models
         public int Expr1 { get; set; }
         public Nullable<System.DateTime> ShftDate { get; set; }
         public Nullable<bool> shiftacitve { get; set; }
+        public Nullable<int> Code { get; set; }
     }
 }

@@ -34,15 +34,14 @@ namespace Doctors.Controllers
         {
             DB db = new DB();
             var query = db.VpatientLists.Where(x =>  x.IsActive == true )
-            .Select(p => new { p.ID, p.PatientName, p.Serv ,p.PaidAmount ,p.ShiftID });
+            .Select(p => new { p.ID, p.PatientName, p.Serv, p.ServName ,p.PaidAmount ,p.ShiftID });
             return Json(new { aaData = query }, JsonRequestBehavior.AllowGet);
         }
-
         public JsonResult WaitTbl()
         {
             DB db = new DB();
             var query = db.Vwaitlists.Where(x => x.shfactive == true)
-            .Select(p => new { p.ID, p.PatientName, p.ServName ,p.CreateDate ,p.Sorted,p.RemainingAmount ,p.ShiftID});
+            .Select(p => new { p.ID, p.PatientName, p.ServName ,p.CreateDate ,p.Sorted,p.RemainingAmount ,p.ShiftID ,p.Code });
             return Json(new { aaData = query }, JsonRequestBehavior.AllowGet);
         }
         public JsonResult autoserv(string Prefix)
@@ -54,8 +53,11 @@ namespace Doctors.Controllers
         // add new patient
         public JsonResult adpat(string patname, string mobile,string phone,int servID,int shftid, string servname,decimal paidamount,DateTime? visitdate, bool gender,string adress, int cby, string cbyn)
         {
+
+            var cod = db.Patients.ToList().LastOrDefault().ID +1;
             Patient m = new Patient();
             m.PatientName = patname;
+            m.Code = cod;
             m.Mobile = mobile;
             m.Phone = phone;
             m.Address = adress;
@@ -72,15 +74,47 @@ namespace Doctors.Controllers
             db.SaveChanges();
             return Json(new { Success = true, Message = "تمت الإضافة بنجاح" }, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult adpats(string patname, string mobile, string phone, int servID, int shftid, string servname, decimal paidamount, DateTime? visitdate, bool gender, string adress, int cby,int cod, string cbyn)
+        {
+            var z = db.Patients.Where(x => x.Code == cod && x.ShiftID == shftid).LastOrDefault();
+            if (z == null)
+            {
+                Patient m = new Patient();
+                m.PatientName = patname;
+                m.Code = cod;
+                m.Mobile = mobile;
+                m.Phone = phone;
+                m.Address = adress;
+                m.Serv = servID;
+                m.PaidAmount = paidamount;
+                m.ServName = servname;
+                m.Gender = gender;
+                m.CreateBy = cby;
+                m.IsActive = true;
+                m.PatienState = 1;
+                m.CreateDate = visitdate;
+                m.ShiftID = shftid;
+                db.Patients.Add(m);
+                db.SaveChanges();
+            }
+            else
+            {
+                return Json(new { Success = false, Message = "لا يجوز التكرار" }, JsonRequestBehavior.AllowGet);
+            }
+            
+            return Json(new { Success = true, Message = "تمت الإضافة بنجاح" }, JsonRequestBehavior.AllowGet);
+        }
         // add new shift work 
-        public JsonResult adshift(DateTime shiftdate , string cbyn)
+        public JsonResult adshift(DateTime shiftdate, string cbyn)
         {
             ShiftList shft = new ShiftList();
             var isactive = db.ShiftLists.Where(x => x.IsActive == true).ToList();
             isactive.ForEach(x => x.IsActive = false);
             db.SaveChanges();
-            
-            shft.ShftDate = shiftdate;
+            if (shiftdate == null) {
+                shiftdate = DateTime.Now;
+            }
+            shft.ShftDate =  shiftdate   ;
             shft.IsActive = true;
             db.ShiftLists.Add(shft);
             db.SaveChanges();
@@ -124,11 +158,9 @@ namespace Doctors.Controllers
             db.SaveChanges();
             return Json(new { Success = true, Message = "تم نقل بيانات المريض الي شاشة الطبيب" }, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult SendtoDoct() {
-            var query = db.Patients.Where(x => x.PatienState == 3).Select( x => new { x.Sorted });
-            var patin = db.Patients.Where(x => x.PatienState == 3).SingleOrDefault();
+        public JsonResult SendtoDoct(int id) {
+            var patin = db.Patients.Where(x => x.ID == id).LastOrDefault();
             patin.PatienState = 4;
-
             return Json(new { Success = true, Message = "تم نقل بيانات المريض الي شاشة الطبيب" }, JsonRequestBehavior.AllowGet);
         }
         public JsonResult Refund(int id) {
@@ -142,8 +174,11 @@ namespace Doctors.Controllers
         public JsonResult RefundRp()
         {
             var query = db.vRefundRps.Select(x => new { x.ID , x.PatientName , x.ServName , x.CreateDate });
-
             return Json(new { aaData = query } , JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult TabPatients() {
+            var query = db.Patients.Select(x => new { x.ID, x.PatientName ,x.ServName ,x.CreateDate ,x.ShiftID , x.Code });
+            return Json(new { aaData = query }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         public ActionResult UploadFiles()
@@ -160,12 +195,6 @@ namespace Doctors.Controllers
                     HttpFileCollectionBase files = Request.Files;
                     string category = HttpContext.Request.Form["cby"];
                     string vid = HttpContext.Request.Form["vid"];
-                    string Galry = HttpContext.Request.Form["Galery"];
-                    string Subject = HttpContext.Request.Form["Subject"];
-                    string ReNamePic = HttpContext.Request.Form["ReNamePic"];
-
-
-
                     for (int i = 0; i < files.Count; i++)
                     {
                         //string path = AppDomain.CurrentDomain.BaseDirectory + "Uploads/";  
@@ -183,18 +212,17 @@ namespace Doctors.Controllers
                             fname = file.FileName;
                         }
                         // Get the complete folder path and store the file inside it. 
-                        var m = Convert.ToString(DateTime.Now);
-                        fname = Path.Combine(Server.MapPath("~/Img"), fname);
+                        var m = Guid.NewGuid() + Path.GetExtension(file.FileName);
+                        fname = Path.Combine(Server.MapPath("~/Rays/Img"), m);
                         ArchPro h = new ArchPro();
-                        //h.ProListFK = Convert.ToInt32(vid);
+                        h.PatientID = Convert.ToInt32(vid);
                         //h.GFK = Convert.ToInt32(Galry);
-                        h.PicPath = "/Rays/Img/" + file.FileName;
+                        h.PicPath = "/Rays/Img/" + m;
                         //h.Photo = file.FileName;
                         //h.Subject = Subject;
-                        h.ReNamePic = ReNamePic;
-                        h.CreateBy = Convert.ToInt32(category);
+                   //     h.CreateBy = Convert.ToInt32(category);
                         h.CreateDate = DateTime.Now;
-                        //db.ArchPro.Add(h);
+                        db.ArchProes.Add(h);
                         db.SaveChanges();
                         file.SaveAs(fname);
                     }
@@ -210,6 +238,10 @@ namespace Doctors.Controllers
             {
                 return Json("No files selected.");
             }
+        }
+        public JsonResult ReShift(int id ) {
+
+            return Json(null, JsonRequestBehavior.AllowGet);
         }
     }
 }
