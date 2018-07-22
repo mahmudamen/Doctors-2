@@ -440,7 +440,6 @@
         </div>
     </div>
 </div>
-
 <!-- begin col-4 -->
 <br />
 <div id="content" class="content">
@@ -1153,6 +1152,7 @@
                 $('#spatientname').val(vname);
             }
         });
+        // open report cash
         $('#patlist tbody').on('click', '.cashx', function () {
             var table = $("#patlist").DataTable();
             table.$('tr.selected').removeClass('selected');
@@ -1166,6 +1166,7 @@
             $('#xval').text(moun);
             $('#mdcashrp').modal({ backdrop: false });
         });
+        // print report cash
         $('#bbcashrp').click(function () {
             $("#shiftnum").text($("#qdate").val())
             $("#qdate").hide()

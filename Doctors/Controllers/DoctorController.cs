@@ -23,6 +23,10 @@ namespace Doctors.Controllers
             //      ViewBag.itmtype = new SelectList(db.TypeList, "TypID", "TypName");
             return View();
         }
+        public  ActionResult ScreenS()
+        {
+            return View();
+        }
         public JsonResult gdate()
         {
             var query = DateTime.Now;
@@ -31,7 +35,7 @@ namespace Doctors.Controllers
         public JsonResult PatTbl()
         {
             var query = db.Patients.Where(x => x.IsActive == true && x.PatienState == 3)
-            .Select(p => new { p.ID, p.PatientName, p.ServName , p.CreateDate , p.MedicalHistory , p.PrevDiagnosis ,p.Treatment, p.Diagnosis ,p.Examination , p.Code });
+            .Select(p => new { p.ID, p.PatientName, p.ServName ,p.Serv, p.CreateDate , p.MedicalHistory , p.PrevDiagnosis ,p.Treatment, p.Diagnosis ,p.Examination , p.Code });
             return Json(new { aaData = query }, JsonRequestBehavior.AllowGet);
         }
         public JsonResult WaitTbl()
@@ -113,6 +117,19 @@ namespace Doctors.Controllers
         {
             var query = db.ShiftLists.Where(x => x.IsActive == true).Single().ShftDate;
             return Json(query, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult MDetails(int? id) {
+            if (id == null) {
+                var query = db.PatientItemMedics.Select(x => new { x.ID, x.PatientID, x.ItemMedicID, x.EnName, x.Dose, x.DoseName }).Take(0);
+                return Json(new { aaData = query }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var query = db.PatientItemMedics.Where(x => x.PatientID == id).Select(x => new { x.ID, x.PatientID, x.ItemMedicID, x.EnName, x.Dose, x.DoseName });
+                return Json(new { aaData = query }, JsonRequestBehavior.AllowGet);
+            }
+            
+            
         }
     }
 }

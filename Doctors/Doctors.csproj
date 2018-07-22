@@ -541,7 +541,7 @@
     <Content Include="Views\Shared\_oprusr.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\UnAuthorized.cshtml" />
-    <Content Include="Views\Admin\cash.cshtml" />
+    <Content Include="Views\Admin\ScreenS.cshtml" />
     <Content Include="Views\Doctor\Index.cshtml" />
     <Content Include="Views\Doctor\_ViewStart.cshtml" />
     <Content Include="Views\Screen\_ViewStart.cshtml" />
@@ -560,6 +560,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

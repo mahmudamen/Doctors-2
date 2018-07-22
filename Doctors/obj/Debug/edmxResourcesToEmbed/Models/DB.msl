@@ -701,16 +701,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="PatientItemMedics">
-      <EntityTypeMapping TypeName="SyrnModel.PatientItemMedic">
-        <MappingFragment StoreEntitySet="PatientItemMedic">
-          <ScalarProperty Name="DoseID" ColumnName="DoseID" />
-          <ScalarProperty Name="ItemMedic" ColumnName="ItemMedic" />
-          <ScalarProperty Name="PatientID" ColumnName="PatientID" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Patients">
       <EntityTypeMapping TypeName="SyrnModel.Patient">
         <MappingFragment StoreEntitySet="Patient">
@@ -762,6 +752,20 @@
           <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
           <ScalarProperty Name="ReNamePic" ColumnName="ReNamePic" />
           <ScalarProperty Name="PicPath" ColumnName="PicPath" />
+          <ScalarProperty Name="PatientID" ColumnName="PatientID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PatientItemMedics">
+      <EntityTypeMapping TypeName="SyrnModel.PatientItemMedic">
+        <MappingFragment StoreEntitySet="PatientItemMedic">
+          <ScalarProperty Name="Period" ColumnName="Period" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="DoseName" ColumnName="DoseName" />
+          <ScalarProperty Name="Dose" ColumnName="Dose" />
+          <ScalarProperty Name="EnName" ColumnName="EnName" />
+          <ScalarProperty Name="ItemMedicID" ColumnName="ItemMedicID" />
           <ScalarProperty Name="PatientID" ColumnName="PatientID" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>

@@ -70,9 +70,9 @@ namespace Doctors.Models
         public virtual DbSet<VshiftTotal> VshiftTotals { get; set; }
         public virtual DbSet<DoseList> DoseLists { get; set; }
         public virtual DbSet<ItemMedic> ItemMedics { get; set; }
-        public virtual DbSet<PatientItemMedic> PatientItemMedics { get; set; }
         public virtual DbSet<Patient> Patients { get; set; }
         public virtual DbSet<vRefundRp> vRefundRps { get; set; }
         public virtual DbSet<ArchPro> ArchProes { get; set; }
+        public virtual DbSet<PatientItemMedic> PatientItemMedics { get; set; }
     }
 }

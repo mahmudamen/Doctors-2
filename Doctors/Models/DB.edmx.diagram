@@ -54,13 +54,13 @@
         <EntityTypeShape EntityType="SyrnModel.VshiftTotal" Width="1.5" PointX="5.375" PointY="5.75" />
         <EntityTypeShape EntityType="SyrnModel.DoseList" Width="1.5" PointX="7.375" PointY="4.75" />
         <EntityTypeShape EntityType="SyrnModel.ItemMedic" Width="1.5" PointX="15.375" PointY="19.75" />
-        <EntityTypeShape EntityType="SyrnModel.PatientItemMedic" Width="1.5" PointX="21.375" PointY="0.75" />
         <EntityTypeShape EntityType="SyrnModel.Patient" Width="1.5" PointX="21.625" PointY="15.25" />
         <AssociationConnector Association="SyrnModel.FK_Patient_ServList" />
         <AssociationConnector Association="SyrnModel.FK_Patient_ShiftList" />
         <AssociationConnector Association="SyrnModel.FK_Patient_StateList" />
         <EntityTypeShape EntityType="SyrnModel.vRefundRp" Width="1.5" PointX="21.375" PointY="6.75" />
         <EntityTypeShape EntityType="SyrnModel.ArchPro" Width="1.5" PointX="21.375" PointY="9.75" />
+        <EntityTypeShape EntityType="SyrnModel.PatientItemMedic" Width="1.5" PointX="21.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

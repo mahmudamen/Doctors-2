@@ -320,8 +320,12 @@
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="PatientID" Type="int" />
-    <Property Name="ItemMedic" Type="int" />
-    <Property Name="DoseID" Type="int" />
+    <Property Name="ItemMedicID" Type="int" />
+    <Property Name="EnName" Type="nvarchar" MaxLength="255" />
+    <Property Name="Dose" Type="int" />
+    <Property Name="DoseName" Type="nvarchar" MaxLength="255" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="Period" Type="int" />
   </EntityType>
   <EntityType Name="ServList">
     <Key>

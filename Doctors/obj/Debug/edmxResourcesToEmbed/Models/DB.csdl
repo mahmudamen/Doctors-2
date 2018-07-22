@@ -735,7 +735,6 @@
     <EntitySet Name="VshiftTotals" EntityType="SyrnModel.VshiftTotal" />
     <EntitySet Name="DoseLists" EntityType="SyrnModel.DoseList" />
     <EntitySet Name="ItemMedics" EntityType="SyrnModel.ItemMedic" />
-    <EntitySet Name="PatientItemMedics" EntityType="SyrnModel.PatientItemMedic" />
     <EntitySet Name="Patients" EntityType="SyrnModel.Patient" />
     <AssociationSet Name="FK_Patient_ServList" Association="SyrnModel.FK_Patient_ServList">
       <End Role="ServList" EntitySet="ServLists" />
@@ -751,6 +750,7 @@
     </AssociationSet>
     <EntitySet Name="vRefundRps" EntityType="SyrnModel.vRefundRp" />
     <EntitySet Name="ArchProes" EntityType="SyrnModel.ArchPro" />
+    <EntitySet Name="PatientItemMedics" EntityType="SyrnModel.PatientItemMedic" />
   </EntityContainer>
   <EntityType Name="Vwaitlist">
     <Key>
@@ -875,15 +875,6 @@
     <Property Name="Balance" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="IsActive" Type="Boolean" />
   </EntityType>
-  <EntityType Name="PatientItemMedic">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="PatientID" Type="Int32" />
-    <Property Name="ItemMedic" Type="Int32" />
-    <Property Name="DoseID" Type="Int32" />
-  </EntityType>
   <EntityType Name="Patient">
     <Key>
       <PropertyRef Name="ID" />
@@ -975,5 +966,18 @@
     <Property Name="IsActive" Type="Boolean" />
     <Property Name="Posted" Type="Boolean" />
     <Property Name="PosteDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="PatientItemMedic">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PatientID" Type="Int32" />
+    <Property Name="ItemMedicID" Type="Int32" />
+    <Property Name="EnName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Dose" Type="Int32" />
+    <Property Name="DoseName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="Period" Type="Int32" />
   </EntityType>
 </Schema>

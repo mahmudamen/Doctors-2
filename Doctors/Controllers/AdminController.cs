@@ -25,11 +25,17 @@ namespace Doctors.Controllers
       //      ViewBag.itmtype = new SelectList(db.TypeList, "TypID", "TypName");
             return View();
         }
+        // get ScreenS view 
+        public ActionResult ScreenS() {
+            return View();
+        }
+        // get DateTime 
         public JsonResult gdate()
         {
             var query = DateTime.Now;
             return Json(query, JsonRequestBehavior.AllowGet);
         }
+        // Get Patient Table 
         public JsonResult PatTbl()
         {
             DB db = new DB();
@@ -240,9 +246,10 @@ namespace Doctors.Controllers
                 return Json("No files selected.");
             }
         }
-        public JsonResult ReShift(int id ) {
-
-            return Json(null, JsonRequestBehavior.AllowGet);
+        public JsonResult ScreenWaitTbl() {
+            var query = db.Vwaitlists.Where(x => x.shfactive == true)
+            .Select(p => new { p.ID, p.PatientName, p.ServName, p.CreateDate, p.Sorted, p.RemainingAmount, p.ShiftID, p.Code });
+            return Json(new { aaData = query }, JsonRequestBehavior.AllowGet);
         }
     }
 }
