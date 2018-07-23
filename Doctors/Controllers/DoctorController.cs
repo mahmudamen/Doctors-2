@@ -48,11 +48,18 @@ namespace Doctors.Controllers
             var query = db.ItemMedics.Where(x => x.IsActive == true).Select(n => new { n.ID , n.EnName , n.Materialact  });
             return Json(new {aaData = query }, JsonRequestBehavior.AllowGet);
         }
+        // auto complete service name 
         public JsonResult autoserv(string Prefix)
         {
             var CityName = db.ServLists.Where(o => o.ServName.Contains(Prefix) && o.IsActive == true)
                     .Select(x => new { x.ID, x.ServName, x.PaidAmount }).Take(20).ToList();
             return Json(CityName, JsonRequestBehavior.AllowGet);
+        }
+        // autocomplete item name modal 
+        public JsonResult autoitemname(string Prefix)
+        {
+            var Query = db.ItemMedics.Where(o => o.EnName.Contains(Prefix)).Select(x => new { x.ID , x.EnName }).Take(20).ToList();
+            return Json(Query, JsonRequestBehavior.AllowGet);
         }
         // get patient's rays
         public JsonResult PatRay(int? id) {
