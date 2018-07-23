@@ -916,7 +916,7 @@
         $('#itemname').autocomplete({
             autoFocus: true,
             messages: { noResults: '', results: function () { } },
-            appendTo: $('#tbitemmeditadd'),
+            appendTo: $('#mdadditem'),
             source: function (request, response) {
                 $.ajax({
                     url: "@(Url.Action("autoitemname", "Doctor"))",
