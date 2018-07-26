@@ -111,7 +111,7 @@ namespace Doctors.Controllers
             return Json(new { Success = true, Message = "تمت الإضافة بنجاح" }, JsonRequestBehavior.AllowGet);
         }
         // add new shift work 
-        public JsonResult adshift(DateTime shiftdate, string cbyn)
+        public JsonResult adshift(DateTime? shiftdate, string cbyn)
         {
             ShiftList shft = new ShiftList();
             var isactive = db.ShiftLists.Where(x => x.IsActive == true).ToList();
@@ -120,11 +120,29 @@ namespace Doctors.Controllers
             if (shiftdate == null) {
                 shiftdate = DateTime.Now;
             }
-            shft.ShftDate =  shiftdate   ;
+            shft.ShftDate =  DateTime.Now;
             shft.IsActive = true;
             db.ShiftLists.Add(shft);
             db.SaveChanges();
-            return Json(new { Success = true, Message = "تمت الإضافة  شفت بنجاح" }, JsonRequestBehavior.AllowGet);
+            return Json(new { Success = true, Message = "تمت الإضافة  شفت بنجاح" } , JsonRequestBehavior.AllowGet);
+        }
+        // add new service name
+        public JsonResult addserv(string servname,decimal paid)
+        {
+            ServList srv = new ServList();
+            srv.ServName = servname;
+            srv.PaidAmount = paid;
+            srv.IsActive = true;
+            db.ServLists.Add(srv);
+            db.SaveChanges();
+            return Json(new { Success = true, Message = "تمت الإضافة  شفت بنجاح" } , JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult removserv(int id)
+        {
+            var query = db.ServLists.Where(x => x.ID == id).SingleOrDefault();
+            query.IsActive = false;
+            db.SaveChanges();
+            return Json(new { Success = true, Message = "تم الحذف بنجاح " }, JsonRequestBehavior.AllowGet);
         }
         // function get last shift number 
         public JsonResult Tcount()
@@ -250,6 +268,16 @@ namespace Doctors.Controllers
             var query = db.Vwaitlists.Where(x => x.shfactive == true)
             .Select(p => new { p.ID, p.PatientName, p.ServName, p.CreateDate, p.Sorted, p.RemainingAmount, p.ShiftID, p.Code });
             return Json(new { aaData = query }, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult ItemsSetting()
+        {
+
+            return View();
+        }
+        public JsonResult srvlst()
+        {
+            var query = db.ServLists.Where(x => x.IsActive == true).Select(o => new { o.ID, o.ServName, o.PaidAmount });
+            return Json(new {aaData = query }, JsonRequestBehavior.AllowGet);
         }
     }
 }

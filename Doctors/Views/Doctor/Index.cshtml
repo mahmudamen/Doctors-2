@@ -219,7 +219,7 @@
                 </div>
                 <hr />
                 <div class="row">
-                    <div class="panel-body" id="panledcpatient" style="max-height:200px; min-height:10px; padding:1px">
+                    <div class="panel-body" id="apanledcpatient" style="max-height:200px; min-height:10px; padding:1px">
                         <table id="tbitemmeditadd" class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
@@ -243,7 +243,7 @@
                             </tbody>
                         </table>
                     </div>
-                    </div>
+                  </div>
             </div>
             <div class="modal-footer">
                 <a href="javascript:;" id="adshift" type="button" class="btn btn-sm btn-success">اضافة</a>
@@ -326,11 +326,55 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="MDoseList">
+    <div class="modal-med">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #0094ff;font-size: 15px;" >
+                <label class="modal-title">الجرعات العلاجية </label>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-inline ls_form">
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>الجرعة العلاجية </label>
+                            <input type="text" id="zdosename" class="form-control text-center" style="width:300px" />
+                            <a href="javascript:;" id="asdose" type="button" class="btn btn-sm btn-success">اضافة</a>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="panel-body" id="apanledcpatient" style="max-height:200px; min-height:10px; padding:1px">
+                        <table id="tbdoselist" class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>ID </th>
+                                    <th>Dose Name</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a type="button" href="javascript:;" class="btn btn-sm btn-danger" data-dismiss="modal">إغلاق</a>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- begin col-4 -->
 <div class="row">
     <div class="col-md-12">
        <div id="a-panal" class="panel panel-success" style="margin-bottom:1px" data-sortable-id="index-1">
-                <div class="panel-heading" style="height: 50px;">
+                <div class="panel-heading" style="height: 50px;background-color: #283e4a;color:  white;">
                     <label class="panel-title" style="font-size:15px;" > Patient Basic Details </label>
                     <div class="btn-group m-r-5 pull-left">
                         <button class="btn-group-sm btn-icon btn-square btn-info pull-left" title="تبديل "  id="btbillexpand"><i class="fa fa-expand"></i></button>
@@ -381,7 +425,7 @@
         <div class="col-md-6">
             <div id="b-panal" class="panel panel-primary" style="margin-bottom:5px" data-sortable-id="index-1">
                 <div class="panel-heading" style="height: 50px;">
-                    <label class="panel-title" style="font-size:13px;"> Medical Details </label>
+                    <label class="panel-title" style="font-size:14px;"> Medical Details </label>
                     <div class="btn-group m-r-5 pull-left">
                         <button class="btn-group-sm btn-icon btn-square btn-info pull-left" title="Expand " id="btitem"><i class="fa fa-expand"></i></button>
                         <button class="btn-group-sm btn-icon btn-square btn-success pull-left" title="Reload Data " id="btitemrefresh"><i class="fa fa-repeat"></i></button>
@@ -413,13 +457,10 @@
                     </table>
                 </div>
             </div>
-
-            <!-- end col-4 -->
-        </div>
-        <div class="col-md-6">
+            <hr />
             <div id="b-panal" class="panel panel-primary" style="margin-bottom:5px" data-sortable-id="index-1">
                 <div class="panel-heading" style="height: 50px;">
-                    <label class="panel-title" style="font-size:13px;">  Queue </label>
+                    <label class="panel-title" style="font-size:14px;">  Queue </label>
                     <div class="btn-group m-r-5 pull-left">
                         <button class="btn-group-sm btn-icon btn-square btn-info pull-left" title="تبديل " id="btQueueexpand"><i class="fa fa-expand"></i></button>
                         <button class="btn-group-sm btn-icon btn-square btn-success pull-left" title="تحديث " id="refreshwait"><i class="fa fa-repeat"></i></button>
@@ -451,10 +492,8 @@
                     </table>
                 </div>
             </div>
+            <!-- end col-6 -->
         </div>
-        <!-- end col-4 -->
-    </div>
-    <div class="row">
         <div class="col-md-6">
             <div id="b-panal" class="panel panel-danger"  style="margin-bottom:5px;  "  data-sortable-id="index-1">
                 <div class="panel-heading" style="height: 50px;">
@@ -485,8 +524,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-6">
+            <hr />
             <div id="b-panal" class="panel panel-primary" style="margin-bottom:5px" data-sortable-id="index-1">
                 <div class="panel-heading" style="height: 50px;">
                     <label class="panel-title" style="font-size:13px;">  Medical History </label>
@@ -521,9 +559,8 @@
                     </table>
                 </div>
             </div>
+            <!-- end col-6 -->
         </div>
-
-        <!-- end col-4 -->
     </div>
 </div>
 <link href="~/Content/select2.css" rel="stylesheet" />
@@ -535,14 +572,14 @@
     <script>
             $(document).ready(function () {
                 App.init();
-                // date function
             });
             function refresh() {
+        // Refresh Wait Table 
                 var table = $('#tbwait').DataTable();
                 table.clear();
                 table.draw();
                 table.ajax.url('/Doctors/Doctor/WaitTbl').load();
-
+        // Refresh Patient Table
                 var table = $('#dcpatient').DataTable();
                 table.clear();
                 table.draw();
@@ -563,12 +600,11 @@
                   formatedSecond = (second.length === 1) ? ("0" + second) : second;
                 return formatedDay + "-" + formatedMonth + "-" + year + " " + formatedHour + ':' + formatedMinute + ':' + formatedSecond;
             };
-
         // select2 function
             $(".js-example-basic-single").select2({
                 dir: "rtl", language: "ar", selectOnClose: true, width: '30%'
             });
-            // var data table current patient 
+        // var data table current patient 
             var table = $('#dcpatient').DataTable({
                 cache: true,
                 bProcessing: false, sAjaxSource: '/Doctors/Doctor/PatTbl', "order": [[0, "desc"]], bFilter: false, bInfo: false, lengthChange: false, scrollY: false, scrollCollapse: false, bPaginate: false,
@@ -604,7 +640,7 @@
         // var data table wait quee list 
             var table = $('#tbwait').DataTable({
                 cache: true,
-                bProcessing: false, sAjaxSource: '/Doctors/Doctor/WaitTbl', "order": [[4, "asc"]], bFilter: true, bInfo: false, lengthChange: false, scrollY: '250px', scrollCollapse: true, bPaginate: true,
+                bProcessing: false, sAjaxSource: '/Doctors/Doctor/WaitTbl', "order": [[4, "asc"]], bFilter: false, bInfo: false, lengthChange: false, scrollY: '250px', scrollCollapse: false, bPaginate: false,
                 columns: [
              { "data": "ID", "visible": false },
              { "data": "PatientName", "width": "2%" },
@@ -637,7 +673,7 @@
         // var data table medical details
             var table = $('#tbitemmedit').DataTable({
                 cache: true,
-                bProcessing: false, sAjaxSource: '/Doctors/Doctor/MDetails?id=' + $('#vpatid').val(), "order": [[0, "desc"]], bFilter: true, bInfo: false, lengthChange: false, scrollY: '250px', scrollCollapse: true, bPaginate: true,
+                bProcessing: false, sAjaxSource: '/Doctors/Doctor/MDetails?id=' + $('#vpatid').val(), "order": [[0, "desc"]], bFilter: false, bInfo: false, lengthChange: false, scrollY: '250px', scrollCollapse: false, bPaginate: false,
                 columns: [
              { "data": "ID", "visible": false },
              { "data": "PatientID", "visible": false },
@@ -647,7 +683,7 @@
              { "data": "DoseName", "width": "1%" }            
                 ]
             });
-            // var data table medical details add
+        // var data table medical details add
             var table = $('#tbitemmeditadd').DataTable({
                 cache: true,
                 bProcessing: false, sAjaxSource: '/Doctors/Doctor/MDetails?id=' + $('#vpatid').val(), "order": [[0, "desc"]], bFilter: false, bInfo: false, lengthChange: false, scrollY: '100px', scrollCollapse: false, bPaginate: false,
@@ -660,10 +696,10 @@
              { "data": "DoseName", "width": "1%" }
                 ]
             });
-            // var data table medical history
+        // var data table medical history
             var table = $('#tabMH').DataTable({
                 cache: true,
-                bProcessing: false, sAjaxSource: '/Doctors/Doctor/MDetails?id=' + $('#vpatid').val(), "order": [[0, "desc"]], bFilter: true, bInfo: false, lengthChange: false, scrollY: '250px', scrollCollapse: true, bPaginate: true,
+                bProcessing: false, sAjaxSource: '/Doctors/Doctor/MDetails?id=' + $('#vpatid').val(), "order": [[0, "desc"]], bFilter: false, bInfo: false, lengthChange: false, scrollY: '250px', scrollCollapse: false, bPaginate: false,
                 columns: [
              { "data": "ID", "visible": false },
              { "data": "PatientID", "visible": false },
@@ -673,7 +709,7 @@
              { "data": "DoseName", "width": "1%" }
                 ]
             });
-            // Open modal form nav shift report total 
+        // Open modal form nav shift report total 
             $('#navshiftreport').click(function () {
                 $('#mdshiftreport').modal({ backdrop: false });
                 var table = $("#shiftreport").DataTable();
@@ -681,9 +717,8 @@
                 table.clear();
                 table.draw();
                 table.ajax.url('/Doctors/Admin/ShiftReportTbl').load();
-
             });
-            // table shift report 
+        // table shift report 
             var table = $('#shiftreport').DataTable({
                 cache: true,
                 bProcessing: false, sAjaxSource: '/Doctors/Admin/ShiftReportTbl', "order": [[0, "desc"]], bFilter: true, bInfo: false, lengthChange: false, scrollY: '250px', scrollCollapse: true, bPaginate: true,
@@ -709,7 +744,49 @@
              { "data": "total", "width": "1%" }
                 ]
             });
-
+        // table Dose List 
+            var table = $('#tbdoselist').DataTable({
+                cache: true,
+                bProcessing: false, sAjaxSource: '/Doctors/Doctor/DoseList', "order": [[0, "desc"]], bFilter: false, bInfo: false, lengthChange: false, scrollY: '250px', scrollCollapse: false, bPaginate: false,
+                columns: [
+             { "data": "ID", "width": "auto" },
+             { "data": "DoseName", "width": "auto" },
+             {
+               "data": null, "sClass": "dt-center", "width": "1%", "orderable": false,
+               "defaultContent": "<button  class='deldose small btn-warning'id='post'><i class='fa fa-earse'></button>"
+             }
+                ]
+            });
+        // add new Dose in modal 
+            $('#asdose').click(function () {
+                if ($('#zdosename').val() == ' ') {
+                    $('#zdosename').focus();
+                    $('#zdosename').addClass('input-validation-error');
+                    alert('يجب تحديد اسم الجرعة');
+                } else {
+                    var vdosename = $("#zdosename").val();
+                    console.log(vdosename);
+                    $.ajax({
+                        url: "@(Url.Action("AdDose", "Doctor"))",
+                        type: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    data: { vname: vdosename },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.Success) {
+                            alert(data.Message)
+                            var table = $("#tbdoselist").DataTable();
+                            table.$('tr.selected').removeClass('selected');
+                            table.clear();
+                            table.draw();
+                            table.ajax.url('/Doctors/Doctor/DoseList').load();
+                        } else {
+                            alert(data.Message)
+                        }
+                    }
+                });
+            }
+            });
         // expand current patient 
             $('#btbillexpand').click(function () {
                 $('#panledcpatient').toggle();
@@ -721,13 +798,16 @@
         // btn expand rays panal
             $('#btRaysexpand').click(function () {
                 $('#panelraylist').toggle();
-
             });
         // btn expand queue panal 
             $('#btQueueexpand').click(function () {
                 $('#panelwaitlist').toggle();
+                var table = $('#tbwait').DataTable();
+                table.clear();
+                table.draw();
+                table.ajax.url('/Doctors/Doctor/WaitTbl').load();
             });
-            // expand item medic list 
+        // expand item medic list 
             $('#btitem').click(function () {
                 $('#panelitemmedic').toggle();
                 var table = $('#tbitemmedit').DataTable();
@@ -755,6 +835,7 @@
 
                 $('#mdadditem').modal({ backdrop: false });
             });
+        // btn item refresh 
             $('#btitemrefresh').click(function () {
                 var table = $('#tbitemmedit').DataTable();
                 table.clear();
@@ -801,7 +882,13 @@
                 table.$('tr.selected').removeClass('selected');
                 $(this).closest('tr').addClass('selected');
             });
-            // select table shiftreport
+        // select table Dose List
+            $('#tbdoselist tbody').on('click', 'tr', function () {
+                var table = $("#tbdoselist").DataTable();
+                table.$('tr.selected').removeClass('selected');
+                $(this).closest('tr').addClass('selected');
+            });
+        // select table shiftreport
             $('#shiftreport tbody').on('click', 'tr', function () {
                 var table = $("#shiftreport").DataTable();
                 table.$('tr.selected').removeClass('selected');
@@ -860,9 +947,8 @@
         } else {
                 alert('تم إلغاء العملية')
         }
-
         });
-// auto complete for serv id
+        // auto complete for serv id
             $('#serv').autocomplete({
                 autoFocus: true,
                 messages: { noResults: '', results: function () { } },
@@ -912,7 +998,7 @@
                 });
             }
             });
-// auto complete for Item Name 
+        // auto complete for Item Name 
         $('#itemname').autocomplete({
             autoFocus: true,
             messages: { noResults: '', results: function () { } },
@@ -960,7 +1046,6 @@
             });
         }
         });
-
         // open add modal
         $('#btnewpat').click(function () {
             $('#MdAdPat').modal({ backdrop: false }); 
@@ -968,9 +1053,10 @@
             shiftdate();
             $('#visitdate').val(getdate);
         });
+        // open MdAdPatAdvanced Data 
         $('#patedit').click(function () {
             var table = $("#dcpatient").DataTable();
-           // table.$('tr.selected').removeClass('selected');
+        // table.$('tr.selected').removeClass('selected');
             $(this).closest('tr').addClass('selected');
             var vid = table.cell('.selected', 0).data();
             var vname = table.cell('.selected', 1).data();
@@ -989,6 +1075,10 @@
             Gent();
             $('#mdshift').modal({ backdrop: false });
             $('#shiftdate').val(getdate);
+        });
+        // nav Dose list modal 
+        $('#navDose').click(function () {
+            $('#MDoseList').modal({ backdrop: false });
         });
         // add new shift work modal shift
         $('#adshift').click(function () {
@@ -1019,9 +1109,7 @@
                     }
                 });
             } else {
-
             }
-
         });
         // btn expand btMHexpand
         $('#btMHexpand').click(function () {
@@ -1050,7 +1138,6 @@
                 $('#serv').addClass('input-validation-error');
                 alert('يجب تحديد نوع الزيارة');
             } else {
-
                 $.ajax({
                     url: "@(Url.Action("adpat", "Doctor"))",
                     type: "GET",
@@ -1066,7 +1153,6 @@
                     paidamount: $('#PaidAmount').val(),
                     visitdate: $('#visitdate').val(),
                     gender: $('#gender').val(),
-
                     cbyn: $('#cbyn').val()
                 },
                 dataType: "json",
@@ -1087,7 +1173,7 @@
             });
         }
         });
-       // table button action send to wait list 
+        // table button action send to wait list 
         $('#patlist tbody').on('click', '.sendwait', function () {
             var table = $("#patlist").DataTable();
             table.$('tr.selected').removeClass('selected');

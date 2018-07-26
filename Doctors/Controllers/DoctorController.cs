@@ -38,6 +38,7 @@ namespace Doctors.Controllers
             .Select(p => new { p.ID, p.PatientName, p.ServName ,p.Serv, p.CreateDate , p.MedicalHistory , p.PrevDiagnosis ,p.Treatment, p.Diagnosis ,p.Examination , p.Code });
             return Json(new { aaData = query }, JsonRequestBehavior.AllowGet);
         }
+        // Get wait table 
         public JsonResult WaitTbl()
         {
             var query = db.Vwaitlists.Where(x => x.shfactive == true)
@@ -64,7 +65,6 @@ namespace Doctors.Controllers
         // get patient's rays
         public JsonResult PatRay(int? id) {
             var query = db.ArchProes.Where(x => x.PatientID == 29).Single().ReNamePic;
-
             return Json(query, JsonRequestBehavior.AllowGet);
         }
         // next patient button 
@@ -137,6 +137,30 @@ namespace Doctors.Controllers
             }
             
             
+        }
+        public JsonResult DoseList()
+        {
+            var query = db.DoseLists.Select(x => new { x.ID, x.DoseName });
+            return Json(new { aaData = query }, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult AdDose(string vname)
+        {
+            var query = db.DoseLists.Where(x => x.DoseName.Equals(vname)).SingleOrDefault();
+            
+
+             if(vname != null )
+            {
+                DoseList dl = new DoseList();
+                dl.DoseName = vname;
+                dl.IsActive = true;
+                db.DoseLists.Add(dl);
+                db.SaveChanges();
+                return Json(new { Success = true, Message = "تمت الإضافة بنجاح" }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { Success = true, Message = "خطاء" }, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }
