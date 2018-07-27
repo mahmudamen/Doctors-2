@@ -12,16 +12,10 @@ namespace Doctors.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class PatientItemMedic
+    public partial class CompList
     {
         public int ID { get; set; }
-        public Nullable<int> PatientID { get; set; }
-        public Nullable<int> ItemMedicID { get; set; }
-        public string EnName { get; set; }
-        public Nullable<int> Dose { get; set; }
-        public string DoseName { get; set; }
-        public Nullable<System.DateTime> CreateDate { get; set; }
-        public Nullable<int> Period { get; set; }
-        public Nullable<int> VisitID { get; set; }
+        public string ncomp { get; set; }
+        public bool IsActive { get; set; }
     }
 }

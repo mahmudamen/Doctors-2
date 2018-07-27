@@ -1,5 +1,5 @@
 ﻿
-@{ViewBag.Title = " الخدمات المقدمة";}
+@{ViewBag.Title = " الخدمات العيادة الداخلية";}
 <script language="javascript" type="text/javascript">
     function shiftcount() {
         $.ajax({
@@ -45,9 +45,8 @@
 <link href="~/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
 <link href="~/Content/google-grid.css" rel="stylesheet" />
 <link href="~/Content/animate.css" rel="stylesheet" media="screen">
-<input type="hidden" id="cby" value=@HttpContext.Current.User.Identity.Name.Split('|')[1] />
+<input type="hidden" id="cby"  value=@HttpContext.Current.User.Identity.Name.Split('|')[1] />
 <input type="hidden" id="cbyn" value=@HttpContext.Current.User.Identity.Name.Split('|')[0] />
-
 <!-- begin col-4 -->
 <div class="modal fade" id="MdAdServ">
     <div class="modal-med">
@@ -60,6 +59,7 @@
                     <div class="form-inline ls_form">
                         <div class="form-group" style="margin:0px 5px 0px 5px">
                             <label>اسم الخدمة</label>
+                            <input type="hidden" id="serid" />
                             <input type="text" id="servname" class="form-control text-center" style="width:250px" autofocus="autofocus" />
                         </div>
                         <div class="form-group" style="margin:0px 5px 0px 5px">
@@ -70,7 +70,33 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="javascript:;" id="adserv" type="button" class="btn btn-sm btn-success">اضافة</a>
+                <a href="javascript:;" id="adserv"  type="button" class="btn btn-sm btn-success">اضافة</a>
+                <a href="javascript:;" id="zeditserv" type="button" class="btn btn-sm btn-warning">تعديل</a>
+                <a type="button" href="javascript:;" class="btn btn-sm btn-danger" data-dismiss="modal">إغلاق</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="MdAdComp">
+    <div class="modal-med">
+        <div class="modal-content">
+            <div class="modal-header">
+                <label class="modal-title">اضافة شركة جديدة </label>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-inline ls_form">
+                        <div class="form-group" style="margin:0px 5px 0px 5px">
+                            <label>اسم الشركة</label>
+                            <input type="hidden" id="compid" />
+                            <input type="text" id="compname" class="form-control text-center" style="width:250px" autofocus="autofocus" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:;" id="adcomp" type="button" class="btn btn-sm btn-success">اضافة</a>
+                <a href="javascript:;" id="zeditcomp" type="button" class="btn btn-sm btn-warning">تعديل</a>
                 <a type="button" href="javascript:;" class="btn btn-sm btn-danger" data-dismiss="modal">إغلاق</a>
             </div>
         </div>
@@ -130,9 +156,8 @@
                             <tr>
                                 <th>كود</th>
                                 <th class="text-center">الشركة</th>
-                                <th class="text-center"> اضافة</th>
-                                <th class="text-center">حذف</th>
                                 <th class="text-center">تعديل</th>
+                                <th class="text-center">حذف</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -140,8 +165,7 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
-                                <td></td>                                
+                                <td></td>                               
                             </tr>
                         </tbody>
                     </table>
@@ -215,17 +239,34 @@
                 bProcessing: false, sAjaxSource: '/Doctors/Admin/srvlst', "order": [[0, "desc"]], bFilter: true, bInfo: false, lengthChange: false, scrollY: '300px', scrollCollapse: true, bPaginate: true,
                 columns: [
              { "data": "ID", "visible": false },
-             { "data": "ServName", "width": "2%" },
+             { "data": "ServName", "width": "1%" },
              { "data": "PaidAmount", "width": "1%" },
              {
               "data": null, "sClass": "dt-center", "width": "1%", "orderable": false,
               "defaultContent": "<button  class='editserv small btn-warning'id='post'><i class='fa fa-edit'></button>"
              },
-              {
-                  "data": null, "sClass": "dt-center", "width": "1%", "orderable": false,
-                  "defaultContent": "<button  class='eraserv small btn-warning'id='post'><i class='fa fa-eraser'></button>"
+             { 
+              "data": null, "sClass": "dt-center", "width": "1%", "orderable": false,
+              "defaultContent": "<button  class='eraserv small btn-warning'id='post'><i class='fa fa-eraser'></button>"
               }
             ]
+            });
+            // var table company  list
+            var table = $('#tbcompany').DataTable({
+                cache: true,
+                bProcessing: false, sAjaxSource: '/Doctors/Admin/CompanyList', "order": [[0, "desc"]], bFilter: true, bInfo: false, lengthChange: false, scrollY: '300px', scrollCollapse: true, bPaginate: true,
+                columns: [
+             { "data": "ID", "width": "1%" },
+             { "data": "CompanyName", "width": "1%" },
+             {
+                 "data": null, "sClass": "dt-center", "width": "1%", "orderable": false,
+                 "defaultContent": "<button  class='editcompany small btn-warning'id='post'><i class='fa fa-edit'></button>"
+             },
+             {
+                 "data": null, "sClass": "dt-center", "width": "1%", "orderable": false,
+                 "defaultContent": "<button  class='erasecompany small btn-warning'id='post'><i class='fa fa-eraser'></button>"
+             }
+                ]
             });
         // refresh table service list
             $('#refreshservlist').click(function () {
@@ -255,16 +296,130 @@
             });
         // button open modal add new serv 
             $('#btnewserv').click(function () {
+                $('#editserv').css("display", "none");
+                $('#adserv').css("display", "-webkit-inline-box");
                 $('#MdAdServ').modal({ backdrop: false });
+            });
+        // button open modal edit 
+            $('#servlist tbody').on('click', '.editserv', function () {
+                $('#adserv').css("display", "none");
+                $('#editserv').css("display", "-webkit-inline-box");
+                var table = $('#servlist').DataTable();
+                table.$('tr.selected').removeClass('selected');
+                $(this).closest('tr').addClass('selected');
+                var idv = table.cell('.selected', 0).data();
+                var namev = table.cell('.selected', 1).data();
+                var paid = table.cell('.selected', 2).data();
+                $('#serid').val(idv);
+                $('#servname').val(namev);
+                $('#paidmount').val(paid);
+                $('#MdAdServ').modal({ backdrop: false });
+            });
+            // button open modal edit 
+            $('#tbcompany tbody').on('click', '.editcompany', function () {
+                $('#adcomp').css("display", "none");
+                $('#editcomp').css("display", "-webkit-inline-box");
+                var table = $('#tbcompany').DataTable();
+                table.$('tr.selected').removeClass('selected');
+                $(this).closest('tr').addClass('selected');
+                var idv = table.cell('.selected', 0).data();
+                var namev = table.cell('.selected', 1).data();
+                $('#compid').val(idv);
+                $('#compname').val(namev);
+                $('#MdAdComp').modal({ backdrop: false });
+            });
+        // button edit service 
+            $('#zeditserv').click(function () {
+                if ($('#serid').val() == ' ') {
+                    $('#serid').focus();
+                    $('#serid').addClass('input-validation-error');
+                    alert('الرجاء اختيار خدمة ');
+                }else if ($('#servname').val() == ' '){
+                    $('#servname').focus();
+                    $('#servname').addClass('input-validation-error');
+                } else {
+                    var con = confirm('هل تريد فعلا تعديل الخدمة');
+                    if (con) {
+                        $.ajax({
+                            url: "@(Url.Action("eddserv", "Admin"))",
+                            type: "GET",
+                        contentType: "application/json; charset=utf-8",
+                        data: {
+                            id: $('#serid').val(),
+                            vname: $('#servname').val(),
+                            paidmount: $('#paidmount').val()
+                        },
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.Success) {
+                                $("#MdAdServ").modal("hide");
+                                console.log(data.Message)
+                                alert(data.Message)
+                                var table = $('#servlist').DataTable();
+                                table.clear();
+                                table.draw();
+                                table.ajax.url('/Doctors/Admin/srvlst').load();
+                                
+                            } else {
+                                alert(data.Message);
+                            }
+                        }
+                    });
+                    } else {
+                        alert('تم الغاء العملية ')
+                    }
+
+                }
+            });
+        // button edit service 
+        $('#zeditcomp').click(function () {
+            if ($('#compid').val() == ' ') {
+                $('#compid').focus();
+                $('#compid').addClass('input-validation-error');
+                alert('الرجاء اختيار خدمة ');
+            }else if ($('#compname').val() == ' '){
+                $('#compname').focus();
+                $('#compname').addClass('input-validation-error');
+            } else {
+                var con = confirm('هل تريد فعلا تعديل الخدمة');
+                if (con) {
+                    $.ajax({
+                        url: "@(Url.Action("editcompany", "Admin"))",
+                        type: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    data: {
+                        id: $('#compid').val(),
+                        namecompany: $('#compname').val()
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.Success) {
+                            $("#MdAdComp").modal("hide");
+                            console.log(data.Message)
+                            alert(data.Message)
+                            var table = $('#tbcompany').DataTable();
+                            table.clear();
+                            table.draw();
+                            table.ajax.url('/Doctors/Admin/CompanyList').load();
+                        } else {
+                            alert(data.Message);
+                        }
+                    }
+                });
+            } else {
+                    alert('تم الغاء العملية ');
+        }
+
+        }
         });
         // button add new patient
-        $('#adserv').click(function () {
+            $('#adserv').click(function () {
             if ($('#servname').val() == ' ') {
                 $('#servname').focus();
                 $('#servname').addClass('input-validation-error');
                 alert('يجب تحديد اسم الخدمة');
             }
-            else if ($('#paidmount').val() == '') {
+            else if ($('#paidmount').val() == ' ') {
                 $('#serv').focus();
                 $('#serv').addClass('input-validation-error');
                 alert('يجب تحديد نوع الزيارة');
@@ -292,7 +447,7 @@
                 }
             });
         }
-        });
+      });
         // table button action servlist
         $('#servlist tbody').on('click', '.eraserv', function () {
             var table = $("#servlist").DataTable();
@@ -309,16 +464,48 @@
                 dataType: "json",
                 success: function (data) {
                     if (data.Success) {
-                        alert(data.Message)
+                        alert(data.Message);
+                        console.log(data.Message);
                         refresh(1);
                     } else {
-                        alert(data.Message)
+                        alert(data.Message);
+
                     }
                 }
             });
             } else {
-                alert('لقد تم الغاء العملية')
+                alert('لقد تم الغاء العملية');
+                console.log('لقد تم الغاء العملية')
             }
+        });
+        // table button action erasecompany
+        $('#tbcompany tbody').on('click', '.erasecompany', function () {
+            var table = $("#tbcompany").DataTable();
+            table.$('tr.selected').removeClass('selected');
+            $(this).closest('tr').addClass('selected');
+            var idv  = table.cell('.selected', 0).data();
+            var conf = confirm("هل تريد فعلاً حذف الشركة  ");
+            if (conf) {
+                $.ajax({
+                    url: "@(Url.Action("removecompany", "Admin"))",
+                    type: "GET",
+                contentType: "application/json; charset=utf-8",
+                data: { ID: idv },
+                dataType: "json",
+                success: function (data) {
+                    if (data.Success) {
+                        alert(data.Message);
+                        console.log(data.Message);
+                        refresh(1);
+                    } else {
+                        alert(data.Message);
+
+                    }
+                }
+            });
+        } else {
+                alert('لقد تم الغاء العملية');
+        }
         });
         // button send next patient to doctor's screen
         $('#tbwait tbody').on('click', '.quebutton ', function () {
@@ -354,7 +541,7 @@
             table.$('tr.selected').removeClass('selected');
             $(this).closest('tr').addClass('selected');
             var idv = table.cell('.selected', 0).data();
-            var patname = table.cell('.selected', 2).data();
+            var patname = table.cell('.selected', 1).data();
             $('#zvid').val(idv);
             $('#vname').val(patname);
             $('#Mdrays').modal({ backdrop: false });

@@ -258,6 +258,18 @@
           <Property Name="Posted" Type="bit" />
           <Property Name="PosteDate" Type="datetime" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Syrn.Recep.CompList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="CompList">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="ncomp" />
+            <PropertyRef Name="IsActive" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ncomp" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="DoseList">
           <Key>
             <PropertyRef Name="ID" />
@@ -331,6 +343,7 @@
           <Property Name="DoseName" Type="nvarchar" MaxLength="255" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="Period" Type="int" />
+          <Property Name="VisitID" Type="int" />
         </EntityType>
         <EntityType Name="ServList">
           <Key>
@@ -966,6 +979,13 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
           <EntitySet Name="Role" EntityType="Self.Role" Schema="usr" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="usr" store:Type="Tables" />
           <EntitySet Name="Usr" EntityType="Self.Usr" Schema="usr" store:Type="Tables" />
+          <EntitySet Name="CompList" EntityType="Self.CompList" store:Type="Tables" store:Schema="Recep">
+            <DefiningQuery>SELECT 
+    [CompList].[ID] AS [ID], 
+    [CompList].[ncomp] AS [ncomp], 
+    [CompList].[IsActive] AS [IsActive]
+    FROM [Recep].[CompList] AS [CompList]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vcashrp" EntityType="Self.vcashrp" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vcashrp].[itmid] AS [itmid], 
@@ -2053,6 +2073,7 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
           <EntitySet Name="vRefundRps" EntityType="SyrnModel.vRefundRp" />
           <EntitySet Name="ArchProes" EntityType="SyrnModel.ArchPro" />
           <EntitySet Name="PatientItemMedics" EntityType="SyrnModel.PatientItemMedic" />
+          <EntitySet Name="CompLists" EntityType="SyrnModel.CompList" />
           </EntityContainer>
         <EntityType Name="Vwaitlist">
           <Key>
@@ -2281,6 +2302,17 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
           <Property Name="DoseName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="Period" Type="Int32" />
+          <Property Name="VisitID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="CompList">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="ncomp" />
+            <PropertyRef Name="IsActive" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ncomp" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -3047,6 +3079,7 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
           <EntitySetMapping Name="PatientItemMedics">
             <EntityTypeMapping TypeName="SyrnModel.PatientItemMedic">
               <MappingFragment StoreEntitySet="PatientItemMedic">
+                <ScalarProperty Name="VisitID" ColumnName="VisitID" />
                 <ScalarProperty Name="Period" ColumnName="Period" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="DoseName" ColumnName="DoseName" />
@@ -3054,6 +3087,15 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
                 <ScalarProperty Name="EnName" ColumnName="EnName" />
                 <ScalarProperty Name="ItemMedicID" ColumnName="ItemMedicID" />
                 <ScalarProperty Name="PatientID" ColumnName="PatientID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CompLists">
+            <EntityTypeMapping TypeName="SyrnModel.CompList">
+              <MappingFragment StoreEntitySet="CompList">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ncomp" ColumnName="ncomp" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

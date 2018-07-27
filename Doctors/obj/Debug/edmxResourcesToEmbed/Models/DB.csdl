@@ -751,6 +751,7 @@
     <EntitySet Name="vRefundRps" EntityType="SyrnModel.vRefundRp" />
     <EntitySet Name="ArchProes" EntityType="SyrnModel.ArchPro" />
     <EntitySet Name="PatientItemMedics" EntityType="SyrnModel.PatientItemMedic" />
+    <EntitySet Name="CompLists" EntityType="SyrnModel.CompList" />
   </EntityContainer>
   <EntityType Name="Vwaitlist">
     <Key>
@@ -979,5 +980,16 @@
     <Property Name="DoseName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="CreateDate" Type="DateTime" Precision="3" />
     <Property Name="Period" Type="Int32" />
+    <Property Name="VisitID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="CompList">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="ncomp" />
+      <PropertyRef Name="IsActive" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ncomp" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
   </EntityType>
 </Schema>

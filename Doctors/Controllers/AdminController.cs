@@ -8,7 +8,6 @@ using System.IO;
 using System.Web.Mvc.Async;
 using System.Web.Mvc;
 
-
 namespace Doctors.Controllers
 {
      [AuthorizeRoles("Admin" , "Doctor" ,"Screen")]
@@ -137,12 +136,26 @@ namespace Doctors.Controllers
             db.SaveChanges();
             return Json(new { Success = true, Message = "تمت الإضافة  شفت بنجاح" } , JsonRequestBehavior.AllowGet);
         }
+        // eidt company name 
+        public JsonResult editcompany(int id,string namecompany)
+        {
+            var ma = db.CompLists.Where(x => x.ID == id).SingleOrDefault();
+            ma.ncomp = namecompany;
+            db.SaveChanges();
+            return Json(new { Success = true, Message = "تم التعديل بنجاح " }, JsonRequestBehavior.AllowGet);
+        }
         public JsonResult removserv(int id)
         {
             var query = db.ServLists.Where(x => x.ID == id).SingleOrDefault();
             query.IsActive = false;
             db.SaveChanges();
             return Json(new { Success = true, Message = "تم الحذف بنجاح " }, JsonRequestBehavior.AllowGet);
+        }
+        // remove company from list 
+        public JsonResult removecompany(int id) {
+            var query = db.CompLists.Where(x => x.ID == id).SingleOrDefault();
+            query.IsActive = false;
+            return Json(new { Success = true, Message = "" },JsonRequestBehavior.AllowGet);
         }
         // function get last shift number 
         public JsonResult Tcount()
@@ -271,13 +284,25 @@ namespace Doctors.Controllers
         }
         public ActionResult ItemsSetting()
         {
-
             return View();
         }
         public JsonResult srvlst()
         {
             var query = db.ServLists.Where(x => x.IsActive == true).Select(o => new { o.ID, o.ServName, o.PaidAmount });
             return Json(new {aaData = query }, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult eddserv(int id, string vname , decimal paidmount )
+        {
+            var query = db.ServLists.Where(i => i.ID == id).SingleOrDefault();
+            query.ServName = vname;
+            query.PaidAmount = paidmount;
+            db.SaveChanges();
+            return Json(new { Success = true, Message = "تم التعديل بنجاح " }, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult CompanyList()
+        {
+            var query = db.CompLists.Where(x => x.IsActive == true).Select(x => new { x.ID , x.ncomp });
+            return Json(new { aaData = query }, JsonRequestBehavior.AllowGet);
         }
     }
 }

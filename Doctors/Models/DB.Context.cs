@@ -74,5 +74,6 @@ namespace Doctors.Models
         public virtual DbSet<vRefundRp> vRefundRps { get; set; }
         public virtual DbSet<ArchPro> ArchProes { get; set; }
         public virtual DbSet<PatientItemMedic> PatientItemMedics { get; set; }
+        public virtual DbSet<CompList> CompLists { get; set; }
     }
 }

@@ -760,6 +760,7 @@
     <EntitySetMapping Name="PatientItemMedics">
       <EntityTypeMapping TypeName="SyrnModel.PatientItemMedic">
         <MappingFragment StoreEntitySet="PatientItemMedic">
+          <ScalarProperty Name="VisitID" ColumnName="VisitID" />
           <ScalarProperty Name="Period" ColumnName="Period" />
           <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
           <ScalarProperty Name="DoseName" ColumnName="DoseName" />
@@ -767,6 +768,15 @@
           <ScalarProperty Name="EnName" ColumnName="EnName" />
           <ScalarProperty Name="ItemMedicID" ColumnName="ItemMedicID" />
           <ScalarProperty Name="PatientID" ColumnName="PatientID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CompLists">
+      <EntityTypeMapping TypeName="SyrnModel.CompList">
+        <MappingFragment StoreEntitySet="CompList">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="ncomp" ColumnName="ncomp" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>

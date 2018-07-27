@@ -169,6 +169,9 @@
     <Compile Include="Models\ArchPro.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CompList.cs">
+      <DependentUpon>DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CoreManager\CoreManager.cs" />
     <Compile Include="Models\CoreManager\CoreModel.cs" />
     <Compile Include="Models\DB.Context.cs">

@@ -253,6 +253,18 @@
     <Property Name="Posted" Type="bit" />
     <Property Name="PosteDate" Type="datetime" />
   </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Syrn.Recep.CompList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="CompList">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="ncomp" />
+      <PropertyRef Name="IsActive" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ncomp" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
   <EntityType Name="DoseList">
     <Key>
       <PropertyRef Name="ID" />
@@ -326,6 +338,7 @@
     <Property Name="DoseName" Type="nvarchar" MaxLength="255" />
     <Property Name="CreateDate" Type="datetime" />
     <Property Name="Period" Type="int" />
+    <Property Name="VisitID" Type="int" />
   </EntityType>
   <EntityType Name="ServList">
     <Key>
@@ -959,6 +972,13 @@ warning 6002: The table/view 'Syrn.usr.vURoles' does not have a primary key defi
     <EntitySet Name="Role" EntityType="Self.Role" Schema="usr" store:Type="Tables" />
     <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="usr" store:Type="Tables" />
     <EntitySet Name="Usr" EntityType="Self.Usr" Schema="usr" store:Type="Tables" />
+    <EntitySet Name="CompList" EntityType="Self.CompList" store:Type="Tables" store:Schema="Recep">
+      <DefiningQuery>SELECT 
+    [CompList].[ID] AS [ID], 
+    [CompList].[ncomp] AS [ncomp], 
+    [CompList].[IsActive] AS [IsActive]
+    FROM [Recep].[CompList] AS [CompList]</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="vcashrp" EntityType="Self.vcashrp" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
     [vcashrp].[itmid] AS [itmid], 
